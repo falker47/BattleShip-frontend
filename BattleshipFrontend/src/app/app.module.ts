@@ -5,12 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PlayerComponent } from './player/player.component';
+import { BoardComponent } from './board/board.component';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingPageComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PlayerComponent,
+    BoardComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule,
