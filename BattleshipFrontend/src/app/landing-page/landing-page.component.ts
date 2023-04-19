@@ -14,25 +14,53 @@ export class LandingPageComponent {
   confirmedPlayers = false;
   playerId = 1;
 
+  player: Player = {
+    id: 0,
+    name: '',
+    group: 0,
+    ships: {
+      destroyer: [],       
+      submarine: [],        
+      cruiser: [],         
+      battleship: [],     
+      carrier: []
+    },
+    points: 0,
+  }
+
 
   addPlayer(name: string) {
     if (!name) return;
 
-    if (this.players.length < this.limitNumPlayers) {
+    if (this.players.length === 0) {
       this.players.push({
+        ...this.player,
         id: this.playerId++,
         name: name,
-        group: Math.floor(Math.random() * 2),
-        ships: {
-          destroyer: [],       
-          submarine: [],        
-          cruiser: [],         
-          battleship: [],     
-          carrier: []
-        },
-        points: 0,
+        group: 1, 
+      });
+      return;
+    }
+
+    if (this.players.length === 1) {
+      this.players.push({
+        ...this.player,
+        id: this.playerId++,
+        name: name,
+        group: 2,
+      });
+      return;
+    }
+
+    if (this.players.length < this.limitNumPlayers) {
+      this.players.push({
+        ...this.player,
+        id: this.playerId++,
+        name: name,
+        group: Math.floor(Math.random() * 2) + 1,
       });
     }
+
     console.log(this.players);
   }
 
@@ -45,7 +73,7 @@ export class LandingPageComponent {
 
 
   confirmPlayers() {
-    // backend connection
+    // backend connection: send confirmed array of player to backend
 
     this.confirmedPlayers = true;
   }

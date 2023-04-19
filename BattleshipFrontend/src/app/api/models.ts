@@ -1,7 +1,7 @@
 export interface Player {
-  id: number;
+  id: number;                     // 1, 2, 3, 4, 5, or 6
   name: string;
-  group: number;
+  group: number;                  // 1 or 2
   ships: Ships;
   points: number;
 }
