@@ -60,10 +60,6 @@ select {
   font: inherit;
 }
 
-/* input, textarea{
-  text-transform: capitalize;
-} */
-
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
@@ -87,16 +83,19 @@ select {
     --font-paragraph: "Karla", sans-serif;
     --font-log: "Chivo Mono", sans-serif;
 
-    --title-color: whitesmoke;
-    --paragraph-color: #211f1f;
+    --white-color: whitesmoke;
+    --black-color: #474040;
+    --highlight-color: #09a13e;
+    --link-color: #090993;
 
-    --grid-bg-color: #0077b6;
-    --grid-line-color: #0096c7;
+    --board-bg-color: #0077b6;
+    --board-line-color: #0096c7;
 
     --btn-bg-color: #76c893;
     --btn-hover-color: #51ba76;
-}
+} 
 
-h1 {
-    font-family: var(--font-title);
-}
+body {
+    font-family: var(--font-paragraph);
+    font-size: 1em;
+} 
