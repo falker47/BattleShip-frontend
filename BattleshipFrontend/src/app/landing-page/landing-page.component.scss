@@ -31,6 +31,7 @@
 
     button {
         font-size: 1.2em;
+        font-family: inherit;
         padding: .5em 1em;
         border: none;
         border-radius: 10em;
@@ -53,15 +54,6 @@
     color: var(--white-color);
     width: 100%;
     text-align: center;
-
-    .player-name {
-        list-style-type: none;
-        text-transform: capitalize;
-        font-size: 1.5em;
-        font-family: var(--font-log);
-        letter-spacing: 2px;
-        color: var(--white-color);
-    }
 }
 
 
