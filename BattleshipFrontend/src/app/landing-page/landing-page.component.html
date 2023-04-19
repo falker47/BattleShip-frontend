@@ -33,7 +33,8 @@
     >
         Confirm players
     </button>
-
-    
-    <!-- show another component when players are confirmed - pass the players array -->
 </div>
+
+
+
+<app-board *ngIf="confirmedPlayers" [players]="players"></app-board>

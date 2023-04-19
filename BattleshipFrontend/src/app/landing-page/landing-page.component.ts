@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Player } from '../api/models';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class LandingPageComponent {
   player: Player = {
     id: 0,
     name: '',
-    group: 0,
+    team: 0,
     ships: {
       destroyer: [],       
       submarine: [],        
@@ -29,6 +30,9 @@ export class LandingPageComponent {
   }
 
 
+  constructor(private router: Router) {}
+
+
   addPlayer(name: string) {
     if (!name) return;
 
@@ -37,7 +41,7 @@ export class LandingPageComponent {
         ...this.player,
         id: this.playerId++,
         name: name,
-        group: 1, 
+        team: 1, 
       });
       return;
     }
@@ -47,7 +51,7 @@ export class LandingPageComponent {
         ...this.player,
         id: this.playerId++,
         name: name,
-        group: 2,
+        team: 2,
       });
       return;
     }
@@ -57,7 +61,7 @@ export class LandingPageComponent {
         ...this.player,
         id: this.playerId++,
         name: name,
-        group: Math.floor(Math.random() * 2) + 1,
+        team: Math.floor(Math.random() * 2) + 1,
       });
     }
 
@@ -76,6 +80,7 @@ export class LandingPageComponent {
     // backend connection: send confirmed array of player to backend
 
     this.confirmedPlayers = true;
+    this.router.navigate(['/board']); // maybe delete later
   }
 
 }

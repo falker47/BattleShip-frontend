@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PlayerComponent } from './player/player.component';
+import { BoardComponent } from './board/board.component';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +15,8 @@ import { PlayerComponent } from './player/player.component';
     LandingPageComponent,
     PageNotFoundComponent,
     PlayerComponent,
+    BoardComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule,

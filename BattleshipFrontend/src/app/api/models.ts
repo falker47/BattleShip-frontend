@@ -1,7 +1,7 @@
 export interface Player {
-  id: number;                     // 1, 2, 3, 4, 5, or 6
+  id: number;                     // BLA BLA BLA 
   name: string;
-  group: number;                  // 1 or 2
+  team: number;                  // 1 or 2
   ships: Ships;
   points: number;
 }
@@ -11,7 +11,7 @@ export interface Coordinates {
 }
 
 export interface Ships {
-  destroyer: Coordinates[];        // Size 2
+  destroyer: Coordinates[];        // Size 2   //  Example: [1,4] [5,6]
   submarine: Coordinates[];        // Size 3
   cruiser: Coordinates[];          // Size 3
   battleship: Coordinates[];       // Size 4
@@ -21,6 +21,7 @@ export interface Ships {
 export interface Ship {
   id: number;
   name: string;
+  length: number;
+  hp: number;
   coordinates: Coordinates[];
-  sunk: boolean;
 }
