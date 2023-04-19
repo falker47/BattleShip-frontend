@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5em;
+    color: var(--black-color);
+
+    p {
+        font-size: 4em;
+        text-transform: uppercase;
+        margin-bottom: 1em;
+    }
+
+    a { 
+        font-size: 1.1em;
+        text-decoration: none;
+        color: var(--link-color);
+        padding-bottom: .2em;
+        border-bottom: 1px solid var(--link-color);
+    }
+
+    a:hover {
+        cursor: pointer;
+        color: var(--board-bg-color);
+        border-bottom: 1px solid var(--board-bg-color);
+    }
+}

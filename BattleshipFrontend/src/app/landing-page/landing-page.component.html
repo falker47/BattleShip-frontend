@@ -1,0 +1,39 @@
+<div class="container">
+    <h1 class="title">Battleship</h1>
+
+    <div class="add-player-container">
+        <input 
+            #newPlayer
+            type="text"
+            placeholder="Enter player name"
+            (keyup.enter)="addPlayer(newPlayer.value)"
+        />
+
+        <button 
+            (click)="addPlayer(newPlayer.value)"
+        >+</button>
+    </div>
+
+
+    <ul class="players-list">
+        <li *ngFor="let player of players" class="player-name">
+            {{ player }}
+        </li>
+    </ul>
+
+    <span *ngIf="players.length === 6" class="limit-players-mesagge">
+        You have reached the limit number of players
+    </span>
+
+
+    <button 
+        *ngIf="players.length >= 2" 
+        class="confirm-players-btn"
+        (click)="confirmPlayers()"
+    >
+        Confirm players
+    </button>
+
+
+    <!-- show another component when players are confirmed - pass the players array -->
+</div>
