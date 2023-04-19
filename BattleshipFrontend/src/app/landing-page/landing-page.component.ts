@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 })
 export class LandingPageComponent {
 
-  // Temporary memory --> backend
   players: string[] = ["alexia", "maurizio", "artiom", "flavio", "daniele"];
   limitNumPlayers: number = 6;
+  confirmedPlayers: boolean = false;
 
 
   addPlayer(name: string) {
@@ -19,7 +19,14 @@ export class LandingPageComponent {
     if (this.players.length < this.limitNumPlayers) {
       this.players.push(name);
       name = '';
+      console.log(this.players)
     }
   }
-  
+
+  confirmPlayers() {
+    // backend connection
+
+    this.confirmedPlayers = true;
+  }
+
 }
