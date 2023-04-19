@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     padding-top: 5em;
-    color: var(--black-color);
+    color: var(--white-color);
 
     p {
         font-size: 4em;
@@ -15,14 +15,14 @@
     a { 
         font-size: 1.1em;
         text-decoration: none;
-        color: var(--link-color);
+        color: var(--board-bg-color);
         padding-bottom: .2em;
-        border-bottom: 1px solid var(--link-color);
+        border-bottom: 1px solid var(--board-bg-color);
     }
 
     a:hover {
         cursor: pointer;
-        color: var(--board-bg-color);
-        border-bottom: 1px solid var(--board-bg-color);
+        color: var(--board-line-color);
+        border-bottom: 1px solid var(--board-line-color);
     }
 }

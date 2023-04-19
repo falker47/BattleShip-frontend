@@ -80,7 +80,7 @@ export class LandingPageComponent {
     // backend connection: send confirmed array of player to backend
 
     this.confirmedPlayers = true;
-    this.router.navigate(['/board']); // maybe delete later
+    // this.router.navigate(['/board']); // maybe delete later
   }
 
 }

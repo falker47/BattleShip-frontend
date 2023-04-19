@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-color);
+
+    h2 {
+        font-family: var(--font-log);
+        font-size: 2em;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin: 2em 0;
+    }
+}
