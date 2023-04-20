@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Player } from '../api/models';
+import { PlayerFront } from '../api/models';
 import { Router } from '@angular/router';
 
 
@@ -10,24 +10,9 @@ import { Router } from '@angular/router';
 })
 export class LandingPageComponent {
 
-  players: Player[] = [];
+  players: PlayerFront[] = [];
   limitNumPlayers = 6;
   confirmedPlayers = false;
-  playerId = 1;
-
-  player: Player = {
-    id: 0,
-    name: '',
-    team: 0,
-    ships: {
-      destroyer: [],       
-      submarine: [],        
-      cruiser: [],         
-      battleship: [],     
-      carrier: []
-    },
-    points: 0,
-  }
 
 
   constructor(private router: Router) {}
@@ -38,46 +23,37 @@ export class LandingPageComponent {
 
     if (this.players.length === 0) {
       this.players.push({
-        ...this.player,
-        id: this.playerId++,
         name: name,
-        team: 1, 
+        team: 0, 
       });
       return;
     }
 
     if (this.players.length === 1) {
       this.players.push({
-        ...this.player,
-        id: this.playerId++,
         name: name,
-        team: 2,
+        team: 1,
       });
       return;
     }
 
     if (this.players.length < this.limitNumPlayers) {
       this.players.push({
-        ...this.player,
-        id: this.playerId++,
         name: name,
-        team: Math.floor(Math.random() * 2) + 1,
+        team: Math.floor(Math.random() * 2),
       });
     }
-
-    console.log(this.players);
   }
 
 
-  removePlayer(player: Player) {
+  removePlayer(player: PlayerFront) {
     this.players.splice(this.players.indexOf(player), 1);
-    console.log(player);
-    console.log(this.players);
   }
 
 
   confirmPlayers() {
-    // backend connection: send confirmed array of player to backend
+    // PLAYER SERVICE! --> backend connection
+    
 
     this.confirmedPlayers = true;
     // this.router.navigate(['/board']); // maybe delete later
