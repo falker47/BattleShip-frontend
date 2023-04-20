@@ -1,0 +1,31 @@
+<div class="container">
+    <h2>Position your ships</h2>
+
+    <div class="flex">
+        <table class="board-container">
+            <tr *ngFor="let row of cells; let xaxis = index" class="cell">
+                <td *ngFor="let col of cells; let yaxis = index" class="cell"></td>
+            </tr>
+        </table>
+    
+    
+        <div class="right-side">
+            <div class="ships-container" #ships>
+                <div id="ship_4_1" class="ship" draggable="true"></div>
+                <div id="ship_3_1" class="ship" draggable="true"></div>
+                <div id="ship_3_2" class="ship" draggable="true"></div>
+                <div id="ship_3_3" class="ship" draggable="true"></div>
+                <div id="ship_2_1" class="ship" draggable="true"></div>
+                <div id="ship_2_2" class="ship" draggable="true"></div>
+                <div id="ship_2_3" class="ship" draggable="true"></div>
+                <div id="ship_1_1" class="ship" draggable="true"></div>
+                <div id="ship_1_2" class="ship" draggable="true"></div>
+            </div>
+    
+            <div class="btns-container">
+                <button class="flip-btn" (click)="flip()">Flip</button>
+                <button class="start-btn" (click)="start()">Start</button>
+            </div>
+        </div>
+    </div>
+</div>

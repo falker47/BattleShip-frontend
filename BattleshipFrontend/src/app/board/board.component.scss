@@ -1,0 +1,112 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-color);
+    padding-bottom: 4em;
+
+    h2 {
+        font-family: var(--font-log);
+        font-size: 2em;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin: 2em 0 1em 0;
+    }
+}
+
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.board-container {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1em;
+    border-collapse: collapse; 
+
+    .cell {
+        border-collapse: collapse;
+        width: 25px;
+        height: 25px;
+        background-color: var(--board-bg-color);
+        border: 1px solid var(--board-line-color);
+    }
+}
+
+
+.right-side {
+    margin-left: 2em;
+
+    .flip {
+        transform: rotate(90deg);
+    }
+
+    .ships-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 20em;
+        height: 20em;
+
+        .ship {
+            background-color: rgb(172, 166, 166);
+            border-radius: 5px;
+            margin: 1em;
+        }
+
+        
+
+        #ship_4_1 {
+            width: calc(25px * 4);
+            height: 25px;
+        }
+
+        #ship_3_1, #ship_3_2, #ship_3_3 {
+            width: calc(25px * 3);
+            height: 25px;
+        }
+
+        #ship_2_1, #ship_2_2, #ship_2_3 {
+            width: calc(25px * 2);
+            height: 25px;
+        }
+
+        #ship_1_1, #ship_1_2 {
+            width: 25px;
+            height: 25px;
+        }
+    }
+    
+    .btns-container {
+        .flip-btn,
+        .start-btn {
+            text-transform: uppercase;
+            font-size: 1.2em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--white-color);
+            border: none;
+            border-radius: 5px;
+            background-color: var(--btn-bg-color);
+            padding: .5em 1em;
+        }
+    
+        .flip-btn {
+            margin-right: 1em;
+        }
+        
+        .flip-btn:hover, 
+        .flip-btn:focus,
+        .start-btn:hover,
+        .start-btn:focus {
+            cursor: pointer;
+            background-color: var(--btn-hover-color);
+        }
+    }
+}
+
+
