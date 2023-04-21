@@ -1,49 +1,79 @@
-<div class="container">
-    <h2>Position your ships</h2>
+<div class="config-container">
+  <h2>Position your ships</h2>
 
-    <div class="flex" cdkDropListGroup>        
-        <!-- board-container has to have an id! (players id from backend) -->
-        <div 
-            class="board-container" 
-            [ngClass]="{
-            'board-container-10': width === 10,
-            'board-container-15': width === 15,
-            'board-container-20': width === 20,
-            'board-container-25': width === 25,
-            'board-container-30': width === 30
-        }">
-            <div 
-                cdkDropList
-                (cdkDropListDropped)="drop($event)"
-                [cdkDropListData]="droppedShips"
-                *ngFor="let boardCell of boardCells; let i = index"
-                id="{{i}}"
-                class="board-cell" 
+  <div class="lists-container">
+
+      <div class="container-1">
+        <div class="ships">
+          <h3>Available ships: {{ this.shipList1.length }}</h3>
+
+          <div
+            class="droplist"
+            #list
+            (mouseover)="hoveredElement(list.getBoundingClientRect(), 'list', -1, -1, $event)"
             >
+            <div *ngIf="shipList1.length > 0">
+              <div [style.size]="30 * shipList1[0].size + 'px'" (dblclick)="rotate($event)">
+                <app-ship
+                  cdkDrag
+                  id="0"
+                  [style.top.px]="yInitial"
+                  [style.left.px]="xInitial"
+                  [size]="shipList1[0].size"
+                  [name]="shipList1[0].name"
+                  [rotate]="shipList1[0].rotate"
+                  (cdkDragStarted)="dragStarted($event)"
+                  (cdkDragEnded)="dragEnded($event)"
+                  (cdkDragMoved)="dragMoved($event)"
+                ></app-ship>
+              </div>
             </div>
-            <div *ngFor="let droppedShip of droppedShips"></div>
+          </div>
+
+          <button 
+            *ngIf="this.shipList1.length === 0"
+            class="start-btn" 
+            (click)="startGame()"
+          >Start game
+          </button>
+
         </div>
+      </div>
+      
+      <div class="container-2">
+        <div class="droplist">
 
-
-        <div class="right-side">
-            <div 
-                #shipsContainer 
-                cdkDropList
-                [cdkDropListData]="{ships}"
-                class="ships-container" 
+          <div *ngFor="let ship of shipList2; let i = index">
+            <app-ship
+              cdkDrag
+              id="{{i}}"
+              [style.top.px]="ship.top"
+              [style.left.px]="ship.left"
+              [size]="ship.size"
+              [name]="ship.name"
+              (cdkDragStarted)="dragStarted($event)"
+              (cdkDragEnded)="dragEnded($event)"
+              (cdkDragMoved)="dragMoved($event)"
             >
-                <div 
-                    *ngFor="let ship of ships; let i = index"
-                    id="{{i}}"
-                    class="{{ship.name}} ship"
-                    cdkDrag
+            </app-ship>
+          </div>
+
+          <div class="board" #board>
+            <div class="row" *ngFor="let row of boardP1; let x = index" id="{{x+1}}" #rows>
+              <div *ngFor="let box of row; let y = index" id="{{y+1}}" #cols>
+                <div
+                  class="cell"
+                  #cell
+                  (mouseover)="hoveredElement(cell.getBoundingClientRect(), 'cell', y+1, x+1, $event)"
                 ></div>
+              </div>
             </div>
+          </div>
+
         </div>
-    </div>
-    
-    <div class="btns-container">
-        <button class="flip-btn" (click)="flip()">Flip</button>
-        <button class="start-btn" (click)="start()">Start</button>
-    </div>
+      </div>
+      
+  </div>
+
 </div>
+

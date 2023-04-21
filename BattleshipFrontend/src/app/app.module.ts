@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PlayerComponent } from './player/player.component';
 import { BoardComponent } from './board/board.component';
 import { GameComponent } from './game/game.component';
+import { ShipComponent } from './board/ship/ship.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { GameComponent } from './game/game.component';
     PlayerComponent,
     BoardComponent,
     GameComponent,
+    ShipComponent,
   ],
   imports: [
     BrowserModule,

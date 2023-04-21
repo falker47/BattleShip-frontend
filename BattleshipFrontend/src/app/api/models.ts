@@ -76,3 +76,11 @@ export interface ShipsPosition {
   ship_1_1: Coordinates[]; // Size 1
   ship_1_2: Coordinates[]; // Size 1
 }
+
+export interface DragModel {
+  cellX: number;
+  cellY: number;
+  type: string;
+  row: number;
+  col: number;
+}
