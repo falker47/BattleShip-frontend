@@ -1,31 +1,49 @@
 <div class="container">
     <h2>Position your ships</h2>
 
-    <div class="flex">
-        <table class="board-container">
-            <tr *ngFor="let row of cells; let xaxis = index" class="cell">
-                <td *ngFor="let col of cells; let yaxis = index" class="cell"></td>
-            </tr>
-        </table>
-    
-    
-        <div class="right-side">
-            <div class="ships-container" #ships>
-                <div id="ship_4_1" class="ship" draggable="true"></div>
-                <div id="ship_3_1" class="ship" draggable="true"></div>
-                <div id="ship_3_2" class="ship" draggable="true"></div>
-                <div id="ship_3_3" class="ship" draggable="true"></div>
-                <div id="ship_2_1" class="ship" draggable="true"></div>
-                <div id="ship_2_2" class="ship" draggable="true"></div>
-                <div id="ship_2_3" class="ship" draggable="true"></div>
-                <div id="ship_1_1" class="ship" draggable="true"></div>
-                <div id="ship_1_2" class="ship" draggable="true"></div>
+    <div class="flex" cdkDropListGroup>        
+        <!-- board-container has to have an id! (players id from backend) -->
+        <div 
+            class="board-container" 
+            [ngClass]="{
+            'board-container-10': width === 10,
+            'board-container-15': width === 15,
+            'board-container-20': width === 20,
+            'board-container-25': width === 25,
+            'board-container-30': width === 30
+        }">
+            <div 
+                cdkDropList
+                (cdkDropListDropped)="drop($event)"
+                [cdkDropListData]="droppedShips"
+                *ngFor="let boardCell of boardCells; let i = index"
+                id="{{i}}"
+                class="board-cell" 
+            >
             </div>
-    
-            <div class="btns-container">
-                <button class="flip-btn" (click)="flip()">Flip</button>
-                <button class="start-btn" (click)="start()">Start</button>
+            <div *ngFor="let droppedShip of droppedShips"></div>
+        </div>
+
+
+        <div class="right-side">
+            <div 
+                #shipsContainer 
+                cdkDropList
+                [cdkDropListData]="{ships}"
+                class="ships-container" 
+            >
+                <div 
+                    *ngFor="let ship of ships; let i = index"
+                    id="{{i}}"
+                    class="{{ship.name}} ship"
+                    cdkDrag
+                ></div>
             </div>
         </div>
+    </div>
+    
+    <div class="btns-container">
+        <button class="flip-btn" (click)="flip()">Flip</button>
+        <button class="start-btn" (click)="start()">Start</button>
     </div>
 </div>

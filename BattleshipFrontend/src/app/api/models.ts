@@ -7,6 +7,7 @@ export interface Cell {
   id: string;
   gridId: number;
   shipId: string;
+  ship: string;
   xaxis: number;
   yaxis: number;
   state: number;
@@ -22,10 +23,11 @@ export interface Grid {
 }
 
 export interface Ship {
-  id: number;
-  playerId: number;
+  id?: number;
+  name: string,
+  playerId?: number;
   length: number;
-  hp: number;
+  hp?: number;
 }
 
 export interface shotGrid {
