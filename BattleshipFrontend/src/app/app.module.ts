@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -23,7 +25,9 @@ import { GameComponent } from './game/game.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

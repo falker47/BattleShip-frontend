@@ -1,9 +1,11 @@
 <div class="container">
     <h2>Position your ships</h2>
 
-    <div class="flex">        
+    <div class="flex" cdkDropListGroup>        
         <!-- board-container has to have an id! (players id from backend) -->
-        <div class="board-container" [ngClass]="{
+        <div 
+            class="board-container" 
+            [ngClass]="{
             'board-container-10': width === 10,
             'board-container-15': width === 15,
             'board-container-20': width === 20,
@@ -11,63 +13,37 @@
             'board-container-30': width === 30
         }">
             <div 
-                *ngFor="let cell of cells; let i = index"
+                cdkDropList
+                (cdkDropListDropped)="drop($event)"
+                [cdkDropListData]="droppedShips"
+                *ngFor="let boardCell of boardCells; let i = index"
                 id="{{i}}"
-                class="cell" 
-                (dragover)="dragOver($event)" 
-                (drop)="dropShip($event, i)"
-            >{{i}}</div>
-        </div>
-    
-    
-        <div class="right-side">
-            <div class="ships-container" #shipsContainer>
-                <div id="0" class="ship_4_1 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_4_1_start"></div>
-                    <div id="ship_4_1_middle1"></div>
-                    <div id="ship_4_1_middle2"></div>
-                    <div id="ship_4_1_end"></div> -->
-                </div>
-                <div id="1" class="ship_3_1 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_3_1_start"></div>
-                    <div id="ship_3_1_middle"></div>
-                    <div id="ship_3_1_end"></div> -->
-                </div>
-                <div id="2" class="ship_3_2 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_3_2_start"></div>
-                    <div id="ship_3_2_middle"></div>
-                    <div id="ship_3_2_end"></div> -->
-                </div>
-                <div id="3" class="ship_3_3 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_3_3_start"></div>
-                    <div id="ship_3_3_middle"></div>
-                    <div id="ship_3_3_end"></div> -->
-                </div>
-                <div id="4" class="ship_2_1 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_2_1_start"></div>
-                    <div id="ship_2_1_end"></div> -->
-                </div>
-                <div id="5" class="ship_2_2 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_2_2_start"></div>
-                    <div id="ship_2_2_end"></div> -->
-                </div>
-                <div id="6" class="ship_2_3 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_2_3_start"></div>
-                    <div id="ship_2_3_end"></div> -->
-                </div>
-                <div id="7" class="ship_1_1 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_1_1_start"></div> -->
-                </div>
-                <div id="8" class="ship_1_2 ship" draggable="true" (dragstart)="dragStart($event)">
-                    <!-- <div id="ship_1_2_start"></div> -->
-                </div>
+                class="board-cell" 
+            >
             </div>
-    
+            <div *ngFor="let droppedShip of droppedShips"></div>
+        </div>
 
-            <div class="btns-container">
-                <button class="flip-btn" (click)="flip()">Flip</button>
-                <button class="start-btn" (click)="start()">Start</button>
+
+        <div class="right-side">
+            <div 
+                #shipsContainer 
+                cdkDropList
+                [cdkDropListData]="{ships}"
+                class="ships-container" 
+            >
+                <div 
+                    *ngFor="let ship of ships; let i = index"
+                    id="{{i}}"
+                    class="{{ship.name}} ship"
+                    cdkDrag
+                ></div>
             </div>
         </div>
+    </div>
+    
+    <div class="btns-container">
+        <button class="flip-btn" (click)="flip()">Flip</button>
+        <button class="start-btn" (click)="start()">Start</button>
     </div>
 </div>
