@@ -72,9 +72,9 @@ export class BoardComponent implements OnInit {
     if (this.dragEnd.type === "cell" && this.dragStart.type === "cell") {  // Moving ship around board
       let index: number = +event.source.element.nativeElement.id;          
       console.log(index)
-      let item = this.shipList2[index];                                    // Search dragged ship inside "ships in board list"
-      item = this.updateShipsCss(item);                                    // Update dragged ship position in board
-      this.shipList2.splice(index, 1);                                     // Delete dragged ship from "ships in board list" to:
+      let item = this.shipList2[index];                                    // Search dragged ship inside "ships on board list"
+      item = this.updateShipsCss(item);                                    // Update dragged ship position on board
+      this.shipList2.splice(index, 1);                                     // Delete dragged ship from "ships on board list" to:
       this.shipList2.push(item);                                           // Push it at the end of the array
       event.source._dragRef.reset();
     }
@@ -91,7 +91,7 @@ export class BoardComponent implements OnInit {
   private moveFromshipList1To2(id: string) {
     let index: number = +id;                                               // Index will be always 0
     let item = this.updateShipsCss(this.shipList1[index]);                 // Placing the new first ship of "available ships list" in the board
-    this.shipList2.push(item);                                             // Pushing this ship to "ships in board list"
+    this.shipList2.push(item);                                             // Pushing this ship to "ships on board list"
     this.shipList1.splice(index, 1);
   }
 
@@ -102,7 +102,7 @@ export class BoardComponent implements OnInit {
   //   return ship;
   // }
 
-  public updateShipsCss(ship: ShipComponent): ShipComponent {             // Updating ship position in board
+  public updateShipsCss(ship: ShipComponent): ShipComponent {             // Updating ship position on board
     ship.col = this.dragEnd.col;
     ship.row = this.dragEnd.row;
     ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
