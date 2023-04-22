@@ -83,42 +83,47 @@ export class BoardComponent implements OnInit {
     dropPlace.row = row;
     dropPlace.col = col;
 
-    console.log(this.shipName)
-
     if (this.shipName !== '') {                                                 // Checking where is the dragged ship (list1 or list2?)
       let currentShip = this.shipList1.find(ship => ship.name === this.shipName);
-        console.log("list 1: " + currentShip)
       if (currentShip === undefined) {
         currentShip = this.shipList2.find(ship => ship.name === this.shipName);
-        console.log("list 2: " + currentShip)
       }
       if (currentShip !== undefined) {                                          // Found ship
         if (!currentShip.rotate) {                                              // If ship is horizontal
           if (currentShip.size <= (this.width - col + 1)) {                     // If ship size is <= than remaining space in a row, we can place it there
-            if (this.shipList2[0] === undefined) this.hoverPlace = dropPlace;
-            this.shipList2.forEach(ship => {                                    // Checking if space is not taken
-              if ((ship.col !== col && ship.row !== row) && (ship.col + ship.size - 1) < col) { 
-                this.hoverPlace = dropPlace;
-              }
-            })
+            if (this.shipList2[0] !== undefined) {
+              this.hoverPlace = dropPlace;
+              this.shipList2.forEach(ship => {                                  // Checking if space is taken
+                if ((ship.col === col && ship.row === row) 
+                || (ship.col + ship.size - 1) > col && ship.row === row 
+                || (col + currentShip!.size) < ship.col && ship.row === row ) { 
+                  this.hoverPlace = this.dragStart;
+                }
+              })
+            } else { 
+              this.hoverPlace = dropPlace; 
+            }
           } else {
             this.hoverPlace = this.dragStart;
-            console.log("Ship does not fit in here!");
           }
         } else {                                                               // If ship is vertical
           if (currentShip.size <= (this.width - row + 1)) {                    // If ship size is <= than remaining space in a col, we can place it there
-            if (this.shipList2[0] === undefined) this.hoverPlace = dropPlace;
-            this.shipList2.forEach(ship => {                                   // Checking if space is not taken
-              if ((ship.col !== col && ship.row !== row) && (ship.row + ship.size - 1) < row ) {
-                this.hoverPlace = dropPlace;
-              }
-            })
-          } else {
-            this.hoverPlace = this.dragStart;
-            console.log("Ship does not fit in here!");
+            if (this.shipList2[0] === undefined) {
+              this.hoverPlace = dropPlace;
+              this.shipList2.forEach(ship => {                                  // Checking if space is taken
+                if ((ship.col === col && ship.row === row) 
+                || (ship.row + ship.size - 1) > row && ship.col === col 
+                || (row + currentShip!.size) < ship.row && ship.col === col) {
+                  this.hoverPlace = this.dragStart;
+                }
+              })
+              this.hoverPlace = dropPlace;
+            } else {
+              this.hoverPlace = this.dragStart;
+            }
           }
         }
-      }
+      } 
     }
   }
 
