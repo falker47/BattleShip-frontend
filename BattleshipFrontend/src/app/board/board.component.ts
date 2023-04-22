@@ -47,7 +47,6 @@ export class BoardComponent implements OnInit {
     //      move1to2       
 
     //   } else {
-    //     // move2to1
     //     currentShip = this.shipList2.find(ship => ship.name === this.shipName);
     //   }
     // } else {
