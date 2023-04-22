@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class BoardComponent implements OnInit {
 
-  @Input() players!: PlayerFront[]; // TODO: then change to player for full info from backend
+  @Input() players!: PlayerFront[]; // TODO: then change to type Player to get full info from backend
   @ViewChild("board", { read: ElementRef, static: false }) boardElement!: ElementRef<HTMLElement>;
   @ViewChild("cols") cols!: ElementRef<HTMLElement>;
   @ViewChild("rows") rows!: ElementRef<HTMLElement>;
@@ -40,7 +40,7 @@ export class BoardComponent implements OnInit {
   // DRAG END
   public dragEnded(event: CdkDragEnd) {
     this.dragEnd = this.hoverPlace;
-    // this.increaseZIndex(event.source.element);
+    // this.increaseZIndex(event.source.element); // TODO: we dont need this
 
     if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Moving from available ships to board ships
       this.moveFromshipList1To2(event.source.element.nativeElement.id);    
@@ -56,7 +56,7 @@ export class BoardComponent implements OnInit {
           "ship x axis: " + ship.col + "\n", 
           "ship y axis: " + ship.row + "\n", 
           "is ship vertical?: " + ship.rotate
-          )
+        )
       )
     }
     
@@ -95,7 +95,7 @@ export class BoardComponent implements OnInit {
     this.shipList1.splice(index, 1);
   }
 
-  // public updateOnBoardCss(ship: ShipComponent): ShipComponent {
+  // public updateOnBoardCss(ship: ShipComponent): ShipComponent { // TODO: we dont need this, is never used
   //   console.clear();
   //   ship.left = this.dragEnd.cellX;
   //   ship.top = this.dragEnd.cellY;
@@ -143,7 +143,7 @@ export class BoardComponent implements OnInit {
     this.dragStart = this.hoverPlace;
   }
 
-  // DRAG MOVE
+  // DRAG MOVE // TODO: we dont need this
   // public dragMoved(event: CdkDragMove) {
   //   this.decreaseZIndex(event.source.element);
   // }
