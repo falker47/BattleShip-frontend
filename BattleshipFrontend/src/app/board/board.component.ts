@@ -53,8 +53,8 @@ export class BoardComponent implements OnInit {
         console.log(
           "ship name: " + ship.name + "\n", 
           "ship size: " + ship.size + "\n", 
-          "ship x axis: " + ship.x + "\n", 
-          "ship y axis: " + ship.y + "\n", 
+          "ship x axis: " + ship.col + "\n", 
+          "ship y axis: " + ship.row + "\n", 
           "is ship vertical?: " + ship.rotate
           )
       )
@@ -103,8 +103,8 @@ export class BoardComponent implements OnInit {
   // }
 
   public updateShipsCss(ship: ShipComponent): ShipComponent {             // Updating ship position in board
-    ship.x = this.dragEnd.col;
-    ship.y = this.dragEnd.row;
+    ship.col = this.dragEnd.col;
+    ship.row = this.dragEnd.row;
     ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
     ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
     return ship;
@@ -154,15 +154,15 @@ export class BoardComponent implements OnInit {
   // Create fleet and board
   private createFleet(): Array<ShipComponent> {
     return [
-      { name: 'ship_5_1', size: 5, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
-      { name: 'ship_4_1', size: 4, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
-      { name: 'ship_3_1', size: 3, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
-      { name: 'ship_3_2', size: 3, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
-      { name: 'ship_2_1', size: 2, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
-      { name: 'ship_2_2', size: 2, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
-      { name: 'ship_2_3', size: 2, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
-      { name: 'ship_1_1', size: 1, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
-      { name: 'ship_1_2', size: 1, rotate: false, top: 0, left: 0, x: 0, y: 0, deployed: false },
+      { name: 'ship_5_1', size: 5, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_4_1', size: 4, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_3_1', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_3_2', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_2_1', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_2_2', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_2_3', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_1_1', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_1_2', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
     ];
   }
   
@@ -181,10 +181,6 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  isHorizontal() {
-    return this.shipList2[0].rotate
-  }
-
   startGame() {
     const shipsData: ShipData[] = [];
 
@@ -192,12 +188,15 @@ export class BoardComponent implements OnInit {
       const s = {
         name: ship.name,
         length: ship.size,
-        // !The next code only works when ships are all horizontal
-        coordinates: ship.size === 5 ? [[ship.x, ship.y], [ship.x+1, ship.y], [ship.x+2, ship.y], [ship.x+3, ship.y], [ship.x+4, ship.y]]
-                   : ship.size === 4 ? [[ship.x, ship.y], [ship.x+1, ship.y], [ship.x+2, ship.y], [ship.x+3, ship.y]]
-                   : ship.size === 3 ? [[ship.x, ship.y], [ship.x+1, ship.y], [ship.x+2, ship.y]]
-                   : ship.size === 2 ? [[ship.x, ship.y], [ship.x+1, ship.y]]
-                   : ship.size === 1 ? [[ship.x, ship.y]]
+        coordinates: ship.size === 5 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row], [ship.col+3, ship.row], [ship.col+4, ship.row]] // Horizontal ship
+                   : ship.size === 5 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2], [ship.col, ship.row+3], [ship.col, ship.row+4]] // Vertical ship
+                   : ship.size === 4 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row], [ship.col+3, ship.row]] 
+                   : ship.size === 4 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2], [ship.col, ship.row+3]]
+                   : ship.size === 3 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row]] 
+                   : ship.size === 3 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2]]
+                   : ship.size === 2 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row]] 
+                   : ship.size === 2 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1]]
+                   : ship.size === 1 && !ship.rotate ? [[ship.col, ship.row]]
                    : []
       }
       shipsData.push(s);

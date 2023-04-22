@@ -13,8 +13,8 @@ export class ShipComponent  {
     @Input() rotate!: boolean;
     @Input() top!: number;
     @Input() left!: number;
-    @Input() x!: number;
-    @Input() y!: number;
+    @Input() col!: number;
+    @Input() row!: number;
     @Input() deployed!: boolean;
 
 }
