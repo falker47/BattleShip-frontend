@@ -40,7 +40,7 @@ export class BoardComponent implements OnInit {
   // DRAG END
   public dragEnded(event: CdkDragEnd) {
     this.dragEnd = this.hoverPlace;
-    // this.increaseZIndex(event.source.element); // TODO: we dont need this
+    // this.increaseZIndex(event.source.element);                          // TODO: we dont need this
 
     if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Moving from available ships to board ships
       this.moveFromshipList1To2(event.source.element.nativeElement.id);    
@@ -95,7 +95,7 @@ export class BoardComponent implements OnInit {
     this.shipList1.splice(index, 1);
   }
 
-  // public updateOnBoardCss(ship: ShipComponent): ShipComponent { // TODO: we dont need this, is never used
+  // public updateOnBoardCss(ship: ShipComponent): ShipComponent {         // TODO: we dont need this, is never used
   //   console.clear();
   //   ship.left = this.dragEnd.cellX;
   //   ship.top = this.dragEnd.cellY;
@@ -143,7 +143,7 @@ export class BoardComponent implements OnInit {
     this.dragStart = this.hoverPlace;
   }
 
-  // DRAG MOVE // TODO: we dont need this
+  // DRAG MOVE                                                          // TODO: we dont need this
   // public dragMoved(event: CdkDragMove) {
   //   this.decreaseZIndex(event.source.element);
   // }
@@ -164,7 +164,7 @@ export class BoardComponent implements OnInit {
   // Create fleet and board
   private createFleet(): Array<ShipComponent> {
     return [
-      { name: 'ship_5_1', size: 5, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
+      { name: 'ship_5_1', size: 5, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false }, // TODO: deployed is never use, maybe delete later
       { name: 'ship_4_1', size: 4, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
       { name: 'ship_3_1', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },
       { name: 'ship_3_2', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, deployed: false },

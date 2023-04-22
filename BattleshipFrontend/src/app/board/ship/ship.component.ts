@@ -15,6 +15,6 @@ export class ShipComponent  {
     @Input() left!: number;
     @Input() col!: number;
     @Input() row!: number;
-    @Input() deployed!: boolean;
+    @Input() deployed!: boolean;   // TODO we dont need this
 
 }
