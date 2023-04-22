@@ -44,7 +44,7 @@ export class BoardComponent implements OnInit {
 
     if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Moving from available ships to board ships
       this.moveFromshipList1To2(event.source.element.nativeElement.id);    
-      this.shipList1[0] !== undefined ? this.shipList1[0].rotate = false : '';       // Updating rotate property in following ship in the "available ships list"
+      this.shipList1[0] !== undefined ? this.shipList1[0].rotate = false : ''; // Updating rotate property in following ship in the "available ships list"
       event.source._dragRef.reset();
       
       console.clear();
@@ -70,7 +70,7 @@ export class BoardComponent implements OnInit {
     }
    
     if (this.dragEnd.type === "cell" && this.dragStart.type === "cell") {  // Moving ship around board
-      let index: number = +event.source.element.nativeElement.id;          // Is this always 0?
+      let index: number = +event.source.element.nativeElement.id;          
       console.log(index)
       let item = this.shipList2[index];                                    // Search dragged ship inside "ships in board list"
       item = this.updateShipsCss(item);                                    // Update dragged ship position in board
@@ -81,7 +81,7 @@ export class BoardComponent implements OnInit {
   }
 
   private moveFromshipList2To1(id: string) {
-    let index: number = +id;                                               // 0
+    let index: number = +id;                                               
     let item = this.shipList2[index];
     let temp = [item].concat(this.shipList1);
     this.shipList1 = temp;
@@ -89,9 +89,9 @@ export class BoardComponent implements OnInit {
   }
 
   private moveFromshipList1To2(id: string) {
-    let index: number = +id;                                               // 0
-    let item = this.updateShipsCss(this.shipList1[index]);                 // El primer elemento de available ships se ubica en la board
-    this.shipList2.push(item);                                             // Lo pusheamos en la lista de naves en la board
+    let index: number = +id;                                               // Index will be always 0
+    let item = this.updateShipsCss(this.shipList1[index]);                 // Placing the new first ship of "available ships list" in the board
+    this.shipList2.push(item);                                             // Pushing this ship to "ships in board list"
     this.shipList1.splice(index, 1);
   }
 
