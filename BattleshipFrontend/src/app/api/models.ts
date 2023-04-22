@@ -15,10 +15,10 @@ export interface Coordinates {
 }
 
 export interface ShipsPosition {
+  ship_5_1: Coordinates[]; // Size 5
   ship_4_1: Coordinates[]; // Size 4
   ship_3_1: Coordinates[]; // Size 3
   ship_3_2: Coordinates[]; // Size 3
-  ship_3_3: Coordinates[]; // Size 3
   ship_2_1: Coordinates[]; // Size 2
   ship_2_2: Coordinates[]; // Size 2
   ship_2_3: Coordinates[]; // Size 2   // Example: [1,4] [5,6]
