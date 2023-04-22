@@ -94,13 +94,18 @@ export class BoardComponent implements OnInit {
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
               this.shipList2.forEach(ship => {                                  // Checking if space is taken
-                if ((ship.col === col && ship.row === row) 
-                || (ship.col + ship.size - 1) > col && ship.row === row 
-                || (col + currentShip!.size) < ship.col && ship.row === row ) { 
+                if ((ship.col === col && ship.row === row)) {
+                  this.hoverPlace = this.dragStart;
+                }
+                if ((ship.col + ship.size - 1) > col && ship.row === row) {
+                  this.hoverPlace = this.dragStart;
+                }
+                //  else if ((ship.col - col) < (currentShip!.size - 1) && ship.row === row) {
+                if ((col + currentShip!.size) < ship.col && ship.row === row) {
                   this.hoverPlace = this.dragStart;
                 }
               })
-            } else { 
+            } else {   
               this.hoverPlace = dropPlace; 
             }
           } else {
@@ -112,8 +117,8 @@ export class BoardComponent implements OnInit {
               this.hoverPlace = dropPlace;
               this.shipList2.forEach(ship => {                                  // Checking if space is taken
                 if ((ship.col === col && ship.row === row) 
-                || (ship.row + ship.size - 1) > row && ship.col === col 
-                || (row + currentShip!.size) < ship.row && ship.col === col) {
+                || ((ship.row + ship.size - 1) > row && ship.col === col)
+                || ((row + currentShip!.size) < ship.row && ship.col === col)) {
                   this.hoverPlace = this.dragStart;
                 }
               })
