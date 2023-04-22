@@ -16,18 +16,18 @@
 
 
     <ul class="players-list">
-        <li *ngFor="let player of players">
-            <app-player (remove)="removePlayer(player)" [player]="player"></app-player>
+        <li *ngFor="let player of playersNames">
+            <app-player (remove)="removePlayer(player)" [player]="player"></app-player> 
         </li>
     </ul>
 
-    <span *ngIf="players.length === 6" class="limit-players-mesagge">
+    <span *ngIf="playersNames.length === 6" class="limit-players-mesagge">
         You have reached the limit number of players
     </span>
 
 
     <button 
-        *ngIf="players.length >= 2" 
+        *ngIf="playersNames.length >= 2" 
         class="confirm-players-btn"
         (click)="confirmPlayers()"
     >
@@ -37,4 +37,4 @@
 
 
 
-<app-board *ngIf="confirmedPlayers" [players]="players"></app-board>
+<app-board *ngIf="confirmedPlayers" [players]="playersNames"></app-board> <!-- Board receives full players info -->

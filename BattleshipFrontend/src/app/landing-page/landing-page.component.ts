@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LandingPageComponent {
 
-  players: PlayerFront[] = [];
+  playersNames: PlayerFront[] = [];
   limitNumPlayers = 6;
   confirmedPlayers = false;
 
@@ -21,24 +21,24 @@ export class LandingPageComponent {
   addPlayer(name: string) {
     if (!name) return;
 
-    if (this.players.length === 0) {
-      this.players.push({
+    if (this.playersNames.length === 0) {
+      this.playersNames.push({
         name: name,
         team: 0, 
       });
       return;
     }
 
-    if (this.players.length === 1) {
-      this.players.push({
+    if (this.playersNames.length === 1) {
+      this.playersNames.push({
         name: name,
         team: 1,
       });
       return;
     }
 
-    if (this.players.length < this.limitNumPlayers) {
-      this.players.push({
+    if (this.playersNames.length < this.limitNumPlayers) {
+      this.playersNames.push({
         name: name,
         team: Math.floor(Math.random() * 2),
       });
@@ -47,16 +47,31 @@ export class LandingPageComponent {
 
 
   removePlayer(player: PlayerFront) {
-    this.players.splice(this.players.indexOf(player), 1);
+    this.playersNames.splice(this.playersNames.indexOf(player), 1);
   }
 
 
   confirmPlayers() {
-    // PLAYER SERVICE! --> backend connection
+    console.log(this.playersNames);
+
+    // TODO: when it works, place this block of code in a service: fetch --> this.httpClient.post(...)
+    fetch ('BACKEND_URL', {
+      method: 'POST',
+      body: JSON.stringify({
+        players: this.playersNames,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    }).then((res) => {
+      if (res.ok) return res.json();
+      return Promise.reject(res);
+    }).then((data) => console.log(data)
+    ).catch((error) => console.warn('Something went wrong', error));
     
 
     this.confirmedPlayers = true;
-    // this.router.navigate(['/board']); // maybe delete later
+    // this.router.navigate(['/board']); 
   }
 
 }

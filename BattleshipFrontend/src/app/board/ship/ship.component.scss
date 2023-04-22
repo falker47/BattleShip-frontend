@@ -3,7 +3,7 @@
   position: relative;
   height: 30px;
   z-index: 100;
-  margin: 1px;
+  // margin: 1px;
 }
 
 .ship-drop-wrapper {
@@ -17,3 +17,18 @@
   height: 30px;
   display: inline-block;
 }
+
+.ship-rotate {
+  transform: rotate(90deg);
+}
+
+#ship_5_1 { background-color: #ff0000; }
+#ship_4_1 { background-color: #008000; }
+#ship_3_1 { background-color: #0000ff; }
+#ship_3_2 { background-color: #fe95a7; }
+#ship_3_3 { background-color: #ff7f50; }
+#ship_2_1 { background-color: #9b65e3; }
+#ship_2_2 { background-color: #ffff00; }
+#ship_2_3 { background-color: #1cc11c; }
+#ship_1_1 { background-color: #bc09bc; }
+#ship_2_2 { background-color: #5dc1e2; }

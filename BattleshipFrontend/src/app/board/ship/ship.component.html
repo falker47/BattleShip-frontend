@@ -1,4 +1,4 @@
-<div *ngIf="rotate !== true" class="ship-box" [style.width]="30 * size + 'px'" id="{{name}}">
+<div class="ship-box" [style.width]="30 * size + 'px'" id="{{name}}" [ngClass]="{'ship-rotate': rotate}">
   <div class="ship-drop-wrapper">
     <div
       *ngFor="let i of [0, 1, 2, 3, 4, 5].slice(0, size)"
@@ -6,14 +6,3 @@
     ></div>
   </div>
 </div>
-
-
-<div *ngIf="rotate === true" class="ship-box" [style.width]="30 * size + 'px'" id="{{name}}" style="transform: rotate(90deg);">
-  <div class="ship-drop-wrapper">
-    <div
-      *ngFor="let i of [0, 1, 2, 3, 4, 5].slice(0, size)"
-      class="ship-box-cell"
-    ></div>
-  </div>
-</div>
-

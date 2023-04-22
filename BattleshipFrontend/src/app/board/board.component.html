@@ -1,6 +1,12 @@
 <div class="config-container">
   <h2>Position your ships</h2>
 
+  <button *ngIf="this.shipList1.length === 0"
+    class="start-btn" 
+    (click)="startGame()"
+  >Start game
+  </button>
+
   <div class="lists-container">
 
       <div class="container-1">
@@ -10,10 +16,10 @@
           <div
             class="droplist"
             #list
-            (mouseover)="hoveredElement(list.getBoundingClientRect(), 'list', -1, -1, $event)"
+            (mouseover)="hoveredElement(list.getBoundingClientRect(), 'list', -1, -1)"
             >
             <div *ngIf="shipList1.length > 0">
-              <div [style.size]="30 * shipList1[0].size + 'px'" (dblclick)="rotate($event)">
+              <div [style.size]="30 * shipList1[0].size + 'px'" (dblclick)="rotate(0)">
                 <app-ship
                   cdkDrag
                   id="0"
@@ -24,18 +30,11 @@
                   [rotate]="shipList1[0].rotate"
                   (cdkDragStarted)="dragStarted($event)"
                   (cdkDragEnded)="dragEnded($event)"
-                  (cdkDragMoved)="dragMoved($event)"
-                ></app-ship>
+                  ></app-ship>
+                  <!-- (cdkDragMoved)="dragMoved($event)" -->
               </div>
             </div>
           </div>
-
-          <button 
-            *ngIf="this.shipList1.length === 0"
-            class="start-btn" 
-            (click)="startGame()"
-          >Start game
-          </button>
 
         </div>
       </div>
@@ -51,20 +50,21 @@
               [style.left.px]="ship.left"
               [size]="ship.size"
               [name]="ship.name"
+              [rotate]="ship.rotate"
               (cdkDragStarted)="dragStarted($event)"
               (cdkDragEnded)="dragEnded($event)"
-              (cdkDragMoved)="dragMoved($event)"
-            >
+              >
+              <!-- (cdkDragMoved)="dragMoved($event)" -->
             </app-ship>
           </div>
 
-          <div class="board" #board>
-            <div class="row" *ngFor="let row of boardP1; let x = index" id="{{x+1}}" #rows>
+          <div class="board" #board> <!-- This board has to have the player's id -->
+            <div class="row" *ngFor="let row of playerBoard; let x = index" id="{{x+1}}" #rows>
               <div *ngFor="let box of row; let y = index" id="{{y+1}}" #cols>
                 <div
                   class="cell"
                   #cell
-                  (mouseover)="hoveredElement(cell.getBoundingClientRect(), 'cell', y+1, x+1, $event)"
+                  (mouseover)="hoveredElement(cell.getBoundingClientRect(), 'cell', y+1, x+1)"
                 ></div>
               </div>
             </div>
