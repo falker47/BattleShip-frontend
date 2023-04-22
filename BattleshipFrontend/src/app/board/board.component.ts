@@ -193,7 +193,6 @@ export class BoardComponent implements OnInit {
 
   startGame() {
     const shipsData: ShipData[] = [];
-
     this.shipList2.forEach(ship => {  
       const s = {
         name: ship.name,
@@ -213,7 +212,7 @@ export class BoardComponent implements OnInit {
     })
 
     const playerData: PositionData = {
-      playerId: 1, // Hardcoding for now, then --> this.players.find(player => player.id === id)
+      playerId: 1, // TODO: Hardcoding for now, then --> this.players.find(player => player.id === id)
       ships: shipsData,
     }
 
