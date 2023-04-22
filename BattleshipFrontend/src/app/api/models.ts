@@ -70,7 +70,7 @@ export interface ShipData {
   coordinates: number[][]; // number[][]
 }
 
-export interface PositionData {
+export interface PlayerPositionData {
   playerId: number;
   ships: ShipData[];
 }

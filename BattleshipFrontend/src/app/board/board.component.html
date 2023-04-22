@@ -28,10 +28,9 @@
                   [size]="shipList1[0].size"
                   [name]="shipList1[0].name"
                   [rotate]="shipList1[0].rotate"
-                  (cdkDragStarted)="dragStarted($event)"
+                  (cdkDragStarted)="dragStarted(shipList1[0].name)"
                   (cdkDragEnded)="dragEnded($event)"
                   ></app-ship>
-                  <!-- (cdkDragMoved)="dragMoved($event)" -->
               </div>
             </div>
           </div>
@@ -51,10 +50,9 @@
               [size]="ship.size"
               [name]="ship.name"
               [rotate]="ship.rotate"
-              (cdkDragStarted)="dragStarted($event)"
+              (cdkDragStarted)="dragStarted(ship.name)"
               (cdkDragEnded)="dragEnded($event)"
               >
-              <!-- (cdkDragMoved)="dragMoved($event)" -->
             </app-ship>
           </div>
 
