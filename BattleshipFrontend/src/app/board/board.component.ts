@@ -37,95 +37,44 @@ export class BoardComponent implements OnInit {
     this.shipList2 = [];
   }
 
-  // DRAG END
-  public dragEnded(event: CdkDragEnd) {
-    this.dragEnd = this.hoverPlace;
 
-    // if (this.dragEnd !== this.dragStart) {
-    //   let currentShip = this.shipList1.find(ship => ship.name === this.shipName);
-    //   if (currentShip !== undefined) {
-    //      // move1to2       
-    //   } else {
-    //     currentShip = this.shipList2.find(ship => ship.name === this.shipName);
-    //   }
-    // } else {
-    //   event.source._dragRef.reset();
-    // }
-
-
-    if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Moving from available ships to board ships
-      this.moveFromshipList1To2(event.source.element.nativeElement.id);    
-      this.shipList1[0] !== undefined ? this.shipList1[0].rotate = false : '';
-      event.source._dragRef.reset();
-
-      // console.clear();
-      // this.shipList2.map(ship => 
-      //   console.log(
-      //     "ship name: " + ship.name + "\n", 
-      //     "ship size: " + ship.size + "\n", 
-      //     "ship x axis: " + ship.col + "\n", 
-      //     "ship y axis: " + ship.row + "\n", 
-      //     "is ship vertical?: " + ship.rotate + "\n",
-      //     ship.occupiedCoords
-      //   )
-      // )
-    }
-    
-    if (this.dragEnd.type !== "cell" && this.dragStart.type !== "list") {  // Moving from board ships to available ships when dropping ship outside DropLists
-      this.moveFromshipList2To1(event.source.element.nativeElement.id);
-      event.source._dragRef.reset();
-    }
-   
-    if (this.dragEnd.type === "list" && this.dragStart.type === "list") {  // Moving ship around available ships
-      event.source._dragRef.reset();
-    }
-   
-    if (this.dragEnd.type === "cell" && this.dragStart.type === "cell") {  // Moving ship around board
-      let index: number = +event.source.element.nativeElement.id;          
-      let item = this.shipList2[index];                                    // Search dragged ship inside "ships on board list"
-      item = this.updateShip(item);                                        // Update dragged ship position on board
-      this.shipList2.splice(index, 1);                                     // Delete dragged ship from "ships on board list" to:
-      this.shipList2.push(item);                                           // Push it at the end of the array
-      event.source._dragRef.reset();
-    }
+  private createFleet(): Array<ShipComponent> {
+    return [
+      { name: 'ship_5_1', size: 5, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_4_1', size: 4, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_3_1', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_3_2', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_2_1', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_2_2', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_2_3', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_1_1', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_1_2', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+    ];
   }
-
-  private moveFromshipList2To1(id: string) {
-    let index: number = +id;                                               
-    let item = this.shipList2[index];
-    let temp = [item].concat(this.shipList1);
-    this.shipList1 = temp;
-    this.shipList2.splice(index, 1);
-  }
-
-  private moveFromshipList1To2(id: string) {
-    let index: number = +id;                                               // Index will be always 0
-    let item = this.updateShip(this.shipList1[index]);                     // Placing the new first ship of "available ships list" in the board
-    this.shipList2.push(item);                                             // Pushing this ship to "ships on board list"
-    this.shipList1.splice(index, 1);
+  
+  private getEmptyBoard(): number[][] {
+    for (let i = 0; i <= this.players.length; i++) {
+      if (i > 2) this.width += 5;
+    }
+    return Array.from({ length: this.width }, () => Array(this.width).fill(0));
   }
 
 
-  public updateShip(ship: ShipComponent): ShipComponent {
-    ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
-    ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
-    ship.col = this.dragEnd.col;
-    ship.row = this.dragEnd.row;
-    ship.occupiedCoords =
-        ship.size === 5 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row], [ship.col+3, ship.row], [ship.col+4, ship.row]]
-      : ship.size === 5 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2], [ship.col, ship.row+3], [ship.col, ship.row+4]]
-      : ship.size === 4 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row], [ship.col+3, ship.row]] 
-      : ship.size === 4 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2], [ship.col, ship.row+3]]
-      : ship.size === 3 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row]] 
-      : ship.size === 3 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2]]
-      : ship.size === 2 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row]] 
-      : ship.size === 2 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1]]
-      : ship.size === 1 && !ship.rotate ? [[ship.col, ship.row]]
-      : []
-    return ship;
+  rotate(i: number) {
+    if (this.shipList1[i] !== null) {
+      this.shipList1[i].rotate = !this.shipList1[i].rotate;
+    }
   }
 
 
+  // DRAG START
+  public dragStarted(shipName: string) {
+    this.dragStart = this.hoverPlace;
+    this.shipName = shipName;
+  }
+
+
+  // DRAGGING
   public hoveredElement(position: any, elementType: string, row: number, col: number) {
     let dropPlace = {} as DragModel;
     dropPlace.cellX = position.x;
@@ -173,40 +122,96 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  public dragStarted(shipName: string) {
-    this.dragStart = this.hoverPlace;
-    this.shipName = shipName;
-  }
 
+  // DRAG END
+  public dragEnded(event: CdkDragEnd) {
+    this.dragEnd = this.hoverPlace;
 
-  // Create fleet and board
-  private createFleet(): Array<ShipComponent> {
-    return [
-      { name: 'ship_5_1', size: 5, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] }, // TODO: deployed is never use, delete later
-      { name: 'ship_4_1', size: 4, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_3_1', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_3_2', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_2_1', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_2_2', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_2_3', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_1_1', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_1_2', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-    ];
-  }
-  
-  private getEmptyBoard(): number[][] {
-    for (let i = 0; i <= this.players.length; i++) {
-      if (i > 2) this.width += 5;
+    // if (this.dragEnd !== this.dragStart) {
+    //   let currentShip = this.shipList1.find(ship => ship.name === this.shipName);
+    //   if (currentShip !== undefined) {
+    //      // move1to2       
+    //   } else {
+    //     currentShip = this.shipList2.find(ship => ship.name === this.shipName);
+    //   }
+    // } else {
+    //   event.source._dragRef.reset();
+    // }
+
+    if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Moving from available ships to board ships
+      this.moveFromshipList1To2(event.source.element.nativeElement.id);    
+      this.shipList1[0] !== undefined ? this.shipList1[0].rotate = false : '';
+      event.source._dragRef.reset();
+
+      // console.clear();
+      // this.shipList2.map(ship => 
+      //   console.log(
+      //     "ship name: " + ship.name + "\n", 
+      //     "ship size: " + ship.size + "\n", 
+      //     "ship x axis: " + ship.col + "\n", 
+      //     "ship y axis: " + ship.row + "\n", 
+      //     "is ship vertical?: " + ship.rotate + "\n",
+      //     ship.occupiedCoords
+      //   )
+      // )
     }
-    return Array.from({ length: this.width }, () => Array(this.width).fill(0));
-  }
-
-
-  rotate(i: number) {
-    if (this.shipList1[i] !== null) {
-      this.shipList1[i].rotate = !this.shipList1[i].rotate;
+    
+    if (this.dragEnd.type !== "cell" && this.dragStart.type !== "list") {  // Moving from board ships to available ships when dropping ship outside DropLists
+      this.moveFromshipList2To1(event.source.element.nativeElement.id);
+      event.source._dragRef.reset();
+    }
+   
+    if (this.dragEnd.type === "list" && this.dragStart.type === "list") {  // Moving ship around available ships
+      event.source._dragRef.reset();
+    }
+   
+    if (this.dragEnd.type === "cell" && this.dragStart.type === "cell") {  // Moving ship around board
+      let index: number = +event.source.element.nativeElement.id;          
+      let item = this.shipList2[index];                                    // Search dragged ship inside "ships on board list"
+      item = this.updateShip(item);                                        // Update dragged ship position on board
+      this.shipList2.splice(index, 1);                                     // Delete dragged ship from "ships on board list" to:
+      this.shipList2.push(item);                                           // Push it at the end of the array
+      event.source._dragRef.reset();
     }
   }
+
+
+  private moveFromshipList2To1(id: string) {
+    let index: number = +id;                                               
+    let item = this.shipList2[index];
+    let temp = [item].concat(this.shipList1);
+    this.shipList1 = temp;
+    this.shipList2.splice(index, 1);
+  }
+
+
+  private moveFromshipList1To2(id: string) {
+    let index: number = +id;                                               // Index will be always 0
+    let item = this.updateShip(this.shipList1[index]);                     // Placing the new first ship of "available ships list" in the board
+    this.shipList2.push(item);                                             // Pushing this ship to "ships on board list"
+    this.shipList1.splice(index, 1);
+  }
+
+
+  public updateShip(ship: ShipComponent): ShipComponent {
+    ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
+    ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
+    ship.col = this.dragEnd.col;
+    ship.row = this.dragEnd.row;
+    ship.occupiedCoords =
+        ship.size === 5 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row], [ship.col+3, ship.row], [ship.col+4, ship.row]]
+      : ship.size === 5 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2], [ship.col, ship.row+3], [ship.col, ship.row+4]]
+      : ship.size === 4 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row], [ship.col+3, ship.row]] 
+      : ship.size === 4 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2], [ship.col, ship.row+3]]
+      : ship.size === 3 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row]] 
+      : ship.size === 3 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2]]
+      : ship.size === 2 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row]] 
+      : ship.size === 2 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1]]
+      : ship.size === 1 && !ship.rotate ? [[ship.col, ship.row]]
+      : []
+    return ship;
+  }
+
 
   getFinalData() {
     this.shipList2.forEach(ship => {  
