@@ -118,14 +118,24 @@ export class BoardComponent implements OnInit {
     dropPlace.type = elementType;
     dropPlace.row = row;
     dropPlace.col = col;
-    this.hoverPlace = dropPlace; //TODO DELETE
 
-    // Horizontal check - right side
-    // if (col <= (this.width - this.shipList1[0].size + 1)) { 
-    //   this.hoverPlace = dropPlace;
-    // } else {
-    //   console.log("Ship does not fit in here!")
-    // }
+    if (this.shipList1[0] !== undefined) {
+      if (!this.shipList1[0].rotate) {                                   // If ship is horizontal
+        if (this.shipList1[0].size <= (this.width - col + 1)) {          // If ship size is <= than remaining space in a row, we can place it there
+          this.hoverPlace = dropPlace;
+        } else {
+          console.log("Ship does not fit in here!")
+        }
+      }
+      else {                                                             // If ship is vertical
+        if (this.shipList1[0].size <= (this.width - row + 1)) {          // If ship size is <= than remaining space in a col, we can place it there
+          this.hoverPlace = dropPlace;
+        } else {
+          console.log("Ship does not fit in here!")
+        }
+      }
+    }
+    
   }
 
   // DRAG START
