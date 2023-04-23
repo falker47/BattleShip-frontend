@@ -101,10 +101,10 @@ export class BoardComponent implements OnInit {
                   if (ship.row === row && ship.col < col && (ship.col + ship.size - 1) >= col) {
                     this.hoverPlace = this.dragStart;
                   }
-                  if (ship.row === row && ship.col > col && (ship.col - col) < (currentShip!.size)) { // ! PROBLEM WHEN SHIP.ROW > ROW
+                  if (ship.row === row && ship.col > col && (ship.col - col) < (currentShip!.size)) {
                     this.hoverPlace = this.dragStart;
                   }
-                  if (ship.rotate) {                                            // Checking for VERTICAL ships when placing a HORIZONTAL ship
+                  if (ship.rotate) {                                            // *Checking for VERTICAL ships when placing a HORIZONTAL ship
                     if (ship.col > col                                                
                       && (col + currentShip!.size - 1) >= ship.col                   
                       && (row >= ship.row && row <= (ship.row + ship.size - 1))) { 
@@ -131,10 +131,10 @@ export class BoardComponent implements OnInit {
                     if (ship.col === col && ship.row < row && (ship.row + ship.size - 1) >= row) {
                       this.hoverPlace = this.dragStart;
                     }
-                    if (ship.col === col && ship.row > row && (ship.row - row) < (currentShip!.size)) { // ! PROBLEM WHEN SHIP.ROW > ROW
+                    if (ship.col === col && ship.row > row && (ship.row - row) < (currentShip!.size)) {
                       this.hoverPlace = this.dragStart;
                     }
-                    if (!ship.rotate) {                                         // Checking for HORIZONTAL ships when placing a VERTICAL ship
+                    if (!ship.rotate) {                                         // *Checking for HORIZONTAL ships when placing a VERTICAL ship
                       if (ship.row > row 
                         && (row + currentShip!.size - 1) >= ship.row 
                         && (col >= ship.col && col <= (ship.col + ship.size - 1))) { 
@@ -154,7 +154,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  
+
   public dragMoved(event: CdkDragMove): void {
     this.decreaseZIndex(event.source.element);
   }

@@ -47,6 +47,10 @@
         <div class="list-2">
           <div *ngFor="let ship of shipList2; let i = index">
             <app-ship
+              [ngStyle]="{
+                'width': ship.rotate === true ? '30px' : (30 * ship.size + 'px'),
+                'height': ship.rotate === true ? (30 * ship.size + 'px') : '30px'
+              }"
               cdkDrag
               id="{{i}}"
               [style.top.px]="ship.top"

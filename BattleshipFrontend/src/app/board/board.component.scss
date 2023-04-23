@@ -49,31 +49,6 @@ app-ship {
   position: absolute;
 }
 
-.ship-box {
-  position: absolute;
-  top: 0;
-  z-index: 100;
-}
-
-.ship-box:hover,
-app-ship:hover {
-  cursor: grab;
-  cursor: -moz-grab;
-}
-
-.ship-box:active,
-app-ship:active {
-  cursor: grabbing;
-  cursor: -moz-grabbing;
-}
-
-.ship-box-cell {
-  border: 1px dotted;
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-}
-
 .row {
   display: inline-block;
 }
@@ -87,11 +62,6 @@ app-ship:active {
 
 .cell:hover {
   background-color: rgb(7, 120, 186);
-}
-
-.bt-cell {
-  width: 30px;
-  height: 100%;
 }
 
 .start-btn {
