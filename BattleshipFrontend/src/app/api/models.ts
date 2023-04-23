@@ -77,7 +77,7 @@ export interface Coordinates {
 
 export interface PlayerPositionData {
   playerId: number;
-  ships: ShipData[];
+  ships: Coordinates[][];
 }
 
 

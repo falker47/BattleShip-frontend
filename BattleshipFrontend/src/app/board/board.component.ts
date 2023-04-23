@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { PlayerFront, Player, DragModel, ShipData, PlayerPositionData } from '../api/models';
-import { CdkDragDrop, transferArrayItem, moveItemInArray, CdkDragEnd, CdkDragMove, CdkDragStart } from '@angular/cdk/drag-drop';
+import { PlayerFront, Player, DragModel, ShipData, PlayerPositionData, Coordinates } from '../api/models';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ShipComponent } from './ship/ship.component';
 import { Router } from '@angular/router';
 
@@ -153,17 +153,17 @@ export class BoardComponent implements OnInit {
       }
       event.source._dragRef.reset();
       
-      console.clear();
-      this.shipList2.map(ship => 
-        console.log(
-          "ship name: " + ship.name + "\n", 
-          "ship size: " + ship.size + "\n", 
-          "ship x axis: " + ship.col + "\n", 
-          "ship y axis: " + ship.row + "\n", 
-          "is ship vertical?: " + ship.rotate + "\n",
-          ship.occupiedCoords
-        )
-      )
+      // console.clear();
+      // this.shipList2.map(ship => 
+      //   console.log(
+      //     "ship name: " + ship.name + "\n", 
+      //     "ship size: " + ship.size + "\n", 
+      //     "ship x axis: " + ship.col + "\n", 
+      //     "ship y axis: " + ship.row + "\n", 
+      //     "is ship vertical?: " + ship.rotate + "\n",
+      //     ship.occupiedCoords
+      //   )
+      // )
     }
     
     if (this.dragEnd.type !== "cell" && this.dragStart.type !== "list") {  // Moving from board ships to available ships when dropping ship outside DropLists
@@ -233,9 +233,12 @@ export class BoardComponent implements OnInit {
       this.shipsFinalData.push(shipData);
     })
 
+    const coords: Coordinates[][] = [];
+    this.shipsFinalData.forEach(ship => coords.push(ship.coordinates))
+
     this.playerFinalData = {
       playerId: 0, // TODO: Hardcoding for now, then --> this.players.find(player => player.id === id)
-      ships: this.shipsFinalData,
+      ships: coords
     }
   }
 
