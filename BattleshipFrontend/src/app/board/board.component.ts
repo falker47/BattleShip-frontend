@@ -204,30 +204,21 @@ export class BoardComponent implements OnInit {
 
 
   public updateShip(ship: ShipComponent): ShipComponent {
-    if (!ship.rotate) {
-      ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
-      ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
-    }
-    if (ship.rotate) {
-      ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
-      ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
-    }
+    ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
+    ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
     ship.col = this.dragEnd.col;
     ship.row = this.dragEnd.row;
     ship.occupiedCoords =
-        ship.size === 5 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row], [ship.col+3, ship.row], [ship.col+4, ship.row]]
-      : ship.size === 5 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2], [ship.col, ship.row+3], [ship.col, ship.row+4]]
-      : ship.size === 4 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row], [ship.col+3, ship.row]] 
-      : ship.size === 4 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2], [ship.col, ship.row+3]]
-      : ship.size === 3 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row], [ship.col+2, ship.row]] 
-      : ship.size === 3 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1], [ship.col, ship.row+2]]
-      : ship.size === 2 && !ship.rotate ? [[ship.col, ship.row], [ship.col+1, ship.row]] 
-      : ship.size === 2 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1]]
-      : ship.size === 1 && !ship.rotate ? [[ship.col, ship.row]]
+        ship.size === 5 && !ship.rotate ? [{x: ship.col, y: ship.row}, {x: ship.col+1, y: ship.row}, {x: ship.col+2, y: ship.row}, {x: ship.col+3, y: ship.row}, {x: ship.col+4, y: ship.row}]
+      : ship.size === 5 &&  ship.rotate ? [{x: ship.col, y: ship.row}, {x: ship.col, y: ship.row+1}, {x: ship.col, y: ship.row+2}, {x: ship.col, y: ship.row+3}, {x: ship.col, y: ship.row+4}]
+      : ship.size === 4 && !ship.rotate ? [{x: ship.col, y: ship.row}, {x: ship.col+1, y: ship.row}, {x: ship.col+2, y: ship.row}, {x: ship.col+3, y: ship.row}]
+      : ship.size === 4 &&  ship.rotate ? [{x: ship.col, y: ship.row}, {x: ship.col, y: ship.row+1}, {x: ship.col, y: ship.row+2}, {x: ship.col, y: ship.row+3}]
+      : ship.size === 3 && !ship.rotate ? [{x: ship.col, y: ship.row}, {x: ship.col+1, y: ship.row}, {x: ship.col+2, y: ship.row}]
+      : ship.size === 3 &&  ship.rotate ? [{x: ship.col, y: ship.row}, {x: ship.col, y: ship.row+1}, {x: ship.col, y: ship.row+2}]
+      : ship.size === 2 && !ship.rotate ? [{x: ship.col, y: ship.row}, {x: ship.col+1, y: ship.row}]
+      : ship.size === 2 &&  ship.rotate ? [{x: ship.col, y: ship.row}, {x: ship.col, y: ship.row+1}]
+      : ship.size === 1 && !ship.rotate ? [{x: ship.col, y: ship.row}]
       : []
-    // console.log(ship.top)
-    // console.log(ship.left)
-    // console.log(ship)
     return ship;
   }
 

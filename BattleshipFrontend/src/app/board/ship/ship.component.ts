@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Coordinates } from 'src/app/api/models';
 
 @Component({
     selector: 'app-ship',
@@ -15,6 +16,6 @@ export class ShipComponent  {
     @Input() top!: number;
     @Input() col!: number;
     @Input() row!: number;
-    @Input() occupiedCoords!: number[][];
+    @Input() occupiedCoords!: Coordinates[];
 
 }

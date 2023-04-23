@@ -67,7 +67,12 @@ export interface DragModel {
 export interface ShipData {
   name: string;
   length: number;
-  coordinates: number[][]; // number[][]
+  coordinates: Coordinates[];
+}
+
+export interface Coordinates {
+  x: number;
+  y: number;
 }
 
 export interface PlayerPositionData {
