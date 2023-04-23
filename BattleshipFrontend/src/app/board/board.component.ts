@@ -12,20 +12,18 @@ import { Router } from '@angular/router';
 export class BoardComponent implements OnInit {
 
   @Input() players!: PlayerFront[]; // TODO: when backend ready, change to type Player to get full info
-  @ViewChild("board", { read: ElementRef, static: false }) boardElement!: ElementRef<HTMLElement>;
-  @ViewChild("cols") cols!: ElementRef<HTMLElement>;
-  @ViewChild("rows") rows!: ElementRef<HTMLElement>;
-  public width = 10;
+  @ViewChild("board") boardElement!: ElementRef<HTMLElement>;
+  public width: number = 10;
+  public shipName: string = '';
+  public playerBoard!: number[][];
+  public xInitial: number = 0;
+  public yInitial: number = 0;
+  public playerFinalData!: PlayerShipsData;
   public shipList1!: Array<ShipComponent>;
   public shipList2!: Array<ShipComponent>;
-  public playerBoard!: number[][];
   public hoverPlace: DragModel = {} as DragModel;
   public dragStart: DragModel = {} as DragModel;
   public dragEnd: DragModel = {} as DragModel;
-  public shipName = '';
-  public xInitial = 0;
-  public yInitial = 0;
-  public playerFinalData!: PlayerShipsData;
 
 
   constructor(private router: Router) {}
@@ -59,10 +57,15 @@ export class BoardComponent implements OnInit {
     return Array.from({ length: this.width }, () => Array(this.width).fill(0));
   }
 
-
-  public rotate(i: number): void {
-    if (this.shipList1[i] !== null) {
+  public rotateAvailableShip(i: number): void {
+    if (this.shipList1[i] !== undefined) {
       this.shipList1[i].rotate = !this.shipList1[i].rotate;
+    }
+   
+  }
+  public rotateShipOnBoard(i: number): void {
+    if (this.shipList2[i] !== undefined) {
+      this.shipList2[i].rotate = !this.shipList2[i].rotate;
     }
   }
 
@@ -88,29 +91,32 @@ export class BoardComponent implements OnInit {
       if (currentShip === undefined) {
         currentShip = this.shipList2.find(ship => ship.name === this.shipName);
       }
-      if (currentShip !== undefined) {                                          
+      if (currentShip !== undefined) {       
         if (!currentShip.rotate) {                                              // *Current ship is HORIZONTAL
           if (currentShip.size <= (this.width - col + 1)) {                     // Current ship size is <= than remaining space in a row
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
               this.shipList2.forEach(ship => {                                  // Checking if space is taken
-                if (ship.name !== this.shipName) {                            
+                if (ship.name !== this.shipName) {                           
                   if ((ship.col === col && ship.row === row)) {
                     this.hoverPlace = this.dragStart;                                                  
                   }
-                  if (ship.row === row && ship.col < col && (ship.col + ship.size - 1) >= col) {
+                  if ((ship.col + ship.size) > col && ship.row === row && ship.col < col) {
                     this.hoverPlace = this.dragStart;
                   }
-                  if (ship.row === row && ship.col > col && (ship.col - col) < (currentShip!.size)) {
+                  if ((ship.col - col) < (currentShip!.size) && ship.row === row && ship.col > col) {
                     this.hoverPlace = this.dragStart;
                   }
                   if (ship.rotate) {                                            // *Checking for VERTICAL ships when placing a HORIZONTAL ship
-                    if (ship.col > col                                                
-                      && (col + currentShip!.size - 1) >= ship.col                   
+                    if (ship.col > col                                                           
+                      && (col + currentShip!.size - 1) >= ship.col                 
                       && (row >= ship.row && row <= (ship.row + ship.size - 1))) { 
                       this.hoverPlace = this.dragStart;
                     }
-                  }
+                    if (ship.row === row && ship.col < col) {
+                      this.hoverPlace = dropPlace;
+                    }
+                  } 
                 }
               })
             } else { 
@@ -119,36 +125,40 @@ export class BoardComponent implements OnInit {
           } else {
             this.hoverPlace = this.dragStart;
           }
-        } else {                                                                // *Current ship is VERTICAL
-            if (currentShip.size <= (this.width - row + 1)) {                   // Current ship size is <= than remaining space in a row
-              if (this.shipList2[0] !== undefined) {
-                this.hoverPlace = dropPlace;
-                this.shipList2.forEach(ship => {                                // Checking if space is taken
-                  if (ship.name !== this.shipName) {
-                    if ((ship.col === col && ship.row === row)) {
+
+        } else {                                                              // *Current ship is VERTICAL
+          if (currentShip.size <= (this.width - row + 1)) {                   // Current ship size is <= than remaining space in a row
+            if (this.shipList2[0] !== undefined) {
+              this.hoverPlace = dropPlace;
+              this.shipList2.forEach(ship => {                                // Checking if space is taken
+                if (ship.name !== this.shipName) {
+                  if ((ship.col === col && ship.row === row)) {
+                    this.hoverPlace = this.dragStart;
+                  }
+                  if ((ship.row + ship.size) > row && ship.col === col && ship.row < row) {
+                    this.hoverPlace = this.dragStart;
+                  }
+                  if ((ship.row - row) < (currentShip!.size) && ship.col === col && ship.row > row) {
+                    this.hoverPlace = this.dragStart;
+                  }
+                  if (!ship.rotate) {                                         // *Checking for HORIZONTAL ships when placing a VERTICAL ship
+                    if (ship.row > row 
+                      && (row + currentShip!.size - 1) >= ship.row 
+                      && (col >= ship.col && col <= (ship.col + ship.size - 1))) { 
                       this.hoverPlace = this.dragStart;
                     }
-                    if (ship.col === col && ship.row < row && (ship.row + ship.size - 1) >= row) {
-                      this.hoverPlace = this.dragStart;
+                    if (ship.col === col && ship.row < row) {
+                      this.hoverPlace = dropPlace;
                     }
-                    if (ship.col === col && ship.row > row && (ship.row - row) < (currentShip!.size)) {
-                      this.hoverPlace = this.dragStart;
-                    }
-                    if (!ship.rotate) {                                         // *Checking for HORIZONTAL ships when placing a VERTICAL ship
-                      if (ship.row > row 
-                        && (row + currentShip!.size - 1) >= ship.row 
-                        && (col >= ship.col && col <= (ship.col + ship.size - 1))) { 
-                        this.hoverPlace = this.dragStart;
-                      }
-                    }
-                  }                               
-                })
-              } else { 
-                this.hoverPlace = dropPlace; 
-              }
-            } else {
-              this.hoverPlace = this.dragStart;
+                  }
+                }                               
+              })
+            } else { 
+              this.hoverPlace = dropPlace; 
             }
+          } else {
+            this.hoverPlace = this.dragStart;
+          }
         }
       } 
     }
@@ -219,7 +229,6 @@ export class BoardComponent implements OnInit {
     this.shipList2.push(item);                                            
     this.shipList1.splice(index, 1);
   }
-
 
   public updateShip(ship: ShipComponent): ShipComponent {
     ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;

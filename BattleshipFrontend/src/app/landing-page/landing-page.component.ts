@@ -52,7 +52,6 @@ export class LandingPageComponent {
 
 
   confirmPlayers() {
-    console.log(this.playersNames);
     this.confirmedPlayers = true;
     // this.router.navigate(['/board']); 
   }

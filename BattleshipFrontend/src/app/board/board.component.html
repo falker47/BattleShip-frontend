@@ -1,17 +1,15 @@
 <div class="config-container">
   <h2>Position your ships</h2>
 
-  <button *ngIf="this.shipList1.length === 0"
-    class="start-btn" 
-    (click)="startGame()"
-  >Start game
+  <button *ngIf="this.shipList1.length === 0" class="start-btn" (click)="startGame()">
+    Start game
   </button>
 
   <div class="lists-container">
 
       <div class="container-1">
         <div class="ships">
-          <h3>Available ships: {{ this.shipList1.length }}</h3>
+          <h3>Available ships: {{this.shipList1.length}}</h3>
 
           <div
             class="list-1"
@@ -31,7 +29,7 @@
                   [size]="shipList1[0].size"
                   [name]="shipList1[0].name"
                   [rotate]="shipList1[0].rotate"
-                  (dblclick)="rotate(0)"
+                  (dblclick)="rotateAvailableShip(0)"
                   (cdkDragStarted)="dragStarted(shipList1[0].name)"
                   (cdkDragMoved)="dragMoved($event)"
                   (cdkDragEnded)="dragEnded($event)"
@@ -39,7 +37,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
       
@@ -58,6 +55,7 @@
               [size]="ship.size"
               [name]="ship.name"
               [rotate]="ship.rotate"
+              (dblclick)="rotateShipOnBoard(i)"
               (cdkDragStarted)="dragStarted(ship.name)"
               (cdkDragMoved)="dragMoved($event)"
               (cdkDragEnded)="dragEnded($event)"
@@ -65,7 +63,7 @@
             </app-ship>
           </div>
 
-          <div class="board" #board> <!-- This board has to have the player's id -->
+          <div class="board" #board> <!-- TODO: This board has to have the player's id -->
             <div class="row" #rows *ngFor="let row of playerBoard; let x = index" id="{{x+1}}">
               <div class="col" #cols *ngFor="let box of row; let y = index" id="{{y+1}}" >
                 <div
@@ -76,18 +74,8 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
-      
+
   </div>
-
 </div>
-
-
-<!-- 
-[ngStyle]="{
-  'width': ship.rotate === true ? '30px' : (30 * ship.size + 'px'),
-  'height': ship.rotate === true ? (30 * ship.size + 'px') : '30px'
-}"
- -->
