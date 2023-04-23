@@ -94,23 +94,20 @@ export class BoardComponent implements OnInit {
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
               this.shipList2.forEach(ship => {                                  // Checking if space is taken
-                if (ship.name !== this.shipName ) {                            
+                if (ship.name !== this.shipName) {                            
                   if ((ship.col === col && ship.row === row)) {
                     this.hoverPlace = this.dragStart;                                                  
                   }
-                  if ((ship.col + ship.size - 1) > col && ship.row === row && ship.col < col) { // todo review added -1
+                  if (ship.row === row && ship.col < col && (ship.col + ship.size - 1) >= col) { // todo review added -1
                     this.hoverPlace = this.dragStart;
                   }
-                  if ((ship.col - col) < (currentShip!.size) && ship.row === row && ship.col > col) { // todo review added -1
+                  if (ship.row === row && ship.col > col && (ship.col - col) < (currentShip!.size)) { // ! PROBLEMA CUANDO SHIP.COL > COL
                     this.hoverPlace = this.dragStart;
                   }
                   if (ship.rotate) {                                            // Checking for VERTICAL ships when placing a HORIZONTAL ship
                     if (ship.col > col                                                
                       && (col + currentShip!.size - 1) >= ship.col                   
                       && (row >= ship.row && row <= (ship.row + ship.size - 1))) { 
-                      this.hoverPlace = this.dragStart;
-                    }
-                    if (ship.col === col && (row >= ship.row && row <= (ship.row + ship.size - 1))) {
                       this.hoverPlace = this.dragStart;
                     }
                   }
@@ -127,23 +124,20 @@ export class BoardComponent implements OnInit {
               if (this.shipList2[0] !== undefined) {
                 this.hoverPlace = dropPlace;
                 this.shipList2.forEach(ship => {                                // Checking if space is taken
-                  if (ship.name !== this.shipName ) {
+                  if (ship.name !== this.shipName) {
                     if ((ship.col === col && ship.row === row)) {
                       this.hoverPlace = this.dragStart;
                     }
-                    if ((ship.row + ship.size - 1) > row && ship.col === col && ship.row < row) { // todo review added -1
+                    if (ship.col === col && ship.row < row && (ship.row + ship.size - 1) >= row) { // todo review added -1
                       this.hoverPlace = this.dragStart;
                     }
-                    if ((ship.row - row) < (currentShip!.size - 1) && ship.col === col && ship.row > row) { // todo review added -1
+                    if (ship.col === col && ship.row > row && (ship.row - row) < (currentShip!.size)) { // ! PROBLEMA CUANDO SHIP.ROW > ROW
                       this.hoverPlace = this.dragStart;
                     }
                     if (!ship.rotate) {                                         // Checking for HORIZONTAL ships when placing a VERTICAL ship
                       if (ship.row > row 
                         && (row + currentShip!.size - 1) >= ship.row 
                         && (col >= ship.col && col <= (ship.col + ship.size - 1))) { 
-                        this.hoverPlace = this.dragStart;
-                      }
-                      if (ship.row === row && (col >= ship.col && col <= (ship.col + ship.size - 1))) {
                         this.hoverPlace = this.dragStart;
                       }
                     }

@@ -20,8 +20,9 @@
             >
             <div *ngIf="shipList1.length > 0">
               <div 
-                (dblclick)="rotate(0)">
+                >
                 <app-ship
+                  (dblclick)="rotate(0)"
                   [ngStyle]="{
                     'width': shipList1[0].rotate === true ? '30px' : (30 * shipList1[0].size + 'px'),
                     'height': shipList1[0].rotate === true ? (30 * shipList1[0].size + 'px') : '30px'

@@ -6,11 +6,14 @@
     'height': (rotate === true) ? (30 * size + 'px') : '30px'
   }"
 >
-  <div class="ship-drop-wrapper" >
+  <div class="ship-drop-wrapper">
     <div
-      *ngFor="let i of [0, 1, 2, 3, 4, 5].slice(0, size)"
+      *ngFor="let i of [0, 1, 2, 3, 4].slice(0, size)"
       class="ship-box-cell"
-      [ngStyle]="{'transform': (rotate === true) ? 'rotate(90deg)' : 'none'}"
+      [ngStyle]="{
+        'transform': (rotate === true) ? 'rotate(90deg)' : 'none',
+        'display': (rotate === true) ? 'block' : 'inline-block'
+      }"
     ></div>
   </div>
 </div>

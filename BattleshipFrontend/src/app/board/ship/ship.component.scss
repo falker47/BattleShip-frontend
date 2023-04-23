@@ -1,22 +1,19 @@
 .ship-box {
-  // background-color: coral;
-  border: 1px dotted;
   position: relative;
-  // height: 30px;
   z-index: 100;
   margin: 0;
   padding: 0;
 }
 
-// .ship-box:hover {
-//   cursor: grab;
-//   cursor: -moz-grab;
-// }
+.ship-box:hover {
+  cursor: grab;
+  cursor: -moz-grab;
+}
 
-// .ship-box:active {
-//   cursor: grabbing;
-//   cursor: -moz-grabbing;
-// }
+.ship-box:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+}
 
 .ship-drop-wrapper {
   position: absolute;
@@ -26,17 +23,10 @@
 }
 
 .ship-box-cell {
-  // border: 1px dotted;
+  border: 1px dotted;
   width: 30px;
   height: 30px;
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-}
-
-.ship-rotate {
-  transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
+  // display: inline-block;
   margin: 0;
   padding: 0;
 }
