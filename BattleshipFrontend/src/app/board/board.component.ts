@@ -2,6 +2,10 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Player, Ship } from '../api/models';
 import { CdkDragDrop, transferArrayItem   } from '@angular/cdk/drag-drop';
 
+window.addEventListener('beforeunload', (event) => {
+  event.returnValue = `Are you sure you want to leave?`;
+});
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -32,16 +36,16 @@ export class BoardComponent implements OnInit {
     this.createShip('ship_1_2', 1);
   }
 
-  
+
   generateGameBoard() {
     for (let i = 0; i <= this.players.length; i++) {
       if (i > 2) this.width += 5;
     }
     this.boardCells = [].constructor(this.width * this.width);
   }
-  
 
-  createShip(name: string, length: number) { 
+
+  createShip(name: string, length: number) {
     this.ships.push({
       name: name,
       // playerId: , // TODO: add the playerId
@@ -60,7 +64,7 @@ export class BoardComponent implements OnInit {
 
 
   // DRAG AND DROP ANGULAR MATERIAL
-  
+
   drop(event: CdkDragDrop<Ship[]>) {
     console.log(event);
 
