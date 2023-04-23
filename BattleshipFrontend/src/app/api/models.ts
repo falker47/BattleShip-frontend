@@ -59,7 +59,7 @@ export interface PlayerApi {
 
 export interface ShipsApi {
   id: number;
-  playerId?: number;
+  playerId: number;
   length: number;
   hp: number;
 }
@@ -68,7 +68,6 @@ export interface ShipsApi {
 
 export interface Ship {
   name: string;
-  id: number;
   playerId?: number;
   length: number;
   hp: number;
