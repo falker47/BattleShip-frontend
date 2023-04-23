@@ -14,19 +14,16 @@
           <h3>Available ships: {{ this.shipList1.length }}</h3>
 
           <div
-            class="droplist"
+            class="list-1"
             #list
             (mouseover)="hoveredElement(list.getBoundingClientRect(), 'list', -1, -1)"
             >
             <div *ngIf="shipList1.length > 0">
-              <div 
-                >
+              <div [ngStyle]="{
+                'width': shipList1[0].rotate === true ? '30px' : (30 * shipList1[0].size + 'px'),
+                'height': shipList1[0].rotate === true ? (30 * shipList1[0].size + 'px') : '30px'
+              }">
                 <app-ship
-                  (dblclick)="rotate(0)"
-                  [ngStyle]="{
-                    'width': shipList1[0].rotate === true ? '30px' : (30 * shipList1[0].size + 'px'),
-                    'height': shipList1[0].rotate === true ? (30 * shipList1[0].size + 'px') : '30px'
-                  }"
                   cdkDrag
                   id="0"
                   [style.top.px]="yInitial"
@@ -34,7 +31,9 @@
                   [size]="shipList1[0].size"
                   [name]="shipList1[0].name"
                   [rotate]="shipList1[0].rotate"
+                  (dblclick)="rotate(0)"
                   (cdkDragStarted)="dragStarted(shipList1[0].name)"
+                  (cdkDragMoved)="dragMoved($event)"
                   (cdkDragEnded)="dragEnded($event)"
                   ></app-ship>
               </div>
@@ -45,22 +44,18 @@
       </div>
       
       <div class="container-2">
-        <div class="droplist">
-
+        <div class="list-2">
           <div *ngFor="let ship of shipList2; let i = index">
             <app-ship
               cdkDrag
               id="{{i}}"
-              [ngStyle]="{
-                'width': ship.rotate === true ? '30px' : (30 * ship.size + 'px'),
-                'height': ship.rotate === true ? (30 * ship.size + 'px') : '30px'
-              }"
               [style.top.px]="ship.top"
               [style.left.px]="ship.left"
               [size]="ship.size"
               [name]="ship.name"
               [rotate]="ship.rotate"
               (cdkDragStarted)="dragStarted(ship.name)"
+              (cdkDragMoved)="dragMoved($event)"
               (cdkDragEnded)="dragEnded($event)"
               >
             </app-ship>
@@ -85,3 +80,10 @@
 
 </div>
 
+
+<!-- 
+[ngStyle]="{
+  'width': ship.rotate === true ? '30px' : (30 * ship.size + 'px'),
+  'height': ship.rotate === true ? (30 * ship.size + 'px') : '30px'
+}"
+ -->

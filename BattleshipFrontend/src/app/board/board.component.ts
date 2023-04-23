@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { PlayerFront, Player, DragModel, PlayerShipsData, Coordinates } from '../api/models';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { ShipComponent } from './ship/ship.component';
 import { Router } from '@angular/router';
 
@@ -60,7 +60,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  public rotate(i: number) {
+  public rotate(i: number): void {
     if (this.shipList1[i] !== null) {
       this.shipList1[i].rotate = !this.shipList1[i].rotate;
     }
@@ -68,14 +68,14 @@ export class BoardComponent implements OnInit {
 
 
   // DRAG START
-  public dragStarted(shipName: string) {
+  public dragStarted(shipName: string): void {
     this.dragStart = this.hoverPlace;
     this.shipName = shipName;
   }
 
 
   // DRAGGING - SPACE VALIDATION
-  public hoveredElement(position: any, elementType: string, row: number, col: number) {
+  public hoveredElement(position: any, elementType: string, row: number, col: number): void {
     let dropPlace = {} as DragModel;
     dropPlace.cellX = position.x;
     dropPlace.cellY = position.y;
@@ -154,10 +154,28 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  
+  public dragMoved(event: CdkDragMove): void {
+    this.decreaseZIndex(event.source.element);
+  }
+
+  private decreaseZIndex(element: ElementRef): void {
+    element.nativeElement.style.zIndex = "-1";
+    let elem = element.nativeElement.children[0] as HTMLElement;
+    elem.style.zIndex = "-1";
+  }
+
+  private increaseZIndex(element: ElementRef): void {
+    element.nativeElement.style.zIndex = "100";
+    let elem = element.nativeElement.children[0] as HTMLElement;
+    elem.style.zIndex = "100";
+  }
+
 
   // DRAG END
-  public dragEnded(event: CdkDragEnd) {
+  public dragEnded(event: CdkDragEnd): void {
     this.dragEnd = this.hoverPlace;
+    this.increaseZIndex(event.source.element);
 
     if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Moving from available ships to board ships
       this.moveFromshipList1To2(event.source.element.nativeElement.id);    
@@ -187,7 +205,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  private moveFromshipList2To1(id: string) {
+  private moveFromshipList2To1(id: string): void {
     let index: number = +id;                                               
     let item = this.shipList2[index];
     let aux = [item].concat(this.shipList1);
@@ -195,8 +213,7 @@ export class BoardComponent implements OnInit {
     this.shipList2.splice(index, 1);
   }
 
-
-  private moveFromshipList1To2(id: string) {
+  private moveFromshipList1To2(id: string): void {
     let index: number = +id;                                               
     let item = this.updateShip(this.shipList1[index]);                     
     this.shipList2.push(item);                                            
@@ -224,7 +241,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  public getFinalData() {
+  public getFinalData(): void {
     const occupiedCoords: Coordinates[][] = [];
     this.shipList2.forEach(ship => occupiedCoords.push(ship.occupiedCoords));
 
@@ -235,7 +252,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  public startGame() {
+  public startGame(): void {
     this.getFinalData();
     console.log(this.playerFinalData)
     // this.router.navigate(["/game"]);

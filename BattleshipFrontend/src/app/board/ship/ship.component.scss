@@ -13,10 +13,15 @@
 .ship-box:active {
   cursor: grabbing;
   cursor: -moz-grabbing;
+  box-shadow: 
+    0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
-.ship-drop-wrapper {
+.ship-draggable-wrapper {
   position: absolute;
+  display: block;
   top: 0;
   margin: 0;
   padding: 0;
@@ -26,9 +31,7 @@
   border: 1px dotted;
   width: 30px;
   height: 30px;
-  // display: inline-block;
-  margin: 0;
-  padding: 0;
+  display: inline-block;
 }
 
 #ship_5_1_red { background-color: #ff0000; }

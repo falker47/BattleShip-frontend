@@ -6,7 +6,7 @@
     'height': (rotate === true) ? (30 * size + 'px') : '30px'
   }"
 >
-  <div class="ship-drop-wrapper">
+  <div class="ship-draggable-wrapper">
     <div
       *ngFor="let i of [0, 1, 2, 3, 4].slice(0, size)"
       class="ship-box-cell"
@@ -17,3 +17,7 @@
     ></div>
   </div>
 </div>
+
+
+
+<!-- 'display': (rotate === true) ? 'block' : 'inline-block' -->

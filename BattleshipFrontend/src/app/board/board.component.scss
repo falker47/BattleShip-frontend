@@ -26,7 +26,7 @@
   justify-content: space-between;
 }
 
-.droplist {
+.list-1, .list-2 {
   position: relative;
   height: 100%;
 }
@@ -41,7 +41,7 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     border-bottom: 1px solid var(--white-color);
-    margin-bottom: 5em;
+    margin-bottom: 1.5em;
   }
 }
 
