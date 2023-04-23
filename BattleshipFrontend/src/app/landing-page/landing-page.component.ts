@@ -53,23 +53,6 @@ export class LandingPageComponent {
 
   confirmPlayers() {
     console.log(this.playersNames);
-
-    // TODO: when it works, place this block of code in a service: fetch --> this.httpClient.post(...)
-    fetch ('BACKEND_URL', {
-      method: 'POST',
-      body: JSON.stringify({
-        players: this.playersNames,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    }).then((res) => {
-      if (res.ok) return res.json();
-      return Promise.reject(res);
-    }).then((data) => console.log(data)
-    ).catch((error) => console.warn('Something went wrong', error));
-    
-
     this.confirmedPlayers = true;
     // this.router.navigate(['/board']); 
   }

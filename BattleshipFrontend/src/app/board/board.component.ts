@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class BoardComponent implements OnInit {
 
-  @Input() players!: PlayerFront[]; // TODO: then change to type Player to get full info from backend
+  @Input() players!: PlayerFront[]; // TODO: when backend ready, change to type Player to get full info
   @ViewChild("board", { read: ElementRef, static: false }) boardElement!: ElementRef<HTMLElement>;
   @ViewChild("cols") cols!: ElementRef<HTMLElement>;
   @ViewChild("rows") rows!: ElementRef<HTMLElement>;
@@ -84,6 +84,9 @@ export class BoardComponent implements OnInit {
     dropPlace.row = row;
     dropPlace.col = col;
 
+    if (this.shipList1 !== undefined) console.log('Lista 1: ' + this.shipList1[0])
+    if (this.shipList2 !== undefined) console.log('Lista 2: ' + this.shipList2[0])
+
     if (this.shipName !== '') {                                                 // Checking where is the dragged ship (list1 or list2?)
       let currentShip = this.shipList1.find(ship => ship.name === this.shipName);
       if (currentShip === undefined) {
@@ -105,6 +108,15 @@ export class BoardComponent implements OnInit {
                   if ((ship.col - col) < (currentShip!.size) && ship.row === row && ship.col > col) {  
                     this.hoverPlace = this.dragStart;
                   }
+                  if (ship.rotate) {                                                // Check for vertical ships when placing a horizontal ship
+                    if (ship.col > col                                                // ship.col is smaller than the col where we want to place the current ship
+                      && (col + currentShip!.size - 1) >= ship.col                    // col plus current ship size is bigger or equal to ship.col
+                      && (row >= ship.row                                             // row is between ship.row and ship.row + ship.size
+                      && row <= (ship.row + ship.size - 1))
+                    ) { 
+                      this.hoverPlace = this.dragStart;
+                    }
+                  }
                 }
               })
             } else { 
@@ -113,11 +125,11 @@ export class BoardComponent implements OnInit {
           } else {
             this.hoverPlace = this.dragStart;
           }
-        } else {                                                                // If ship is vertical
-            if (currentShip.size <= (this.width - row + 1)) {                   // If ship size is <= than remaining space in a row, we can place it there
+        } else {                                                                    // If ship is vertical
+            if (currentShip.size <= (this.width - row + 1)) {                       // If ship size is <= than remaining space in a row, we can place it there
               if (this.shipList2[0] !== undefined) {
                 this.hoverPlace = dropPlace;
-                this.shipList2.forEach(ship => {                                // Checking if space is taken
+                this.shipList2.forEach(ship => {                                    // Checking if space is taken
                   if (ship.name !== this.shipName ) {
                     if ((ship.col === col && ship.row === row)) {
                       this.hoverPlace = this.dragStart;
@@ -127,6 +139,14 @@ export class BoardComponent implements OnInit {
                     }
                     if ((ship.row - row) < (currentShip!.size) && ship.col === col && ship.row > row) {
                       this.hoverPlace = this.dragStart;
+                    }
+                    if (!ship.rotate) {                                             // Check for horizontal ships when placing a vertical ship
+                      if (ship.row > row                                              // ship.row is smaller than the row where we want to place the current ship
+                        && (row + currentShip!.size - 1) >= ship.row                  // row plus size of the current ship is bigger or equalto ship.row
+                        && (col >= ship.col && col <= (ship.col + ship.size - 1))     // col is between ship.col and ship.col + ship.size
+                      ) { 
+                        this.hoverPlace = this.dragStart;
+                      }
                     }
                   }                               
                 })
@@ -152,18 +172,6 @@ export class BoardComponent implements OnInit {
         this.shipList1[0].rotate = false;
       }
       event.source._dragRef.reset();
-      
-      // console.clear();
-      // this.shipList2.map(ship => 
-      //   console.log(
-      //     "ship name: " + ship.name + "\n", 
-      //     "ship size: " + ship.size + "\n", 
-      //     "ship x axis: " + ship.col + "\n", 
-      //     "ship y axis: " + ship.row + "\n", 
-      //     "is ship vertical?: " + ship.rotate + "\n",
-      //     ship.occupiedCoords
-      //   )
-      // )
     }
     
     if (this.dragEnd.type !== "cell" && this.dragStart.type !== "list") {  // Moving from board ships to available ships when dropping ship outside DropLists
@@ -183,6 +191,10 @@ export class BoardComponent implements OnInit {
       this.shipList2.push(item);                                           // Push it at the end of the array
       event.source._dragRef.reset();
     }
+
+
+    if (this.shipList1 !== undefined) console.log('Lista 1: ' + this.shipList1[0].name)
+    if (this.shipList2 !== undefined) console.log('Lista 2: ' + this.shipList2[0].name)
   }
 
 
@@ -246,22 +258,6 @@ export class BoardComponent implements OnInit {
   public startGame() {
     this.getFinalData();
     console.log(this.playerFinalData)
-
-    // TODO: when it works, place this block of code in a service: fetch --> this.httpClient.post(...)
-    // this.httpClient.post('BACKEND_URL', {
-    //   body: JSON.stringify({
-    //     data: this.playerFinalData,
-    //   }),
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8'
-    //   }
-    // }).then((res) => {
-    //   if (res.ok) return res.json();
-    //   return Promise.reject(res);
-    // }).then((data) => console.log(data)
-    // ).catch((error) => console.warn('Something went wrong', error));
-
-
     // this.router.navigate(["/game"]);
   }
 }
