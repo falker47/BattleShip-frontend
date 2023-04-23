@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { PlayerFront, Player, DragModel, ShipData, PlayerPositionData, Coordinates } from '../api/models';
+import { PlayerFront, Player, DragModel, PlayerShipsData, Coordinates } from '../api/models';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ShipComponent } from './ship/ship.component';
 import { Router } from '@angular/router';
@@ -25,8 +25,7 @@ export class BoardComponent implements OnInit {
   public shipName = '';
   public xInitial = 0;
   public yInitial = 0;
-  public shipsFinalData: ShipData[] = [];
-  public playerFinalData!: PlayerPositionData;
+  public playerFinalData!: PlayerShipsData;
 
 
   constructor(private router: Router) {}
@@ -90,8 +89,8 @@ export class BoardComponent implements OnInit {
         currentShip = this.shipList2.find(ship => ship.name === this.shipName);
       }
       if (currentShip !== undefined) {                                          
-        if (!currentShip.rotate) {                                              // *If ship is horizontal
-          if (currentShip.size <= (this.width - col + 1)) {                     // If ship size is <= than remaining space in a row
+        if (!currentShip.rotate) {                                              // *Current ship is HORIZONTAL
+          if (currentShip.size <= (this.width - col + 1)) {                     // Current ship size is <= than remaining space in a row
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
               this.shipList2.forEach(ship => {                                  // Checking if space is taken
@@ -99,18 +98,19 @@ export class BoardComponent implements OnInit {
                   if ((ship.col === col && ship.row === row)) {
                     this.hoverPlace = this.dragStart;                                                  
                   }
-                  if ((ship.col + ship.size) > col && ship.row === row && ship.col < col) {            
+                  if ((ship.col + ship.size - 1) > col && ship.row === row && ship.col < col) { // todo review added -1
                     this.hoverPlace = this.dragStart;
                   }
-                  if ((ship.col - col) < (currentShip!.size) && ship.row === row && ship.col > col) {  
+                  if ((ship.col - col) < (currentShip!.size) && ship.row === row && ship.col > col) { // todo review added -1
                     this.hoverPlace = this.dragStart;
                   }
-                  if (ship.rotate) {                                            // Checking for vertical ships when placing a horizontal ship
+                  if (ship.rotate) {                                            // Checking for VERTICAL ships when placing a HORIZONTAL ship
                     if (ship.col > col                                                
                       && (col + currentShip!.size - 1) >= ship.col                   
-                      && (row >= ship.row                                           
-                      && row <= (ship.row + ship.size - 1))
-                    ) { 
+                      && (row >= ship.row && row <= (ship.row + ship.size - 1))) { 
+                      this.hoverPlace = this.dragStart;
+                    }
+                    if (ship.col === col && (row >= ship.row && row <= (ship.row + ship.size - 1))) {
                       this.hoverPlace = this.dragStart;
                     }
                   }
@@ -122,8 +122,8 @@ export class BoardComponent implements OnInit {
           } else {
             this.hoverPlace = this.dragStart;
           }
-        } else {                                                                // *If ship is vertical
-            if (currentShip.size <= (this.width - row + 1)) {                   // If ship size is <= than remaining space in a row
+        } else {                                                                // *Current ship is VERTICAL
+            if (currentShip.size <= (this.width - row + 1)) {                   // Current ship size is <= than remaining space in a row
               if (this.shipList2[0] !== undefined) {
                 this.hoverPlace = dropPlace;
                 this.shipList2.forEach(ship => {                                // Checking if space is taken
@@ -131,17 +131,19 @@ export class BoardComponent implements OnInit {
                     if ((ship.col === col && ship.row === row)) {
                       this.hoverPlace = this.dragStart;
                     }
-                    if ((ship.row + ship.size) > row && ship.col === col && ship.row < row) {
+                    if ((ship.row + ship.size - 1) > row && ship.col === col && ship.row < row) { // todo review added -1
                       this.hoverPlace = this.dragStart;
                     }
-                    if ((ship.row - row) < (currentShip!.size) && ship.col === col && ship.row > row) {
+                    if ((ship.row - row) < (currentShip!.size - 1) && ship.col === col && ship.row > row) { // todo review added -1
                       this.hoverPlace = this.dragStart;
                     }
-                    if (!ship.rotate) {                                         // Checking for horizontal ships when placing a vertical ship
-                      if (ship.row > row                                              
-                        && (row + currentShip!.size - 1) >= ship.row             
-                        && (col >= ship.col && col <= (ship.col + ship.size - 1)) 
-                      ) { 
+                    if (!ship.rotate) {                                         // Checking for HORIZONTAL ships when placing a VERTICAL ship
+                      if (ship.row > row 
+                        && (row + currentShip!.size - 1) >= ship.row 
+                        && (col >= ship.col && col <= (ship.col + ship.size - 1))) { 
+                        this.hoverPlace = this.dragStart;
+                      }
+                      if (ship.row === row && (col >= ship.col && col <= (ship.col + ship.size - 1))) {
                         this.hoverPlace = this.dragStart;
                       }
                     }
@@ -229,17 +231,8 @@ export class BoardComponent implements OnInit {
 
 
   public getFinalData() {
-    this.shipList2.forEach(ship => {  
-      const shipData = {
-        name: ship.name,
-        length: ship.size,
-        coordinates: ship.occupiedCoords
-      }
-      this.shipsFinalData.push(shipData);
-    })
-
     const occupiedCoords: Coordinates[][] = [];
-    this.shipsFinalData.forEach(ship => occupiedCoords.push(ship.coordinates));
+    this.shipList2.forEach(ship => occupiedCoords.push(ship.occupiedCoords));
 
     this.playerFinalData = {
       playerId: 0, // TODO: Hardcoding for now, then --> this.players.find(player => player.id === id)
