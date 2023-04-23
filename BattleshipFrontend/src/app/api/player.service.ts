@@ -47,6 +47,6 @@ export class PlayerService {
   }
 
   postShot(shot: Shot) {
-    return this.httpClient.post(this.URL + 'postShot?' + 'id=' + shot.id + '&xAxis=' + shot.x + '&yAxis=' + shot.y, '')
+    return this.httpClient.post(this.URL + 'postShot', shot);
   }
 }
