@@ -34,7 +34,7 @@ export interface Shot {
 
 //response chiamate get
 
-export interface Cell {
+export interface CellApi {
   id: string;
   gridId: number;
   xaxis: number;
@@ -43,12 +43,31 @@ export interface Cell {
   shipId?: string;
 }
 
-export interface Grid {
+export interface GridApi {
   id: number;
-  cells: Cell[][];
+  cells: CellApi[][];
 }
 
+export interface PlayerApi {
+  id: string;
+  name: string;
+  userGridId: number;
+  shotGridId: number;
+  team: number;
+  points: number;
+}
+
+export interface ShipsApi {
+  id: number;
+  playerId?: number;
+  length: number;
+  hp: number;
+}
+
+//da sistemare
+
 export interface Ship {
+  name: string;
   id: number;
   playerId?: number;
   length: number;
@@ -56,10 +75,10 @@ export interface Ship {
 }
 
 export interface Player {
-  id: string;
+  // id: string;
   name: string;
-  userGridId: number;
-  shotGridId: number;
+  // userGridId: number;
+  // shotGridId: number;
   team: number;
-  points: number;
+  // points: number;
 }

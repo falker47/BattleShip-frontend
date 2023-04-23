@@ -1,21 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Player, PlayerFront, Shot, ShipsFront, Grid, Ship } from './models';
+import { Player, PlayerFront, Shot, ShipsFront, GridApi, Ship, PlayerApi, ShipsApi } from './models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlayerService {
-  URL = 'https://localhost:7100/api/Players/';
+  URL = 'https://api-battleship.azurewebsites.net/api/Players/';
 
   constructor(private httpClient: HttpClient) {}
 
   getPlayers() {
-    return this.httpClient.get<Player[]>(this.URL + 'getPlayers');
+    return this.httpClient.get<PlayerApi[]>(this.URL + 'getPlayers');
   }
 
   getPlayersById(id: number) {
-    return this.httpClient.get<Player>(this.URL + 'getPlayer/' + id);
+    return this.httpClient.get<PlayerApi>(this.URL + 'getPlayer/' + id);
   }
 
   getGridByPlayerId(
@@ -23,7 +23,7 @@ export class PlayerService {
     gridSize: number,
     userGridTRUE_shotGridFALSE: boolean
   ) {
-    return this.httpClient.get<Grid>(
+    return this.httpClient.get<GridApi>(
       this.URL +
         'getGridByPlayerId/' +
         id +
@@ -35,7 +35,7 @@ export class PlayerService {
   }
 
   getShipsByPlayerId(id: number) {
-    return this.httpClient.get<Ship[]>(this.URL + 'getShipsByPlayerId/' + id);
+    return this.httpClient.get<ShipsApi[]>(this.URL + 'getShipsByPlayerId/' + id);
   }
 
   postCreateGame(players: PlayerFront[]) {
