@@ -74,7 +74,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  // DRAGGING
+  // DRAGGING - SPACE VALIDATION
   public hoveredElement(position: any, elementType: string, row: number, col: number) {
     let dropPlace = {} as DragModel;
     dropPlace.cellX = position.x;
@@ -98,10 +98,10 @@ export class BoardComponent implements OnInit {
                   if ((ship.col === col && ship.row === row)) {
                     this.hoverPlace = this.dragStart;                                                  
                   }
-                  if (ship.row === row && ship.col < col && (ship.col + ship.size - 1) >= col) { // todo review added -1
+                  if (ship.row === row && ship.col < col && (ship.col + ship.size - 1) >= col) {
                     this.hoverPlace = this.dragStart;
                   }
-                  if (ship.row === row && ship.col > col && (ship.col - col) < (currentShip!.size)) { // ! PROBLEMA CUANDO SHIP.COL > COL
+                  if (ship.row === row && ship.col > col && (ship.col - col) < (currentShip!.size)) { // ! PROBLEM WHEN SHIP.ROW > ROW
                     this.hoverPlace = this.dragStart;
                   }
                   if (ship.rotate) {                                            // Checking for VERTICAL ships when placing a HORIZONTAL ship
@@ -128,10 +128,10 @@ export class BoardComponent implements OnInit {
                     if ((ship.col === col && ship.row === row)) {
                       this.hoverPlace = this.dragStart;
                     }
-                    if (ship.col === col && ship.row < row && (ship.row + ship.size - 1) >= row) { // todo review added -1
+                    if (ship.col === col && ship.row < row && (ship.row + ship.size - 1) >= row) {
                       this.hoverPlace = this.dragStart;
                     }
-                    if (ship.col === col && ship.row > row && (ship.row - row) < (currentShip!.size)) { // ! PROBLEMA CUANDO SHIP.ROW > ROW
+                    if (ship.col === col && ship.row > row && (ship.row - row) < (currentShip!.size)) { // ! PROBLEM WHEN SHIP.ROW > ROW
                       this.hoverPlace = this.dragStart;
                     }
                     if (!ship.rotate) {                                         // Checking for HORIZONTAL ships when placing a VERTICAL ship
