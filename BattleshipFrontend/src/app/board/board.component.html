@@ -19,8 +19,13 @@
             (mouseover)="hoveredElement(list.getBoundingClientRect(), 'list', -1, -1)"
             >
             <div *ngIf="shipList1.length > 0">
-              <div [style.size]="30 * shipList1[0].size + 'px'" (dblclick)="rotate(0)">
+              <div 
+                (dblclick)="rotate(0)">
                 <app-ship
+                  [ngStyle]="{
+                    'width': shipList1[0].rotate === true ? '30px' : (30 * shipList1[0].size + 'px'),
+                    'height': shipList1[0].rotate === true ? (30 * shipList1[0].size + 'px') : '30px'
+                  }"
                   cdkDrag
                   id="0"
                   [style.top.px]="yInitial"
@@ -45,6 +50,10 @@
             <app-ship
               cdkDrag
               id="{{i}}"
+              [ngStyle]="{
+                'width': ship.rotate === true ? '30px' : (30 * ship.size + 'px'),
+                'height': ship.rotate === true ? (30 * ship.size + 'px') : '30px'
+              }"
               [style.top.px]="ship.top"
               [style.left.px]="ship.left"
               [size]="ship.size"
@@ -57,8 +66,8 @@
           </div>
 
           <div class="board" #board> <!-- This board has to have the player's id -->
-            <div class="row" *ngFor="let row of playerBoard; let x = index" id="{{x+1}}" #rows>
-              <div *ngFor="let box of row; let y = index" id="{{y+1}}" #cols>
+            <div class="row" #rows *ngFor="let row of playerBoard; let x = index" id="{{x+1}}">
+              <div class="col" #cols *ngFor="let box of row; let y = index" id="{{y+1}}" >
                 <div
                   class="cell"
                   #cell

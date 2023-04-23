@@ -1,34 +1,42 @@
 .ship-box {
-  background-color: coral;
+  // background-color: coral;
+  border: 1px dotted;
   position: relative;
-  height: 30px;
+  // height: 30px;
   z-index: 100;
-  // margin: 1px;
+  margin: 0;
+  padding: 0;
 }
 
 .ship-drop-wrapper {
   position: absolute;
   top: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .ship-box-cell {
-  border: 1px dotted;
+  // border: 1px dotted;
   width: 30px;
   height: 30px;
   display: inline-block;
+  margin: 0;
+  padding: 0;
 }
 
 .ship-rotate {
   transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  margin: 0;
+  padding: 0;
 }
 
-#ship_5_1 { background-color: #ff0000; }
-#ship_4_1 { background-color: #008000; }
-#ship_3_1 { background-color: #0000ff; }
-#ship_3_2 { background-color: #fe95a7; }
-#ship_3_3 { background-color: #ff7f50; }
-#ship_2_1 { background-color: #9b65e3; }
-#ship_2_2 { background-color: #ffff00; }
-#ship_2_3 { background-color: #1cc11c; }
-#ship_1_1 { background-color: #bc09bc; }
-#ship_2_2 { background-color: #5dc1e2; }
+#ship_5_1_red { background-color: #ff0000; }
+#ship_4_1_green { background-color: #008000; }
+#ship_3_1_blue { background-color: #0000ff; }
+#ship_3_2_pink { background-color: #fe95a7; }
+#ship_2_1_orange { background-color: #ff7f50; }
+#ship_2_2_yellow { background-color: #ffff00; }
+#ship_2_3_lightgreen { background-color: #1cc11c; }
+#ship_1_1_violet { background-color: #bc09bc; }
+#ship_1_2_lightblue { background-color: #5dc1e2; }

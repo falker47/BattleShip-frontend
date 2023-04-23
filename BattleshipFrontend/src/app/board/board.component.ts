@@ -28,6 +28,7 @@ export class BoardComponent implements OnInit {
   public shipsFinalData: ShipData[] = [];
   public playerFinalData!: PlayerPositionData;
 
+
   constructor(private router: Router) {}
 
 
@@ -40,15 +41,15 @@ export class BoardComponent implements OnInit {
 
   private createFleet(): Array<ShipComponent> {
     return [
-      { name: 'ship_5_1', size: 5, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_4_1', size: 4, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_3_1', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_3_2', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_2_1', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_2_2', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_2_3', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_1_1', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
-      { name: 'ship_1_2', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_5_1_red', size: 5, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_4_1_green', size: 4, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_3_1_blue', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_3_2_pink', size: 3, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_2_1_orange', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_2_2_yellow', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_2_3_lightgreen', size: 2, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_1_1_violet', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
+      { name: 'ship_1_2_lightblue', size: 1, rotate: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [] },
     ];
   }
   
@@ -60,7 +61,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  rotate(i: number) {
+  public rotate(i: number) {
     if (this.shipList1[i] !== null) {
       this.shipList1[i].rotate = !this.shipList1[i].rotate;
     }
@@ -93,18 +94,18 @@ export class BoardComponent implements OnInit {
           if (currentShip.size <= (this.width - col + 1)) {                     // If ship size is <= than remaining space in a row, we can place it there
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
-              this.shipList2.forEach(ship => {  
-                if (ship.name !== this.shipName ) {                            // Checking if space is taken
-                if ((ship.col === col && ship.row === row)) {
-                  this.hoverPlace = this.dragStart;
+              this.shipList2.forEach(ship => {                                  // Checking if space is taken
+                if (ship.name !== this.shipName ) {                            
+                  if ((ship.col === col && ship.row === row)) {
+                    this.hoverPlace = this.dragStart;                                                  
+                  }
+                  if ((ship.col + ship.size) > col && ship.row === row && ship.col < col) {            
+                    this.hoverPlace = this.dragStart;
+                  }
+                  if ((ship.col - col) < (currentShip!.size) && ship.row === row && ship.col > col) {  
+                    this.hoverPlace = this.dragStart;
+                  }
                 }
-                 if ((ship.col + ship.size) > col && ship.row === row && ship.col < col) {
-                  this.hoverPlace = this.dragStart;
-                }
-                if ((ship.col - col) < (currentShip!.size) && ship.row === row && ship.col > col) {
-                  this.hoverPlace = this.dragStart;
-                }
-             }
               })
             } else { 
               this.hoverPlace = dropPlace; 
@@ -114,27 +115,27 @@ export class BoardComponent implements OnInit {
           }
         } else {                                                                // If ship is vertical
             if (currentShip.size <= (this.width - row + 1)) {                   // If ship size is <= than remaining space in a row, we can place it there
-                if (this.shipList2[0] !== undefined) {
-                  this.hoverPlace = dropPlace;
-                  this.shipList2.forEach(ship => {                              // Checking if space is taken
-                    if (ship.name !== this.shipName ) {
-                        if ((ship.col === col && ship.row === row)) {
-                            this.hoverPlace = this.dragStart;
-                          }
-                           if ((ship.row + ship.size) > row && ship.col === col && ship.row < row) {
-                            this.hoverPlace = this.dragStart;
-                          }
-                          if ((ship.row - row) < (currentShip!.size) && ship.col === col && ship.row > row) {
-                            this.hoverPlace = this.dragStart;
-                        }
-                    }                               
-                  })
-                } else { 
-                  this.hoverPlace = dropPlace; 
-                }
-              } else {
-                this.hoverPlace = this.dragStart;
+              if (this.shipList2[0] !== undefined) {
+                this.hoverPlace = dropPlace;
+                this.shipList2.forEach(ship => {                                // Checking if space is taken
+                  if (ship.name !== this.shipName ) {
+                    if ((ship.col === col && ship.row === row)) {
+                      this.hoverPlace = this.dragStart;
+                    }
+                    if ((ship.row + ship.size) > row && ship.col === col && ship.row < row) {
+                      this.hoverPlace = this.dragStart;
+                    }
+                    if ((ship.row - row) < (currentShip!.size) && ship.col === col && ship.row > row) {
+                      this.hoverPlace = this.dragStart;
+                    }
+                  }                               
+                })
+              } else { 
+                this.hoverPlace = dropPlace; 
               }
+            } else {
+              this.hoverPlace = this.dragStart;
+            }
         }
       } 
     }
@@ -147,20 +148,22 @@ export class BoardComponent implements OnInit {
 
     if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Moving from available ships to board ships
       this.moveFromshipList1To2(event.source.element.nativeElement.id);    
-      this.shipList1[0] !== undefined ? this.shipList1[0].rotate = false : '';
+      if (this.shipList1[0] !== undefined) {
+        this.shipList1[0].rotate = false;
+      }
       event.source._dragRef.reset();
-
-      // console.clear();
-      // this.shipList2.map(ship => 
-      //   console.log(
-      //     "ship name: " + ship.name + "\n", 
-      //     "ship size: " + ship.size + "\n", 
-      //     "ship x axis: " + ship.col + "\n", 
-      //     "ship y axis: " + ship.row + "\n", 
-      //     "is ship vertical?: " + ship.rotate + "\n",
-      //     ship.occupiedCoords
-      //   )
-      // )
+      
+      console.clear();
+      this.shipList2.map(ship => 
+        console.log(
+          "ship name: " + ship.name + "\n", 
+          "ship size: " + ship.size + "\n", 
+          "ship x axis: " + ship.col + "\n", 
+          "ship y axis: " + ship.row + "\n", 
+          "is ship vertical?: " + ship.rotate + "\n",
+          ship.occupiedCoords
+        )
+      )
     }
     
     if (this.dragEnd.type !== "cell" && this.dragStart.type !== "list") {  // Moving from board ships to available ships when dropping ship outside DropLists
@@ -186,8 +189,8 @@ export class BoardComponent implements OnInit {
   private moveFromshipList2To1(id: string) {
     let index: number = +id;                                               
     let item = this.shipList2[index];
-    let temp = [item].concat(this.shipList1);
-    this.shipList1 = temp;
+    let aux = [item].concat(this.shipList1);
+    this.shipList1 = aux;
     this.shipList2.splice(index, 1);
   }
 
@@ -201,8 +204,14 @@ export class BoardComponent implements OnInit {
 
 
   public updateShip(ship: ShipComponent): ShipComponent {
-    ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
-    ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
+    if (!ship.rotate) {
+      ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
+      ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
+    }
+    if (ship.rotate) {
+      ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
+      ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
+    }
     ship.col = this.dragEnd.col;
     ship.row = this.dragEnd.row;
     ship.occupiedCoords =
@@ -216,11 +225,14 @@ export class BoardComponent implements OnInit {
       : ship.size === 2 &&  ship.rotate ? [[ship.col, ship.row], [ship.col, ship.row+1]]
       : ship.size === 1 && !ship.rotate ? [[ship.col, ship.row]]
       : []
+    // console.log(ship.top)
+    // console.log(ship.left)
+    // console.log(ship)
     return ship;
   }
 
 
-  getFinalData() {
+  public getFinalData() {
     this.shipList2.forEach(ship => {  
       const shipData = {
         name: ship.name,
@@ -237,13 +249,12 @@ export class BoardComponent implements OnInit {
   }
 
 
-  startGame() {
+  public startGame() {
     this.getFinalData();
     console.log(this.playerFinalData)
 
     // TODO: when it works, place this block of code in a service: fetch --> this.httpClient.post(...)
-    // fetch ('BACKEND_URL', {
-    //   method: 'POST',
+    // this.httpClient.post('BACKEND_URL', {
     //   body: JSON.stringify({
     //     data: this.playerFinalData,
     //   }),
@@ -257,7 +268,6 @@ export class BoardComponent implements OnInit {
     // ).catch((error) => console.warn('Something went wrong', error));
 
 
-    // console.log(this.playerFinalData)
     // this.router.navigate(["/game"]);
   }
 }
