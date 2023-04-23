@@ -84,17 +84,14 @@ export class BoardComponent implements OnInit {
     dropPlace.row = row;
     dropPlace.col = col;
 
-    if (this.shipList1 !== undefined) console.log('Lista 1: ' + this.shipList1[0])
-    if (this.shipList2 !== undefined) console.log('Lista 2: ' + this.shipList2[0])
-
-    if (this.shipName !== '') {                                                 // Checking where is the dragged ship (list1 or list2?)
+    if (this.shipName !== '') {                                                 // Checking where is the dragged ship
       let currentShip = this.shipList1.find(ship => ship.name === this.shipName);
       if (currentShip === undefined) {
         currentShip = this.shipList2.find(ship => ship.name === this.shipName);
       }
-      if (currentShip !== undefined) {                                          // Found ship
-        if (!currentShip.rotate) {                                              // If ship is horizontal
-          if (currentShip.size <= (this.width - col + 1)) {                     // If ship size is <= than remaining space in a row, we can place it there
+      if (currentShip !== undefined) {                                          
+        if (!currentShip.rotate) {                                              // *If ship is horizontal
+          if (currentShip.size <= (this.width - col + 1)) {                     // If ship size is <= than remaining space in a row
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
               this.shipList2.forEach(ship => {                                  // Checking if space is taken
@@ -108,10 +105,10 @@ export class BoardComponent implements OnInit {
                   if ((ship.col - col) < (currentShip!.size) && ship.row === row && ship.col > col) {  
                     this.hoverPlace = this.dragStart;
                   }
-                  if (ship.rotate) {                                                // Check for vertical ships when placing a horizontal ship
-                    if (ship.col > col                                                // ship.col is smaller than the col where we want to place the current ship
-                      && (col + currentShip!.size - 1) >= ship.col                    // col plus current ship size is bigger or equal to ship.col
-                      && (row >= ship.row                                             // row is between ship.row and ship.row + ship.size
+                  if (ship.rotate) {                                            // Checking for vertical ships when placing a horizontal ship
+                    if (ship.col > col                                                
+                      && (col + currentShip!.size - 1) >= ship.col                   
+                      && (row >= ship.row                                           
                       && row <= (ship.row + ship.size - 1))
                     ) { 
                       this.hoverPlace = this.dragStart;
@@ -125,11 +122,11 @@ export class BoardComponent implements OnInit {
           } else {
             this.hoverPlace = this.dragStart;
           }
-        } else {                                                                    // If ship is vertical
-            if (currentShip.size <= (this.width - row + 1)) {                       // If ship size is <= than remaining space in a row, we can place it there
+        } else {                                                                // *If ship is vertical
+            if (currentShip.size <= (this.width - row + 1)) {                   // If ship size is <= than remaining space in a row
               if (this.shipList2[0] !== undefined) {
                 this.hoverPlace = dropPlace;
-                this.shipList2.forEach(ship => {                                    // Checking if space is taken
+                this.shipList2.forEach(ship => {                                // Checking if space is taken
                   if (ship.name !== this.shipName ) {
                     if ((ship.col === col && ship.row === row)) {
                       this.hoverPlace = this.dragStart;
@@ -140,10 +137,10 @@ export class BoardComponent implements OnInit {
                     if ((ship.row - row) < (currentShip!.size) && ship.col === col && ship.row > row) {
                       this.hoverPlace = this.dragStart;
                     }
-                    if (!ship.rotate) {                                             // Check for horizontal ships when placing a vertical ship
-                      if (ship.row > row                                              // ship.row is smaller than the row where we want to place the current ship
-                        && (row + currentShip!.size - 1) >= ship.row                  // row plus size of the current ship is bigger or equalto ship.row
-                        && (col >= ship.col && col <= (ship.col + ship.size - 1))     // col is between ship.col and ship.col + ship.size
+                    if (!ship.rotate) {                                         // Checking for horizontal ships when placing a vertical ship
+                      if (ship.row > row                                              
+                        && (row + currentShip!.size - 1) >= ship.row             
+                        && (col >= ship.col && col <= (ship.col + ship.size - 1)) 
                       ) { 
                         this.hoverPlace = this.dragStart;
                       }
@@ -185,16 +182,12 @@ export class BoardComponent implements OnInit {
    
     if (this.dragEnd.type === "cell" && this.dragStart.type === "cell") {  // Moving ship around board
       let index: number = +event.source.element.nativeElement.id;          
-      let item = this.shipList2[index];                                    // Search dragged ship inside "ships on board list"
-      item = this.updateShip(item);                                        // Update dragged ship position on board
-      this.shipList2.splice(index, 1);                                     // Delete dragged ship from "ships on board list" to:
-      this.shipList2.push(item);                                           // Push it at the end of the array
+      let item = this.shipList2[index];                                    
+      item = this.updateShip(item);                                        
+      this.shipList2.splice(index, 1);                                     
+      this.shipList2.push(item);                                           
       event.source._dragRef.reset();
     }
-
-
-    if (this.shipList1 !== undefined) console.log('Lista 1: ' + this.shipList1[0].name)
-    if (this.shipList2 !== undefined) console.log('Lista 2: ' + this.shipList2[0].name)
   }
 
 
@@ -208,9 +201,9 @@ export class BoardComponent implements OnInit {
 
 
   private moveFromshipList1To2(id: string) {
-    let index: number = +id;                                               // Index will be always 0
-    let item = this.updateShip(this.shipList1[index]);                     // Placing the new first ship of "available ships list" in the board
-    this.shipList2.push(item);                                             // Pushing this ship to "ships on board list"
+    let index: number = +id;                                               
+    let item = this.updateShip(this.shipList1[index]);                     
+    this.shipList2.push(item);                                            
     this.shipList1.splice(index, 1);
   }
 
@@ -245,12 +238,12 @@ export class BoardComponent implements OnInit {
       this.shipsFinalData.push(shipData);
     })
 
-    const coords: Coordinates[][] = [];
-    this.shipsFinalData.forEach(ship => coords.push(ship.coordinates))
+    const occupiedCoords: Coordinates[][] = [];
+    this.shipsFinalData.forEach(ship => occupiedCoords.push(ship.coordinates));
 
     this.playerFinalData = {
       playerId: 0, // TODO: Hardcoding for now, then --> this.players.find(player => player.id === id)
-      ships: coords
+      ships: occupiedCoords
     }
   }
 
