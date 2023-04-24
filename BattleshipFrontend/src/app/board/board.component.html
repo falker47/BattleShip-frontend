@@ -53,11 +53,11 @@
               [size]="ship.size"
               [name]="ship.name"
               [rotate]="ship.rotate"
+              (dblclick)="rotateShipInBoard(i, ship.top, ship.left, ship.row, ship.col)"
               (cdkDragStarted)="dragStarted(ship.name)"
               (cdkDragEnded)="dragEnded($event)"
               (cdkDragMoved)="dragMoved($event)"
               ></app-ship>
-                <!-- (dblclick)="rotateShipInBoard(i, ship.top, ship.left, ship.row, ship.col)" -->
           </div>
 
           <div class="board" #board> <!-- TODO: This board has to have the player's id -->
