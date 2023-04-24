@@ -64,16 +64,16 @@ export class BoardComponent implements OnInit {
   }
 
 
-  public rotateShipOnBoard(i: number, top: number, left: number, row: number, col: number): void { // ! BUG WHEN ROTATING SHIP INSIDE THE BOARD
-    // let dropPlace = {} as DragModel;
-    // dropPlace.cellX = left;
-    // dropPlace.cellY = top;
-    // dropPlace.row = row;
-    // dropPlace.col = col;
-    // this.dropValidation(dropPlace, row, col);
+  // public rotateShipInBoard(i: number, top: number, left: number, row: number, col: number): void { // ! BUG WHEN ROTATING SHIP INSIDE THE BOARD
+  //   // let dropPlace = {} as DragModel;
+  //   // dropPlace.cellX = left;
+  //   // dropPlace.cellY = top;
+  //   // dropPlace.row = row;
+  //   // dropPlace.col = col;
+  //   // this.dropValidation(dropPlace, row, col);
 
-    this.shipList2[i].rotate = !this.shipList2[i].rotate;
-  }
+  //   this.shipList2[i].rotate = !this.shipList2[i].rotate;
+  // }
 
 
   public dragStarted(shipName: string): void {
@@ -247,6 +247,7 @@ export class BoardComponent implements OnInit {
 
 
   public dragMoved(event: CdkDragMove): void {
+    console.log(event)
     this.decreaseZIndex(event.source.element);
   }
   
