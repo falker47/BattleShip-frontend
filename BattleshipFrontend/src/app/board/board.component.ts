@@ -64,15 +64,12 @@ export class BoardComponent implements OnInit {
   }
 
 
-  public rotateShipInBoard(i: number, top: number, left: number, row: number, col: number): void { // ! BUG WHEN ROTATING SHIP INSIDE THE BOARD
-    // let dropPlace = {} as DragModel;
-    // dropPlace.cellX = left;
-    // dropPlace.cellY = top;
-    // dropPlace.row = row;
-    // dropPlace.col = col;
-    // this.dropValidation(dropPlace, row, col);
-
-    this.shipList2[i].rotate = !this.shipList2[i].rotate;
+  public resetShip(i: number): void {
+    this.moveFromshipList2To1(i.toString());
+    this.hoverPlace = this.dragStart;
+    if (this.shipList1[0] !== undefined) {
+      this.shipList1[0].rotate = false;
+    }
   }
 
 
@@ -181,7 +178,7 @@ export class BoardComponent implements OnInit {
     this.dragEnd = this.hoverPlace;
     this.increaseZIndex(event.source.element);
 
-    if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Moving from available ships to board ships
+    if (this.dragEnd.type === "cell" && this.dragStart.type !== "cell") {  // Dropping ship inside the board
       this.moveFromshipList1To2(event.source.element.nativeElement.id);    
       if (this.shipList1[0] !== undefined) {
         this.shipList1[0].rotate = false;
@@ -189,8 +186,11 @@ export class BoardComponent implements OnInit {
       event.source._dragRef.reset();
     }
     
-    if (this.dragEnd.type !== "cell" && this.dragStart.type !== "list") {  // Moving from board ships to available ships when dropping ship outside DropLists
+    if (this.dragEnd.type !== "cell" && this.dragStart.type !== "list") {  // Dropping ship outside DropLists
       this.moveFromshipList2To1(event.source.element.nativeElement.id);
+      if (this.shipList1[0] !== undefined) {
+        this.shipList1[0].rotate = false;
+      }
       event.source._dragRef.reset();
     }
    
@@ -198,8 +198,8 @@ export class BoardComponent implements OnInit {
       event.source._dragRef.reset();
     }
    
-    if (this.dragEnd.type === "cell" && this.dragStart.type === "cell") {  // Moving ship around board
-      let index: number = +event.source.element.nativeElement.id;          
+    if (this.dragEnd.type === "cell" && this.dragStart.type === "cell") {  // Moving ship around the board  // !BUG
+      let index = Number(event.source.element.nativeElement.id);          
       let item = this.shipList2[index];                                    
       item = this.updateShip(item);                                        
       this.shipList2.splice(index, 1);                                     
@@ -210,7 +210,7 @@ export class BoardComponent implements OnInit {
 
 
   private moveFromshipList2To1(id: string): void {
-    let index: number = +id;                                               
+    let index = Number(id);                                               
     let item = this.shipList2[index];
     let aux = [item].concat(this.shipList1);
     this.shipList1 = aux;
@@ -219,7 +219,7 @@ export class BoardComponent implements OnInit {
 
 
   private moveFromshipList1To2(id: string): void {
-    let index: number = +id;                                               
+    let index = Number(id);                                               
     let item = this.updateShip(this.shipList1[index]);                     
     this.shipList2.push(item);                                            
     this.shipList1.splice(index, 1);

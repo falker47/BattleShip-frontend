@@ -53,7 +53,7 @@
               [size]="ship.size"
               [name]="ship.name"
               [rotate]="ship.rotate"
-              (dblclick)="rotateShipInBoard(i, ship.top, ship.left, ship.row, ship.col)"
+              (dblclick)="resetShip(i)"
               (cdkDragStarted)="dragStarted(ship.name)"
               (cdkDragEnded)="dragEnded($event)"
               (cdkDragMoved)="dragMoved($event)"
