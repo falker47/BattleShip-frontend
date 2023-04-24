@@ -50,6 +50,7 @@ export class BoardComponent implements OnInit {
     this.shipList2 = [];
   }
   
+
   private addConfirmedPropertyToPlayer() {
     this.playersTemporary.forEach(player => {
       this.playersData.push({
@@ -64,6 +65,7 @@ export class BoardComponent implements OnInit {
     })
   }
 
+  
   private getCurrentPlayer(index: number): PlayerFrontend {
     return this.playersData[index];
   }
