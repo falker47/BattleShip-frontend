@@ -1,8 +1,6 @@
-export interface PlayerFront {
-  id: string; // TODO temporary
+export interface PlayerInitialData {
   name: string;
   team: number;
-  confirmed: boolean; // TODO temporary
 }
 
 export interface DragModel {
@@ -53,6 +51,15 @@ export interface Ship {
 }
 
 export interface Player {
+  id: string;
+  name: string;
+  userGridId: number;
+  shotGridId: number;
+  team: number;
+  points: number;
+}
+
+export interface PlayerFrontend {
   id: string;
   name: string;
   userGridId: number;

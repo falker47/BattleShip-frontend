@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PlayerFront } from '../api/models';
+import { PlayerInitialData } from '../api/models';
 import { Router } from '@angular/router';
 
 
@@ -10,9 +10,8 @@ import { Router } from '@angular/router';
 })
 export class LandingPageComponent {
 
-  public players: PlayerFront[] = [];
+  public players: PlayerInitialData[] = [];
   public limitNumPlayers = 6;
-  public id: string = '1';
 
 
   constructor(private router: Router) {}
@@ -23,36 +22,30 @@ export class LandingPageComponent {
 
     if (this.players.length === 0) {
       this.players.push({
-        id: this.id,
         name: name,
         team: 0,
-        confirmed: false
       });
       return;
     }
 
     if (this.players.length === 1) {
       this.players.push({
-        id: (Number(this.id) + 1).toString(),
         name: name,
         team: 1,
-        confirmed: false
       });
       return;
     }
 
     if (this.players.length < this.limitNumPlayers) {
       this.players.push({
-        id: (Number(this.id) + 1).toString(),
         name: name,
         team: Math.floor(Math.random() * 2),
-        confirmed: false
       });
     }
   }
 
 
-  removePlayer(player: PlayerFront) {
+  removePlayer(player: PlayerInitialData) {
     this.players.splice(this.players.indexOf(player), 1);
   }
 

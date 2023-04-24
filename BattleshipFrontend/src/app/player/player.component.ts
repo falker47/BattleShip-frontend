@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PlayerFront } from '../api/models';
+import { PlayerInitialData } from '../api/models';
 
 @Component({
   selector: 'app-player',
@@ -8,7 +8,7 @@ import { PlayerFront } from '../api/models';
 })
 export class PlayerComponent {
 
-  @Input() player!: PlayerFront;
-  @Output() remove = new EventEmitter<PlayerFront>();
+  @Input() player!: PlayerInitialData;
+  @Output() remove = new EventEmitter<PlayerInitialData>();
 
 }

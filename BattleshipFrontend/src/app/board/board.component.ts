@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Player, DragModel, PlayerShipsData, Coordinates } from '../api/models';
+import { Player, PlayerFrontend, DragModel, PlayerShipsData, Coordinates } from '../api/models';
 import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { ShipComponent } from './ship/ship.component';
 import { Router } from '@angular/router';
@@ -25,16 +25,17 @@ export class BoardComponent implements OnInit {
   public hoverPlace = {} as DragModel;
   public dragStart = {} as DragModel;
   public dragEnd = {} as DragModel;
-  public currentPlayer!: Player;
-  public index: number = 0;
+  public currentPlayer!: PlayerFrontend;
+  public currentIndex: number = 0;
   public playersFinalData: PlayerShipsData[] = [];
+  public playersData: PlayerFrontend[] = [];
 
   playersTemporary = [
-    { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0, confirmed: false },
-    { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0, confirmed: false },
-    // { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0, confirmed: false },
-    // { id: '4', name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0, confirmed: false },
-    // { id: '5', name: 'Daniele, userGridId: 0, shotGridId: 0, team: 0, points: 0, confirmed: false },
+    { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+    { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
+    // { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+    // { id: '4', name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
+    // { id: '5', name: 'Daniele, userGridId: 0, shotGridId: 0, team: 0, points: 0 },
   ]
 
 
@@ -42,17 +43,30 @@ export class BoardComponent implements OnInit {
 
 
   ngOnInit () {
-    this.currentPlayer = this.getCurrentPlayer(this.index);
+    this.addConfirmedPropertyToPlayer();
+    this.currentPlayer = this.getCurrentPlayer(this.currentIndex);
     this.playerBoard = this.getEmptyBoard();
     this.cellPixels = this.calculateCellPixels();
     this.shipList1 = this.createFleet();
     this.shipList2 = [];
-    console.log(this.currentPlayer)
   }
   
+  private addConfirmedPropertyToPlayer() {
+    this.playersTemporary.forEach(player => {
+      this.playersData.push({
+        id: player.id, 
+        name: player.name, 
+        userGridId: player.userGridId, 
+        shotGridId: player.shotGridId, 
+        team: player.team, 
+        points: player.points,
+        confirmed: false,
+      });
+    })
+  }
 
-  private getCurrentPlayer(index: number): Player {
-    return this.playersTemporary[index];
+  private getCurrentPlayer(index: number): PlayerFrontend {
+    return this.playersData[index];
   }
 
 
@@ -72,7 +86,7 @@ export class BoardComponent implements OnInit {
   
 
   private getEmptyBoard(): number[][] {
-    for (let i = 0; i <= this.playersTemporary.length; i++) { 
+    for (let i = 0; i <= this.playersData.length; i++) { 
       if (i > 2) this.width += 5;
     }
     return Array.from({ length: this.width }, () => Array(this.width).fill(0));
@@ -80,12 +94,11 @@ export class BoardComponent implements OnInit {
 
 
   public calculateCellPixels(): number {
-    if (this.playersTemporary.length === 2 || this.playersTemporary.length === 3) return 30;
-    if (this.playersTemporary.length === 4 || this.playersTemporary.length === 5) return 25;
-    if (this.playersTemporary.length >= 6) return 20;
+    if (this.playersData.length === 2 || this.playersData.length === 3) return 30;
+    if (this.playersData.length === 4 || this.playersData.length === 5) return 25;
+    if (this.playersData.length >= 6) return 20;
     else return 30;
   }
-
 
 
   public getFinalData(): void {
@@ -103,14 +116,14 @@ export class BoardComponent implements OnInit {
   public confirmShips() {
     this.getFinalData();
 
-    this.playersTemporary.map(player => {
+    this.playersData.map(player => {
       if (player.id === this.currentPlayer.id) {
         player.confirmed = true;
       }
     });
 
-    let nextIndex = ++this.index;
-    if (this.playersTemporary[nextIndex] !== undefined) {
+    let nextIndex = ++this.currentIndex;
+    if (this.playersData[nextIndex] !== undefined) {
       this.currentPlayer = this.getCurrentPlayer(nextIndex);
       this.playerBoard = this.getEmptyBoard();
       this.shipList1 = this.createFleet();
@@ -120,13 +133,13 @@ export class BoardComponent implements OnInit {
 
 
   public areAllPlayersReady(): boolean {
-    return this.playersTemporary.every(player => player.confirmed === true);
+    return this.playersData.every(player => player.confirmed === true);
   }
 
 
   public startGame(): void {
     console.log(this.playersFinalData);
-    
+
     // TODO: Send information to backend
     // this.playerService.postConfirmedShips();
 
