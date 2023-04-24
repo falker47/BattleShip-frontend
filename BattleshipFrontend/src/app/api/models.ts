@@ -28,8 +28,8 @@ export interface ShipsPosition {
 
 export interface Shot {
   id: number;
-  x: number;
-  y: number;
+  xAxis: number;
+  yAxis: number;
 }
 
 //response chiamate get
