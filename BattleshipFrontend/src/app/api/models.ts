@@ -24,7 +24,7 @@ export interface Grid {
 
 export interface Ship {
   id?: number;
-  name: string,
+  name: string;
   playerId?: number;
   length: number;
   hp?: number;
@@ -62,7 +62,8 @@ export interface Player {
 }
 
 export interface Coordinates {
-  coordinates: number[];
+  x: number;
+  y: number;
 }
 
 export interface ShipsPosition {
@@ -75,4 +76,18 @@ export interface ShipsPosition {
   ship_2_3: Coordinates[]; // Size 2   // Example: [1,4] [5,6]
   ship_1_1: Coordinates[]; // Size 1
   ship_1_2: Coordinates[]; // Size 1
+}
+
+export interface PlayerShipsData {
+  playerId: number;
+  ships: Coordinates[][];
+}
+
+export interface PlayerAPI {
+  id: string;
+  name: string;
+  userGridId: number;
+  shotGridId: number;
+  team: number;
+  points: number;
 }

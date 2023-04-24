@@ -1,44 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { PlayerService } from '../api/player.service';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+  styleUrls: ['./game.component.scss'],
 })
-export class GameComponent {
-  const boardContainer = document.querySelector('#boards-container')
+export class GameComponent implements OnInit {
+  @ViewChild('board') boardElement!: ElementRef<HTMLElement>;
+  public width: number = 10;
+  public shipName: string = '';
+  public playerBoard!: number[][];
+  public xInitial: number = 0;
+  public yInitial: number = 0;
 
-  const width = 10;
+  constructor(private router: Router, private playerService: PlayerService) {}
 
-  function createBoard() {
-    const gameBoardContainer = document.createElement('div');
-    gameBoardContainer.classList.add('game-board');
-    gameBoardContainer.style.backgroundColor = 'blue';
-
-    boardContainer.append(gameBoardContainer);
-
-    for (let i = 0; i < width*width; i++) {
-      const block = document.createElement('div');
-      block.classList.add('block');
-      block.id = i;
-      gameBoardContainer.append(block);
-    }
-  }
-  createBoard();
-  createBoard();
-
-  class Ship {
-    constructor(name, length) {
-      this.name = name;
-      this.length = length;
-    }
+  ngOnInit() {
+    this.playerBoard = this.getEmptyBoard();
+    this.playerBoard = this.getEmptyBoard();
   }
 
-  const l1 = new Ship("l1", 1);
-  const l2 = new Ship("l2", 2);
-  const l3 = new Ship("l3", 3);
-  const l4 = new Ship("l4", 4);
-  const l5 = new Ship("l5", 5);
-
-  const ships = [l1, l2, l3, l4, l5];
+  private getEmptyBoard(): number[][] {
+    for (let i = 0; i <= 2; i++) {
+      if (i > 2) this.width += 5;
+    }
+    return Array.from({ length: this.width }, () => Array(this.width).fill(0));
+  }
 }
