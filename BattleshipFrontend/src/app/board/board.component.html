@@ -14,7 +14,7 @@
           <div
             class="list-1"
             #list
-            (mouseover)="hoveredDropPlaceValidation(list.getBoundingClientRect(), 'list', -1, -1)"
+            (mouseover)="hoveredPlace(list.getBoundingClientRect(), 'list', -1, -1)"
             >
             <div *ngIf="shipList1.length > 0">
               <div [ngStyle]="{
@@ -55,12 +55,11 @@
               [size]="ship.size"
               [name]="ship.name"
               [rotate]="ship.rotate"
-              (dblclick)="rotateShipOnBoard(i)"
+              (dblclick)="rotateShipOnBoard(i, ship.top, ship.left, ship.row, ship.col)"
               (cdkDragStarted)="dragStarted(ship.name)"
               (cdkDragEnded)="dragEnded($event)"
               (cdkDragMoved)="dragMoved($event)"
-              >
-            </app-ship>
+              ></app-ship>
           </div>
 
           <div class="board" #board> <!-- TODO: This board has to have the player's id -->
@@ -69,7 +68,7 @@
                 <div
                   class="cell"
                   #cell
-                  (mouseover)="hoveredDropPlaceValidation(cell.getBoundingClientRect(), 'cell', y+1, x+1)"
+                  (mouseover)="hoveredPlace(cell.getBoundingClientRect(), 'cell', y+1, x+1)"
                 ></div>
               </div>
             </div>

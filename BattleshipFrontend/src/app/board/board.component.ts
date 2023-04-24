@@ -21,9 +21,9 @@ export class BoardComponent implements OnInit {
   public playerFinalData!: PlayerShipsData;
   public shipList1!: Array<ShipComponent>;
   public shipList2!: Array<ShipComponent>;
-  public hoverPlace: DragModel = {} as DragModel;
-  public dragStart: DragModel = {} as DragModel;
-  public dragEnd: DragModel = {} as DragModel;
+  public hoverPlace = {} as DragModel;
+  public dragStart = {} as DragModel;
+  public dragEnd = {} as DragModel;
 
 
   constructor(private router: Router) {}
@@ -50,6 +50,7 @@ export class BoardComponent implements OnInit {
     ];
   }
   
+
   private getEmptyBoard(): number[][] {
     for (let i = 0; i <= this.players.length; i++) {
       if (i > 2) this.width += 5;
@@ -57,16 +58,21 @@ export class BoardComponent implements OnInit {
     return Array.from({ length: this.width }, () => Array(this.width).fill(0));
   }
 
+
   public rotateAvailableShip(i: number): void {
-    if (this.shipList1[i] !== undefined) {
-      this.shipList1[i].rotate = !this.shipList1[i].rotate;
-    }
-   
+    this.shipList1[i].rotate = !this.shipList1[i].rotate;
   }
-  public rotateShipOnBoard(i: number): void {
-    if (this.shipList2[i] !== undefined) {
-      this.shipList2[i].rotate = !this.shipList2[i].rotate;
-    }
+
+
+  public rotateShipOnBoard(i: number, top: number, left: number, row: number, col: number): void { // ! BUG WHEN ROTATING SHIP INSIDE THE BOARD
+    // let dropPlace = {} as DragModel;
+    // dropPlace.cellX = left;
+    // dropPlace.cellY = top;
+    // dropPlace.row = row;
+    // dropPlace.col = col;
+    // this.dropValidation(dropPlace, row, col);
+
+    this.shipList2[i].rotate = !this.shipList2[i].rotate;
   }
 
 
@@ -76,13 +82,19 @@ export class BoardComponent implements OnInit {
   }
 
 
-  public hoveredDropPlaceValidation(position: any, elementType: string, row: number, col: number): void {
+  public hoveredPlace(position: any, elementType: string, row: number, col: number): void { 
     let dropPlace = {} as DragModel;
     dropPlace.cellX = position.x;
     dropPlace.cellY = position.y;
     dropPlace.type = elementType;
     dropPlace.row = row;
     dropPlace.col = col;
+    this.dropValidation(dropPlace, row, col);
+  }
+
+
+  public dropValidation(dropPlace: DragModel, row: number, col: number): void {
+    this.hoverPlace = dropPlace ? dropPlace : this.dragStart;
 
     if (this.shipName !== '') {                                                 // Checking where is the dragged ship
       let currentShip = this.shipList1.find(ship => ship.name === this.shipName);
@@ -94,6 +106,7 @@ export class BoardComponent implements OnInit {
           if (currentShip.size <= (this.width - col + 1)) {                     // Current ship size is <= than remaining space in a row
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
+              
               this.shipList2.forEach(ship => {                                  // Checking if space is taken
                 if (ship.name !== this.shipName) {                           
                   if ((ship.col === col && ship.row === row)) {
@@ -128,6 +141,7 @@ export class BoardComponent implements OnInit {
           if (currentShip.size <= (this.width - row + 1)) {                   // Current ship size is <= than remaining space in a row
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
+
               this.shipList2.forEach(ship => {                                // Checking if space is taken
                 if (ship.name !== this.shipName) {
                   if ((ship.col === col && ship.row === row)) {
@@ -203,12 +217,14 @@ export class BoardComponent implements OnInit {
     this.shipList2.splice(index, 1);
   }
 
+
   private moveFromshipList1To2(id: string): void {
     let index: number = +id;                                               
     let item = this.updateShip(this.shipList1[index]);                     
     this.shipList2.push(item);                                            
     this.shipList1.splice(index, 1);
   }
+
 
   public updateShip(ship: ShipComponent): ShipComponent {
     ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
@@ -234,11 +250,13 @@ export class BoardComponent implements OnInit {
     this.decreaseZIndex(event.source.element);
   }
   
+
   private decreaseZIndex(element: ElementRef): void {
     element.nativeElement.style.zIndex = "-1";
     let elem = element.nativeElement.children[0] as HTMLElement;
     elem.style.zIndex = "-1";
   }
+  
   
   private increaseZIndex(element: ElementRef): void {
     element.nativeElement.style.zIndex = "100";
