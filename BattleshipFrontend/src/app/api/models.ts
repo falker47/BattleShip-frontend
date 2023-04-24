@@ -1,6 +1,8 @@
 export interface PlayerFront {
+  id: string; // TODO temporary
   name: string;
   team: number;
+  confirmed: boolean; // TODO temporary
 }
 
 export interface DragModel {
@@ -22,8 +24,9 @@ export interface Coordinates {
   y: number;
 }
 
-export interface PlayerShipsData { // TODO: delete ShipsFront and keep this one
-  playerId: number;
+export interface PlayerShipsData {
+  playerId: string;
+  team: number;
   ships: Coordinates[][];
 }
 
@@ -56,4 +59,5 @@ export interface Player {
   shotGridId: number;
   team: number;
   points: number;
+  confirmed: boolean;
 }

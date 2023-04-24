@@ -1,8 +1,9 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { PlayerFront, Player, DragModel, PlayerShipsData, Coordinates } from '../api/models';
+import { Player, DragModel, PlayerShipsData, Coordinates } from '../api/models';
 import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { ShipComponent } from './ship/ship.component';
 import { Router } from '@angular/router';
+import { PlayerService } from '../api/player.service';
 
 @Component({
   selector: 'app-board',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class BoardComponent implements OnInit {
 
-  @Input() players!: PlayerFront[]; // TODO: when backend ready, change to type Player to get full info
+  @Input() players!: Player[];
   @ViewChild("board") boardElement!: ElementRef<HTMLElement>;
   public width: number = 10;
   public shipName: string = '';
@@ -19,22 +20,39 @@ export class BoardComponent implements OnInit {
   public cellPixels!: number;
   public xInitial: number = 0;
   public yInitial: number = 0;
-  public playerFinalData!: PlayerShipsData;
   public shipList1!: Array<ShipComponent>;
   public shipList2!: Array<ShipComponent>;
   public hoverPlace = {} as DragModel;
   public dragStart = {} as DragModel;
   public dragEnd = {} as DragModel;
+  public currentPlayer!: Player;
+  public index: number = 0;
+  public playersFinalData: PlayerShipsData[] = [];
+
+  playersTemporary = [
+    { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0, confirmed: false },
+    { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0, confirmed: false },
+    // { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0, confirmed: false },
+    // { id: '4', name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0, confirmed: false },
+    // { id: '5', name: 'Daniele, userGridId: 0, shotGridId: 0, team: 0, points: 0, confirmed: false },
+  ]
 
 
-  constructor(private router: Router) {}
+  constructor(private playerService: PlayerService, private router: Router) {}
 
 
   ngOnInit () {
+    this.currentPlayer = this.getCurrentPlayer(this.index);
     this.playerBoard = this.getEmptyBoard();
     this.cellPixels = this.calculateCellPixels();
     this.shipList1 = this.createFleet();
     this.shipList2 = [];
+    console.log(this.currentPlayer)
+  }
+  
+
+  private getCurrentPlayer(index: number): Player {
+    return this.playersTemporary[index];
   }
 
 
@@ -54,7 +72,7 @@ export class BoardComponent implements OnInit {
   
 
   private getEmptyBoard(): number[][] {
-    for (let i = 0; i <= this.players.length; i++) {
+    for (let i = 0; i <= this.playersTemporary.length; i++) { 
       if (i > 2) this.width += 5;
     }
     return Array.from({ length: this.width }, () => Array(this.width).fill(0));
@@ -62,11 +80,63 @@ export class BoardComponent implements OnInit {
 
 
   public calculateCellPixels(): number {
-    if (this.players.length === 2 || this.players.length === 3) return 30;
-    if (this.players.length === 4 || this.players.length === 5) return 25;
-    if (this.players.length >= 6) return 20;
+    if (this.playersTemporary.length === 2 || this.playersTemporary.length === 3) return 30;
+    if (this.playersTemporary.length === 4 || this.playersTemporary.length === 5) return 25;
+    if (this.playersTemporary.length >= 6) return 20;
     else return 30;
   }
+
+
+
+  public getFinalData(): void {
+    const occupiedCoords: Coordinates[][] = [];
+    this.shipList2.forEach(ship => occupiedCoords.push(ship.occupiedCoords));
+
+    this.playersFinalData.push({
+      playerId: this.currentPlayer.id,
+      team: this.currentPlayer.team,
+      ships: occupiedCoords
+    });
+  }
+
+
+  public confirmShips() {
+    this.getFinalData();
+
+    this.playersTemporary.map(player => {
+      if (player.id === this.currentPlayer.id) {
+        player.confirmed = true;
+      }
+    });
+
+    let nextIndex = ++this.index;
+    if (this.playersTemporary[nextIndex] !== undefined) {
+      this.currentPlayer = this.getCurrentPlayer(nextIndex);
+      this.playerBoard = this.getEmptyBoard();
+      this.shipList1 = this.createFleet();
+      this.shipList2 = [];
+    }
+  }
+
+
+  public areAllPlayersReady(): boolean {
+    return this.playersTemporary.every(player => player.confirmed === true);
+  }
+
+
+  public startGame(): void {
+    console.log(this.playersFinalData);
+    
+    // TODO: Send information to backend
+    // this.playerService.postConfirmedShips();
+
+    this.router.navigate(["/game"]);
+  }
+
+
+
+
+  // ------------- SHIPS POSITIONING - DRAG & DROP ------------------ //
 
 
   public rotateAvailableShip(i: number): void {
@@ -272,24 +342,6 @@ export class BoardComponent implements OnInit {
     element.nativeElement.style.zIndex = "100";
     let elem = element.nativeElement.children[0] as HTMLElement;
     elem.style.zIndex = "100";
-  }
-
-
-  public getFinalData(): void {
-    const occupiedCoords: Coordinates[][] = [];
-    this.shipList2.forEach(ship => occupiedCoords.push(ship.occupiedCoords));
-
-    this.playerFinalData = {
-      playerId: 0, // TODO: Hardcoding for now, then --> this.players.find(player => player.id === id)
-      ships: occupiedCoords
-    }
-  }
-
-
-  public startGame(): void {
-    this.getFinalData();
-    console.log(this.playerFinalData)
-    // this.router.navigate(["/game"]);
   }
 
 }

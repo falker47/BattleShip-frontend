@@ -1,46 +1,72 @@
-.config-container {
+.config-page-container {
+  color: var(--white-color);
+  font-family: var(--font-paragraph);
+  padding-bottom: 4em;
+}
+
+.content-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--white-color);
-  padding-bottom: 4em;
+}
 
-  h2 {
-    font-family: var(--font-log);
-    font-size: 2em;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-top: 2em;
+.title {
+  font-family: var(--font-log);
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 2em;
+}
+
+.config {
+  width: 60%;
+  margin: 3em 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .player {
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    margin-right: 2em;
+
+    span {
+      color: coral;
+      text-shadow: 1px 1px 5px black;
+    }
   }
 
-  .config {
-    min-height: 200px;
-    margin: 0 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .instructions {
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 1em 2em;
+    border-radius: 10px;
+
+    h4 {
+      align-self: center;
+      border-bottom: 1px solid var(--white-color);
+      padding-bottom: 0.2em;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 0.9em;
+    }
   }
 }
 
-.instructions {
-  max-width: 600px;
-  font-family: var(--font-paragraph);
-  background-color: rgba(0, 0, 0, .6);
-  padding: 1em;
-  border-radius: 10px;
-
-  h4 {
-    align-self: center;
-    margin-bottom: .5em;
-  }
-
-  p {
-    font-size: .9em;
-  }
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5em;
 }
 
-.start-btn {
+.start-btn,
+.confirm-btn {
+  margin-top: 2em;
   margin-bottom: 2em;
   text-transform: uppercase;
   font-size: 1.2em;
@@ -53,10 +79,22 @@
   padding: 0.5em 1em;
 }
 
+.start-btn {
+  font-size: 2em;
+  transition: 250ms ease-in-out;
+}
+
 .start-btn:hover,
-.start-btn:focus {
+.start-btn:focus,
+.confirm-btn:hover,
+.confirm-btn:focus {
   cursor: pointer;
   background-color: var(--btn-hover-color);
+}
+
+.start-btn:hover,
+.start-btn:focus {
+  transform: scale(1.2);
 }
 
 .lists-container {
@@ -70,7 +108,8 @@
   justify-content: space-between;
 }
 
-.list-1, .list-2 {
+.list-1,
+.list-2 {
   position: relative;
   height: 100%;
 }

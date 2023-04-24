@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 })
 export class LandingPageComponent {
 
-  playersNames: PlayerFront[] = [];
-  limitNumPlayers = 6;
-  confirmedPlayers = false;
+  public players: PlayerFront[] = [];
+  public limitNumPlayers = 6;
+  public id: string = '1';
 
 
   constructor(private router: Router) {}
@@ -21,39 +21,45 @@ export class LandingPageComponent {
   addPlayer(name: string) {
     if (!name) return;
 
-    if (this.playersNames.length === 0) {
-      this.playersNames.push({
+    if (this.players.length === 0) {
+      this.players.push({
+        id: this.id,
         name: name,
-        team: 0, 
+        team: 0,
+        confirmed: false
       });
       return;
     }
 
-    if (this.playersNames.length === 1) {
-      this.playersNames.push({
+    if (this.players.length === 1) {
+      this.players.push({
+        id: (Number(this.id) + 1).toString(),
         name: name,
         team: 1,
+        confirmed: false
       });
       return;
     }
 
-    if (this.playersNames.length < this.limitNumPlayers) {
-      this.playersNames.push({
+    if (this.players.length < this.limitNumPlayers) {
+      this.players.push({
+        id: (Number(this.id) + 1).toString(),
         name: name,
         team: Math.floor(Math.random() * 2),
+        confirmed: false
       });
     }
   }
 
 
   removePlayer(player: PlayerFront) {
-    this.playersNames.splice(this.playersNames.indexOf(player), 1);
+    this.players.splice(this.players.indexOf(player), 1);
   }
 
 
   confirmPlayers() {
-    this.confirmedPlayers = true;
-    // this.router.navigate(['/board']); 
+    console.log(this.players);
+    this.router.navigate(['/board']); 
   }
 
 }

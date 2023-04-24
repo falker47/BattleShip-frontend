@@ -8,7 +8,6 @@ import { Coordinates } from 'src/app/api/models';
 })
 
 export class ShipComponent  {
-
     @Input() boardSize!: number;
     @Input() cellPixels!: number;
     @Input() name!: string;
@@ -19,5 +18,4 @@ export class ShipComponent  {
     @Input() col!: number;
     @Input() row!: number;
     @Input() occupiedCoords!: Coordinates[];
-
 }
