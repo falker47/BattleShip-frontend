@@ -12,7 +12,7 @@ import { PlayerService } from '../api/player.service';
 })
 export class BoardComponent implements OnInit {
 
-  @Input() players!: Player[];
+  @Input() players!: Player[]; // TODO receive information from backend
   @ViewChild("board") boardElement!: ElementRef<HTMLElement>;
   public width: number = 10;
   public shipName: string = '';
@@ -30,7 +30,7 @@ export class BoardComponent implements OnInit {
   public playersFinalData: PlayerShipsData[] = [];
   public playersData: PlayerFrontend[] = [];
 
-  playersTemporary = [
+  playersTemporary: Player[] = [  // TODO replace with information from backend
     { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
     { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
     // { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
@@ -72,15 +72,15 @@ export class BoardComponent implements OnInit {
 
   private createFleet(): Array<ShipComponent> {
     return [
-      { name: 'ship_5_1_red', size: 5, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
-      { name: 'ship_4_1_green', size: 4, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
-      { name: 'ship_3_1_blue', size: 3, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
-      { name: 'ship_3_2_pink', size: 3, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
-      { name: 'ship_2_1_orange', size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
-      { name: 'ship_2_2_yellow', size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
-      { name: 'ship_2_3_lightgreen', size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
-      { name: 'ship_1_1_violet', size: 1, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
-      { name: 'ship_1_2_lightblue', size: 1, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { size: 5, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_5_1_red' },
+      { size: 4, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_4_1_green' },
+      { size: 3, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_3_1_blue' },
+      { size: 3, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_3_2_pink' },
+      { size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_2_1_orange' },
+      { size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_2_2_yellow' },
+      { size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_2_3_lightgreen' },
+      { size: 1, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_1_1_violet' },
+      { size: 1, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0, name: 'ship_1_2_lightblue' },
     ];
   }
   
@@ -140,8 +140,7 @@ export class BoardComponent implements OnInit {
   public startGame(): void {
     console.log(this.playersFinalData);
 
-    // TODO: Send information to backend
-    // this.playerService.postConfirmedShips();
+    // TODO send information to backend --> EXAMPLE: this.playerService.postConfirmedShips();
 
     this.router.navigate(["/game"]);
   }
