@@ -12,7 +12,14 @@ import { PlayerService } from '../api/player.service';
 })
 export class BoardComponent implements OnInit {
 
-  @Input() players!: Player[]; // TODO receive information from backend
+  @Input() players!: Player[];     // TODO receive information from backend
+  playersTemporary: Player[] = [   // TODO replace with information from backend
+    { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+    { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
+    { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+    // { id: '4', name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
+    // { id: '5', name: 'Daniele, userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+  ]
   @ViewChild("board") boardElement!: ElementRef<HTMLElement>;
   public width: number = 10;
   public shipName: string = '';
@@ -29,14 +36,6 @@ export class BoardComponent implements OnInit {
   public currentIndex: number = 0;
   public playersFinalData: PlayerShipsData[] = [];
   public playersData: PlayerFrontend[] = [];
-
-  playersTemporary: Player[] = [  // TODO replace with information from backend
-    { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-    { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
-    // { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-    // { id: '4', name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
-    // { id: '5', name: 'Daniele, userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-  ]
 
 
   constructor(private playerService: PlayerService, private router: Router) {}
@@ -125,7 +124,6 @@ export class BoardComponent implements OnInit {
     let nextIndex = ++this.currentIndex;
     if (this.playersData[nextIndex] !== undefined) {
       this.currentPlayer = this.getCurrentPlayer(nextIndex);
-      this.playerBoard = this.getEmptyBoard();
       this.shipList1 = this.createFleet();
       this.shipList2 = [];
     }
