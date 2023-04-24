@@ -9,9 +9,11 @@ import { Coordinates } from 'src/app/api/models';
 
 export class ShipComponent  {
 
+    @Input() boardSize!: number;
+    @Input() cellPixels!: number;
     @Input() name!: string;
     @Input() size!: number;
-    @Input() rotate!: boolean;
+    @Input() isVertical!: boolean;
     @Input() left!: number;
     @Input() top!: number;
     @Input() col!: number;

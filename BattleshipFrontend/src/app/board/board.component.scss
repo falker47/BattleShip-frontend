@@ -11,8 +11,52 @@
     font-size: 2em;
     text-transform: uppercase;
     letter-spacing: 3px;
-    margin: 2em 0 1em 0;
+    margin-top: 2em;
   }
+
+  .config {
+    min-height: 200px;
+    margin: 0 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.instructions {
+  max-width: 600px;
+  font-family: var(--font-paragraph);
+  background-color: rgba(0, 0, 0, .6);
+  padding: 1em;
+  border-radius: 10px;
+
+  h4 {
+    align-self: center;
+    margin-bottom: .5em;
+  }
+
+  p {
+    font-size: .9em;
+  }
+}
+
+.start-btn {
+  margin-bottom: 2em;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--white-color);
+  border: none;
+  border-radius: 5px;
+  background-color: var(--btn-bg-color);
+  padding: 0.5em 1em;
+}
+
+.start-btn:hover,
+.start-btn:focus {
+  cursor: pointer;
+  background-color: var(--btn-hover-color);
 }
 
 .lists-container {
@@ -33,7 +77,6 @@
 
 .ships {
   height: 150px;
-  margin: 40px;
 
   h3 {
     font-family: var(--font-log);
@@ -42,6 +85,10 @@
     letter-spacing: 2px;
     border-bottom: 1px solid var(--white-color);
     margin-bottom: 1.5em;
+
+    span {
+      font-family: var(--font-log);
+    }
   }
 }
 
@@ -54,8 +101,6 @@ app-ship {
 }
 
 .cell {
-  width: 30px;
-  height: 30px;
   border: 1px solid var(--board-line-color);
   background-color: rgba(0, 162, 255, 0.3);
 }
@@ -64,21 +109,17 @@ app-ship {
   background-color: rgb(7, 120, 186);
 }
 
-.start-btn {
-  margin-bottom: 2em;
-  text-transform: uppercase;
-  font-size: 1.2em;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--white-color);
-  border: none;
-  border-radius: 5px;
-  background-color: var(--btn-bg-color);
-  padding: 0.5em 1em;
+.cell-large {
+  width: 30px;
+  height: 30px;
 }
 
-.start-btn:hover,
-.start-btn:focus {
-  cursor: pointer;
-  background-color: var(--btn-hover-color);
+.cell-medium {
+  width: 25px;
+  height: 25px;
+}
+
+.cell-small {
+  width: 20px;
+  height: 20px;
 }

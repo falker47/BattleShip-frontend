@@ -28,9 +28,22 @@
 
 .ship-box-cell {
   border: 1px dotted;
+  display: inline-block;
+}
+
+.ship-box-cell-large {
   width: 30px;
   height: 30px;
-  display: inline-block;
+}
+
+.ship-box-cell-medium {
+  width: 25px;
+  height: 25px;
+}
+
+.ship-box-cell-small {
+  width: 20px;
+  height: 20px;
 }
 
 #ship_5_1_red { background-color: #ff0000; }

@@ -2,17 +2,21 @@
   id="{{ name }}"
   class="ship-box"
   [ngStyle]="{
-    'width': (rotate === true) ? '30px' : (30 * size + 'px'),
-    'height': (rotate === true) ? (30 * size + 'px') : '30px'
-  }"
->
+    'width': isVertical ? (cellPixels + 'px') : (cellPixels * size + 'px'),
+    'height': isVertical ? (cellPixels * size + 'px') : (cellPixels + 'px')
+  }">
   <div class="ship-draggable-wrapper">
     <div
       *ngFor="let i of [0, 1, 2, 3, 4].slice(0, size)"
       class="ship-box-cell"
+      [ngClass]="{
+        'ship-box-cell-large': boardSize === 10 || boardSize === 15,
+        'ship-box-cell-medium': boardSize === 20 || boardSize === 25,
+        'ship-box-cell-small': boardSize === 30
+      }"
       [ngStyle]="{
-        'transform': (rotate === true) ? 'rotate(90deg)' : 'none',
-        'display': (rotate === true) ? 'block' : 'inline-block'
+        'transform': (isVertical === true) ? 'vertical(90deg)' : 'none',
+        'display': (isVertical === true) ? 'block' : 'inline-block',
       }"
     ></div>
   </div>

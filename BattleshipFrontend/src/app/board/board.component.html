@@ -1,24 +1,32 @@
 <div class="config-container">
   <h2>Position your ships</h2>
 
-  <button *ngIf="this.shipList1.length === 0" class="start-btn" (click)="startGame()">
-    Start game
-  </button>
+  <div class="config">
+    <div *ngIf="this.shipList1.length > 0" class="instructions">
+      <h4>Instructions</h4>
+      <p>1. To place a ship inside the board just drag it from the "Available Ships" section and drop it into the board.</p>
+      <p>2. To rotate a ship double click the ship above "Available Ships".</p>
+      <p>3. To reset a ship that's already inside the board just double click it.</p>
+    </div>
+  
+    <button *ngIf="this.shipList1.length === 0" class="start-btn" (click)="startGame()">
+      Start game
+    </button>
+  </div>
 
   <div class="lists-container">
 
       <div class="container-1">
         <div class="ships">
-          <h3>Available ships: {{this.shipList1.length}}</h3>
+          <h3>Available ships: 
+            <span [ngStyle]="{'color': (this.shipList1.length === 0) ? 'red' : ''}">{{this.shipList1.length}}</span>
+          </h3>
 
           <div class="list-1" #list
             (mouseover)="hoveredPlace(list.getBoundingClientRect(), 'list', -1, -1)"
             >
             <div *ngIf="shipList1.length > 0">
-              <div [ngStyle]="{
-                'width': shipList1[0].rotate === true ? '30px' : (30 * shipList1[0].size + 'px'),
-                'height': shipList1[0].rotate === true ? (30 * shipList1[0].size + 'px') : '30px'
-              }">
+              <div>
                 <app-ship
                   cdkDrag
                   id="0"
@@ -26,7 +34,9 @@
                   [style.left.px]="xInitial"
                   [size]="shipList1[0].size"
                   [name]="shipList1[0].name"
-                  [rotate]="shipList1[0].rotate"
+                  [isVertical]="shipList1[0].isVertical"
+                  [boardSize]="width"
+                  [cellPixels]="cellPixels"
                   (dblclick)="rotateAvailableShip(0)"
                   (cdkDragStarted)="dragStarted(shipList1[0].name)"
                   (cdkDragEnded)="dragEnded($event)"
@@ -42,17 +52,15 @@
         <div class="list-2">
           <div *ngFor="let ship of shipList2; let i = index">
             <app-ship
-              [ngStyle]="{
-                'width': ship.rotate === true ? '30px' : (30 * ship.size + 'px'),
-                'height': ship.rotate === true ? (30 * ship.size + 'px') : '30px'
-              }"
               cdkDrag
               id="{{i}}"
               [style.top.px]="ship.top"
               [style.left.px]="ship.left"
               [size]="ship.size"
               [name]="ship.name"
-              [rotate]="ship.rotate"
+              [isVertical]="ship.isVertical"
+              [boardSize]="width"
+              [cellPixels]="cellPixels"
               (dblclick)="resetShip(i)"
               (cdkDragStarted)="dragStarted(ship.name)"
               (cdkDragEnded)="dragEnded($event)"
@@ -63,7 +71,14 @@
           <div class="board" #board> <!-- TODO: This board has to have the player's id -->
             <div class="row" #rows *ngFor="let row of playerBoard; let x = index" id="{{x+1}}">
               <div class="col" #cols *ngFor="let box of row; let y = index" id="{{y+1}}" >
-                <div class="cell" #cell
+                <div 
+                  class="cell" 
+                  [ngClass]="{
+                    'cell-large': playerBoard.length === 10 || playerBoard.length === 15, 
+                    'cell-medium': playerBoard.length === 20 || playerBoard.length === 25,
+                    'cell-small': playerBoard.length === 30
+                  }" 
+                  #cell
                   (mouseover)="hoveredPlace(cell.getBoundingClientRect(), 'cell', y+1, x+1)"
                 ></div>
               </div>
