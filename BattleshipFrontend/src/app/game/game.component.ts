@@ -19,11 +19,10 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.playerBoard = this.getEmptyBoard();
-    this.playerBoard = this.getEmptyBoard();
   }
 
   private getEmptyBoard(): number[][] {
-    for (let i = 0; i <= 2; i++) {
+    for (let i = 0; i <= 6; i++) {
       if (i > 2) this.width += 5;
     }
     return Array.from({ length: this.width }, () => Array(this.width).fill(0));

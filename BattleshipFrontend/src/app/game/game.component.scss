@@ -3,10 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   background-color: rgba(0, 162, 255, 0.3);
-}
-
-.userBoard {
-  margin-right: 3em;
+  margin: 0 1.5em 1em 1.5em;
 }
 
 .userRow,
@@ -25,6 +22,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .general-container {
@@ -68,6 +66,8 @@ h3 {
 }
 
 #logs {
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: visible;
   height: 400px;
+  max-width: 400px;
 }
