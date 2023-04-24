@@ -1,0 +1,19 @@
+.game-board {
+  width: 200px;
+  height: 200px;
+}
+
+#boards-container {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.block {
+  width: 20px;
+  height: 20px;
+  border: solid 1px black;
+  box-sizing: border-box;
+}
