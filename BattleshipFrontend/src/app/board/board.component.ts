@@ -70,15 +70,13 @@ export class BoardComponent implements OnInit {
   }
 
 
-  // DRAG START
   public dragStarted(shipName: string): void {
     this.dragStart = this.hoverPlace;
     this.shipName = shipName;
   }
 
 
-  // DRAGGING - SPACE VALIDATION
-  public hoveredElement(position: any, elementType: string, row: number, col: number): void {
+  public hoveredDropPlaceValidation(position: any, elementType: string, row: number, col: number): void {
     let dropPlace = {} as DragModel;
     dropPlace.cellX = position.x;
     dropPlace.cellY = position.y;
@@ -91,7 +89,7 @@ export class BoardComponent implements OnInit {
       if (currentShip === undefined) {
         currentShip = this.shipList2.find(ship => ship.name === this.shipName);
       }
-      if (currentShip !== undefined) {       
+      if (currentShip !== undefined) {
         if (!currentShip.rotate) {                                              // *Current ship is HORIZONTAL
           if (currentShip.size <= (this.width - col + 1)) {                     // Current ship size is <= than remaining space in a row
             if (this.shipList2[0] !== undefined) {
@@ -160,29 +158,11 @@ export class BoardComponent implements OnInit {
             this.hoverPlace = this.dragStart;
           }
         }
-      } 
+      }
     }
   }
 
 
-  public dragMoved(event: CdkDragMove): void {
-    this.decreaseZIndex(event.source.element);
-  }
-
-  private decreaseZIndex(element: ElementRef): void {
-    element.nativeElement.style.zIndex = "-1";
-    let elem = element.nativeElement.children[0] as HTMLElement;
-    elem.style.zIndex = "-1";
-  }
-
-  private increaseZIndex(element: ElementRef): void {
-    element.nativeElement.style.zIndex = "100";
-    let elem = element.nativeElement.children[0] as HTMLElement;
-    elem.style.zIndex = "100";
-  }
-
-
-  // DRAG END
   public dragEnded(event: CdkDragEnd): void {
     this.dragEnd = this.hoverPlace;
     this.increaseZIndex(event.source.element);
@@ -250,6 +230,23 @@ export class BoardComponent implements OnInit {
   }
 
 
+  public dragMoved(event: CdkDragMove): void {
+    this.decreaseZIndex(event.source.element);
+  }
+  
+  private decreaseZIndex(element: ElementRef): void {
+    element.nativeElement.style.zIndex = "-1";
+    let elem = element.nativeElement.children[0] as HTMLElement;
+    elem.style.zIndex = "-1";
+  }
+  
+  private increaseZIndex(element: ElementRef): void {
+    element.nativeElement.style.zIndex = "100";
+    let elem = element.nativeElement.children[0] as HTMLElement;
+    elem.style.zIndex = "100";
+  }
+
+
   public getFinalData(): void {
     const occupiedCoords: Coordinates[][] = [];
     this.shipList2.forEach(ship => occupiedCoords.push(ship.occupiedCoords));
@@ -266,4 +263,5 @@ export class BoardComponent implements OnInit {
     console.log(this.playerFinalData)
     // this.router.navigate(["/game"]);
   }
+
 }
