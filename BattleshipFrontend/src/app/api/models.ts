@@ -25,12 +25,12 @@ export interface Coordinates {
 }
 
 export interface PlayerShipsData {
-  playerId: string;
+  playerId: number;
   ships: Coordinates[][];
 }
 
 export interface PlayerFrontend {
-  id: string;
+  id: number;
   name: string;
   userGridId: number;
   shotGridId: number;
@@ -53,7 +53,7 @@ export interface CellApi {
   xaxis: number;
   yaxis: number;
   state: number;
-  shipId?: string;
+  shipId?: number;
 }
 
 export interface GridApi {
@@ -62,7 +62,7 @@ export interface GridApi {
 }
 
 export interface PlayerApi {
-  id: string;
+  id: number;
   name: string;
   userGridId: number;
   shotGridId: number;

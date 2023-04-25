@@ -16,14 +16,14 @@ window.addEventListener('beforeunload', (event) => {
 })
 export class BoardComponent implements OnInit {
 
-  @Input() players!: PlayerApi[];     // TODO receive information from backend
-  playersTemporary: PlayerApi[] = [   // TODO replace with information from backend
-    { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-    { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
-    { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-    { id: '4', name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
-    { id: '5', name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-  ]
+  @Input() players!: PlayerApi[]; // TODO receive information from backend
+  playersTemporary: PlayerApi[] = [   
+    { id: 1, name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+    { id: 2, name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
+    // { id: 3, name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+    // { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
+    // { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+  ] // TODO replace with information from backend
   @ViewChild("board") boardElement!: ElementRef<HTMLElement>;
   public width: number = 10;
   public shipName: string = '';
