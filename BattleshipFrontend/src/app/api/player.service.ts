@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Player, PlayerFront, Shot, ShipsFront, GridApi, Ship, PlayerApi, ShipsApi } from './models';
+import { PlayerInitialData, Shot, GridApi, PlayerApi, ShipApi, PlayerShipsData } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { Player, PlayerFront, Shot, ShipsFront, GridApi, Ship, PlayerApi, ShipsA
 export class PlayerService {
   // quando ci sarà il db online:
   // URL = 'https://api-battleship.azurewebsites.net/api/Players/';
-  URL = 'https://localhost:7100/api/Players/'
+  URL = 'https://localhost:7100/api/Players/';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -37,14 +37,14 @@ export class PlayerService {
   }
 
   getShipsByPlayerId(id: number) {
-    return this.httpClient.get<ShipsApi[]>(this.URL + 'getShipsByPlayerId/' + id);
+    return this.httpClient.get<ShipApi[]>(this.URL + 'getShipsByPlayerId/' + id);
   }
 
-  postCreateGame(players: PlayerFront[]) {
+  postCreateGame(players: PlayerInitialData[]) {
     return this.httpClient.post<string>(this.URL + 'postCreateGame', players);
   }
 
-  postPlaceShips(ships: ShipsFront) {
+  postPlaceShips(ships: PlayerShipsData) {
     return this.httpClient.post<string>(this.URL + 'postPlaceShips', ships);
   }
 

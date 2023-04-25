@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!confirmedPlayers">
+<div class="container">
     <h1 class="title">Battleship</h1>
 
     <div class="add-player-container">
@@ -17,7 +17,7 @@
 
     <ul class="players-list">
         <li *ngFor="let player of players">
-            <app-player (remove)="removePlayer(player)" [player]="player"></app-player>
+            <app-player (remove)="removePlayer(player)" [player]="player"></app-player> 
         </li>
     </ul>
 
@@ -34,7 +34,3 @@
         Confirm players
     </button>
 </div>
-
-
-
-<app-board *ngIf="confirmedPlayers" [players]="players"></app-board>

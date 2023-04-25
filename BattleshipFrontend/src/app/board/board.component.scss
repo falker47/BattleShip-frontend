@@ -1,185 +1,164 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--white-color);
-    padding-bottom: 4em;
-
-    h2 {
-        font-family: var(--font-log);
-        font-size: 2em;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        margin: 2em 0 1em 0;
-    }
+.config-page-container {
+  color: var(--white-color);
+  font-family: var(--font-paragraph);
+  padding-bottom: 4em;
 }
 
-
-.flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-
-// --- start DIFFERENT BOARD SIZES ---//
-.board-container {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    
-    .board-cell {
-        background-color: var(--board-bg-color);
-        border: 1px solid var(--board-line-color);
-        box-sizing: border-box;
-    }
-}
-// 2 players
-.board-container-10 {
-    width: 500px;
-    height: 500px;
-   
-    .board-cell {
-        width: calc(500px / 10);
-        height: calc(500px / 10);
-    }
-}
-// 3 players
-.board-container-15 {
-    width: 500px;
-    height: 500px;
-
-    .board-cell {
-        width: calc(500px / 15);
-        height: calc(500px / 15);
-    }
-}
-// 4 players
-.board-container-20 {
-    width: 550px;
-    height: 550px;
-
-    .board-cell {
-        width: calc(550px / 20);
-        height: calc(550px / 20);
-    }
-}
-// 5 players
-.board-container-25 {
-    width: 600px;
-    height: 600px;
-
-    .board-cell {
-        width: calc(600px / 25);
-        height: calc(600px / 25);
-    }
-}
-// 6 players
-.board-container-30 {
-    width: 700px;
-    height: 700px;
-
-    .board-cell {
-        width: calc(700px / 30);
-        height: calc(700px / 30);
-    }
-}
-// --- end DIFFERENT BOARD SIZES ---//
-
-
-.right-side {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-left: 3em;
-
-    .flip {
-        transform: rotate(90deg);
-    }    
+.title {
+  font-family: var(--font-log);
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 2em;
 }
 
+.config {
+  width: 60%;
+  margin: 3em 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-.ships-container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 15em;
-    height: 15em;
+  .player {
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    margin-right: 2em;
 
-    .ship {
-        background-color: rgb(172, 166, 166);
-        border-radius: 3em;
-        margin: 1em;
-        transform:translateZ(0);
-        position:relative; z-index:0;
-        will-change: transform;
+    span {
+      color: coral;
+      text-shadow: 1px 1px 5px black;
+    }
+  }
+
+  .instructions {
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 1em 2em;
+    border-radius: 10px;
+
+    h4 {
+      align-self: center;
+      border-bottom: 1px solid var(--white-color);
+      padding-bottom: 0.2em;
+      margin-bottom: 0.5em;
     }
 
-    .ship_5_1 {
-        width: calc(25px * 5);
-        height: 25px;
+    p {
+      font-size: 0.9em;
     }
-
-    .ship_4_1 {
-        width: calc(25px * 4);
-        height: 25px;
-    }
-
-    .ship_3_1, .ship_3_2 {
-        width: calc(25px * 3);
-        height: 25px;
-    }
-
-    .ship_2_1, .ship_2_2, .ship_2_3 {
-        width: calc(25px * 2);
-        height: 25px;
-    }
-
-    .ship_1_1, .ship_1_2 {
-        width: 25px;
-        height: 25px;
-    }
-
-    .ship_5_1 { background-color: #ffff00; }
-    .ship_4_1 { background-color: #ff5900; }
-    .ship_3_1 { background-color: #008000; }
-    .ship_3_2 { background-color: #0000ff; }
-    .ship_2_1 { background-color: #ffc0cb; }
-    .ship_2_2 { background-color: #870887; }
-    .ship_2_3 { background-color: #ffa500; }
-    .ship_1_1 { background-color: #9cf24b; }
-    .ship_1_2 { background-color: #6bd7e8; }
-
-
+  }
 }
 
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5em;
+}
 
-.btns-container {
-    margin-top: 2em;
+.start-btn,
+.confirm-btn {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--white-color);
+  border: none;
+  border-radius: 5px;
+  background-color: var(--btn-bg-color);
+  padding: 0.5em 1em;
+}
 
-    .flip-btn,
-    .start-btn {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        font-weight: 700;
-        letter-spacing: 1px;
-        color: var(--white-color);
-        border: none;
-        border-radius: 5px;
-        background-color: var(--btn-bg-color);
-        padding: .5em 1em;
-    }
+.start-btn {
+  font-size: 2em;
+  transition: 250ms ease-in-out;
+}
 
-    .flip-btn {
-        margin-right: 1em;
+.start-btn:hover,
+.start-btn:focus,
+.confirm-btn:hover,
+.confirm-btn:focus {
+  cursor: pointer;
+  background-color: var(--btn-hover-color);
+}
+
+.start-btn:hover,
+.start-btn:focus {
+  transform: scale(1.2);
+}
+
+.lists-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.container-1 {
+  margin-left: 2em;
+  display: inline;
+  justify-content: space-between;
+}
+
+.list-1,
+.list-2 {
+  position: relative;
+  height: 100%;
+}
+
+.ships {
+  height: 150px;
+
+  h3 {
+    font-family: var(--font-log);
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--white-color);
+    margin-bottom: 1.5em;
+
+    span {
+      font-family: var(--font-log);
     }
-    
-    .flip-btn:hover, 
-    .flip-btn:focus,
-    .start-btn:hover,
-    .start-btn:focus {
-        cursor: pointer;
-        background-color: var(--btn-hover-color);
-    }
+  }
+}
+
+app-ship {
+  position: absolute;
+}
+
+.row {
+  display: inline-block;
+}
+
+.cell {
+  border: 1px solid var(--board-line-color);
+  background-color: rgba(0, 162, 255, 0.3);
+}
+
+.cell:hover {
+  background-color: rgb(7, 120, 186);
+}
+
+.cell-large {
+  width: 30px;
+  height: 30px;
+}
+
+.cell-medium {
+  width: 25px;
+  height: 25px;
+}
+
+.cell-small {
+  width: 20px;
+  height: 20px;
 }

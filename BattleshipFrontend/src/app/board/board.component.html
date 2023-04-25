@@ -1,49 +1,104 @@
-<div class="container">
-    <h2>Position your ships</h2>
+<div class="config-page-container">
 
-    <div class="flex" cdkDropListGroup>        
-        <!-- board-container has to have an id! (players id from backend) -->
-        <div 
-            class="board-container" 
-            [ngClass]="{
-            'board-container-10': width === 10,
-            'board-container-15': width === 15,
-            'board-container-20': width === 20,
-            'board-container-25': width === 25,
-            'board-container-30': width === 30
-        }">
-            <div 
-                cdkDropList
-                (cdkDropListDropped)="drop($event)"
-                [cdkDropListData]="droppedShips"
-                *ngFor="let boardCell of boardCells; let i = index"
-                id="{{i}}"
-                class="board-cell" 
-            >
-            </div>
-            <div *ngFor="let droppedShip of droppedShips"></div>
-        </div>
-
-
-        <div class="right-side">
-            <div 
-                #shipsContainer 
-                cdkDropList
-                [cdkDropListData]="{ships}"
-                class="ships-container" 
-            >
-                <div 
-                    *ngFor="let ship of ships; let i = index"
-                    id="{{i}}"
-                    class="{{ship.name}} ship"
-                    cdkDrag
-                ></div>
-            </div>
-        </div>
-    </div>
+  <div class="content-container" *ngIf="areAllPlayersReady() === false">
+    <h2 class="title">Position your ships</h2>
     
-    <div class="btns-container">
-        <button class="flip-btn" (click)="flip()">Flip</button>
-        <button class="start-btn" (click)="start()">Start</button>
+    <div class="config" >
+      <p class="player">Player: <span>{{currentPlayer.name}}</span></p>
+  
+      <div *ngIf="this.shipList1.length > 0" class="instructions">
+        <h4>Instructions</h4>
+        <p>1. To place a ship inside the board drag it from the "Available Ships" section and drop it into the board.</p>
+        <p>2. To rotate a ship double click the ship above "Available Ships".</p>
+        <p>3. To reset a ship that's already inside the board double click it.</p>
+      </div>
+  
+      <button *ngIf="this.shipList1.length === 0" class="confirm-btn" (click)="confirmShips()">
+        Confirm ships
+      </button>
     </div>
+  
+  
+    <div class="lists-container">
+  
+        <div class="container-1">
+          <div class="ships">
+            <h3>Available ships: 
+              <span [ngStyle]="{'color': (this.shipList1.length === 0) ? 'red' : ''}">{{this.shipList1.length}}</span>
+            </h3>
+  
+            <div class="list-1" #list
+              (mouseover)="hoveredPlace(list.getBoundingClientRect(), 'list', -1, -1)"
+              >
+              <div *ngIf="shipList1.length > 0">
+                <div>
+                  <app-ship
+                    cdkDrag
+                    id="0"
+                    [style.top.px]="yInitial"
+                    [style.left.px]="xInitial"
+                    [size]="shipList1[0].size"
+                    [name]="shipList1[0].name"
+                    [isVertical]="shipList1[0].isVertical"
+                    [boardSize]="width"
+                    [cellPixels]="cellPixels"
+                    (dblclick)="rotateAvailableShip(0)"
+                    (cdkDragStarted)="dragStarted(shipList1[0].name)"
+                    (cdkDragEnded)="dragEnded($event)"
+                    (cdkDragMoved)="dragMoved($event)"
+                    ></app-ship>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="container-2" id="{{currentPlayer.team}}">
+          <div class="list-2">
+            <div *ngFor="let ship of shipList2; let i = index">
+              <app-ship
+                cdkDrag
+                id="{{i}}"
+                [style.top.px]="ship.top"
+                [style.left.px]="ship.left"
+                [size]="ship.size"
+                [name]="ship.name"
+                [isVertical]="ship.isVertical"
+                [boardSize]="width"
+                [cellPixels]="cellPixels"
+                (dblclick)="resetShip(i)"
+                (cdkDragStarted)="dragStarted(ship.name)"
+                (cdkDragEnded)="dragEnded($event)"
+                (cdkDragMoved)="dragMoved($event)"
+                ></app-ship>
+            </div>
+  
+            <div class="board" #board>
+              <div class="row" #rows *ngFor="let row of playerBoard; let x = index" id="{{x+1}}">
+                <div class="col" #cols *ngFor="let box of row; let y = index" id="{{y+1}}" >
+                  <div 
+                    class="cell" 
+                    [ngClass]="{
+                      'cell-large': playerBoard.length === 10 || playerBoard.length === 15, 
+                      'cell-medium': playerBoard.length === 20 || playerBoard.length === 25,
+                      'cell-small': playerBoard.length === 30
+                    }" 
+                    #cell
+                    (mouseover)="hoveredPlace(cell.getBoundingClientRect(), 'cell', y+1, x+1)"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+    </div>
+  </div>
+
+
+  <div class="center" *ngIf="this.shipList1.length === 0 && areAllPlayersReady() === true">
+    <h2 class="title">Everyone's ready!</h2>
+    <button class="start-btn" (click)="startGame()">Start game</button>
+  </div>
+
 </div>

@@ -1,12 +1,22 @@
-//body chiamate post
-export interface PlayerFront {
+// Frontend
+
+export interface PlayerInitialData {
   name: string;
   team: number;
 }
 
-export interface ShipsFront {
-  playerId: number;
-  shipsPosition: ShipsPosition;
+export interface DragModel {
+  cellX: number;
+  cellY: number;
+  type: string;
+  row: number;
+  col: number;
+}
+
+export interface ShipData {
+  name: string;
+  length: number;
+  coordinates: Coordinates[];
 }
 
 export interface Coordinates {
@@ -14,16 +24,19 @@ export interface Coordinates {
   y: number;
 }
 
-export interface ShipsPosition {
-  ship_5_1: Coordinates[]; // Size 5
-  ship_4_1: Coordinates[]; // Size 4
-  ship_3_1: Coordinates[]; // Size 3
-  ship_3_2: Coordinates[]; // Size 3
-  ship_2_1: Coordinates[]; // Size 2
-  ship_2_2: Coordinates[]; // Size 2
-  ship_2_3: Coordinates[]; // Size 2   // Example: [1,4] [5,6]
-  ship_1_1: Coordinates[]; // Size 1
-  ship_1_2: Coordinates[]; // Size 1
+export interface PlayerShipsData {
+  playerId: number;
+  ships: Coordinates[][];
+}
+
+export interface PlayerFrontend {
+  id: number;
+  name: string;
+  userGridId: number;
+  shotGridId: number;
+  team: number;
+  points: number;
+  confirmed: boolean;
 }
 
 export interface Shot {
@@ -32,7 +45,7 @@ export interface Shot {
   yAxis: number;
 }
 
-//response chiamate get
+// Backend - Response chiamate get
 
 export interface CellApi {
   id: string;
@@ -40,7 +53,7 @@ export interface CellApi {
   xaxis: number;
   yaxis: number;
   state: number;
-  shipId?: string;
+  shipId?: number;
 }
 
 export interface GridApi {
@@ -49,7 +62,7 @@ export interface GridApi {
 }
 
 export interface PlayerApi {
-  id: string;
+  id: number;
   name: string;
   userGridId: number;
   shotGridId: number;
@@ -57,41 +70,9 @@ export interface PlayerApi {
   points: number;
 }
 
-export interface ShipsApi {
+export interface ShipApi {
   id: number;
   playerId: number;
   length: number;
   hp: number;
-}
-
-//da sistemare
-
-export interface Ship {
-  name: string;
-  playerId?: number;
-  length: number;
-  hp: number;
-}
-
-export interface Player {
-  // id: string;
-  name: string;
-  // userGridId: number;
-  // shotGridId: number;
-  team: number;
-  // points: number;
-}
-
-export interface PlayerShipsData {
-  playerId: number;
-  ships: Coordinates[][];
-}
-
-export interface PlayerAPI {
-  id: string;
-  name: string;
-  userGridId: number;
-  shotGridId: number;
-  team: number;
-  points: number;
 }
