@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { PlayerFront } from '../api/models';
 import { Router } from '@angular/router';
 
+window.addEventListener('beforeunload', (event) => {
+  event.returnValue = `Are you sure you want to leave?`;
+});
 
 @Component({
   selector: 'app-landing-page',
@@ -24,7 +27,7 @@ export class LandingPageComponent {
     if (this.players.length === 0) {
       this.players.push({
         name: name,
-        team: 0, 
+        team: 0,
       });
       return;
     }
@@ -53,7 +56,7 @@ export class LandingPageComponent {
 
   confirmPlayers() {
     // PLAYER SERVICE! --> backend connection
-    
+
 
     this.confirmedPlayers = true;
     // this.router.navigate(['/board']); // maybe delete later
