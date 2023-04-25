@@ -17,8 +17,8 @@ export class BoardComponent implements OnInit {
     { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
     { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
     { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-    // { id: '4', name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
-    // { id: '5', name: 'Daniele, userGridId: 0, shotGridId: 0, team: 0, points: 0 },
+    { id: '4', name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
+    { id: '5', name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
   ]
   @ViewChild("board") boardElement!: ElementRef<HTMLElement>;
   public width: number = 10;
@@ -147,6 +147,7 @@ export class BoardComponent implements OnInit {
 
 
 
+  
 
   // ------------- SHIPS POSITIONING - DRAG & DROP ------------------ //
 

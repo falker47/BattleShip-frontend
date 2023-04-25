@@ -53,7 +53,7 @@
           </div>
         </div>
         
-        <div class="container-2">
+        <div class="container-2" id="{{currentPlayer.team}}">
           <div class="list-2">
             <div *ngFor="let ship of shipList2; let i = index">
               <app-ship
@@ -73,7 +73,7 @@
                 ></app-ship>
             </div>
   
-            <div class="board" #board id="{{currentPlayer.id}}">
+            <div class="board" #board>
               <div class="row" #rows *ngFor="let row of playerBoard; let x = index" id="{{x+1}}">
                 <div class="col" #cols *ngFor="let box of row; let y = index" id="{{y+1}}" >
                   <div 
