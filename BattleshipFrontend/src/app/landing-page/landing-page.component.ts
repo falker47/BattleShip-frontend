@@ -9,17 +9,14 @@ window.addEventListener('beforeunload', (event) => {
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss', '../../styles.scss']
+  styleUrls: ['./landing-page.component.scss', '../../styles.scss'],
 })
 export class LandingPageComponent {
-
   players: PlayerFront[] = [];
   limitNumPlayers = 6;
   confirmedPlayers = false;
 
-
   constructor(private router: Router) {}
-
 
   addPlayer(name: string) {
     if (!name) return;
@@ -48,11 +45,9 @@ export class LandingPageComponent {
     }
   }
 
-
   removePlayer(player: PlayerFront) {
     this.players.splice(this.players.indexOf(player), 1);
   }
-
 
   confirmPlayers() {
     // PLAYER SERVICE! --> backend connection
@@ -61,5 +56,4 @@ export class LandingPageComponent {
     this.confirmedPlayers = true;
     // this.router.navigate(['/board']); // maybe delete later
   }
-
 }
