@@ -1,40 +1,40 @@
 <div class="container" *ngIf="!confirmedPlayers">
-    <h1 class="title">Battleship</h1>
+  <h1 class="title">Battle</h1>
+  <h1 class="title">Ship</h1>
 
-    <div class="add-player-container">
-        <input 
-            #newPlayer
-            type="text"
-            placeholder="Enter player name"
-            (keyup.enter)="addPlayer(newPlayer.value); newPlayer.value = ''"
-        />
+  <div class="add-player-container">
+    <input
+      #newPlayer
+      type="text"
+      placeholder="Enter player name"
+      (keyup.enter)="addPlayer(newPlayer.value); newPlayer.value = ''"
+    />
 
-        <button 
-            (click)="addPlayer(newPlayer.value); newPlayer.value = ''"
-        >+</button>
-    </div>
-
-
-    <ul class="players-list">
-        <li *ngFor="let player of players">
-            <app-player (remove)="removePlayer(player)" [player]="player"></app-player>
-        </li>
-    </ul>
-
-    <span *ngIf="players.length === 6" class="limit-players-mesagge">
-        You have reached the limit number of players
-    </span>
-
-
-    <button 
-        *ngIf="players.length >= 2" 
-        class="confirm-players-btn"
-        (click)="confirmPlayers()"
-    >
-        Confirm players
+    <button (click)="addPlayer(newPlayer.value); newPlayer.value = ''">
+      +
     </button>
+  </div>
+
+  <ul class="players-list">
+    <li *ngFor="let player of players">
+      <app-player
+        (remove)="removePlayer(player)"
+        [player]="player"
+      ></app-player>
+    </li>
+  </ul>
+
+  <span *ngIf="players.length === 6" class="limit-players-mesagge">
+    You have reached the limit number of players
+  </span>
+
+  <button
+    *ngIf="players.length >= 2"
+    class="confirm-players-btn"
+    (click)="confirmPlayers()"
+  >
+    Confirm players
+  </button>
 </div>
-
-
 
 <app-board *ngIf="confirmedPlayers" [players]="players"></app-board>
