@@ -1,23 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Player } from './models';
+import { PlayerAPI } from './models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
 
-  url = '';
+  URL = '';
 
   constructor(private httpClient: HttpClient) {}
 
 
   getPlayers() {
-    return this.httpClient.get<Player[]>(this.url);
+    return this.httpClient.get<PlayerAPI[]>(this.URL);
   }
 
   getPlayersById() {
-    return this.httpClient.get<Player[]>(this.url);
+    return this.httpClient.get<PlayerAPI[]>(this.URL);
   }
 
 }

@@ -50,7 +50,7 @@ export interface Ship {
   hp: number;
 }
 
-export interface Player {
+export interface PlayerAPI {
   id: string;
   name: string;
   userGridId: number;

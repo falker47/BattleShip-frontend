@@ -52,6 +52,9 @@ export class LandingPageComponent {
 
   confirmPlayers() {
     console.log(this.players);
+
+    // TODO send players information to backend
+    
     this.router.navigate(['/board']); 
   }
 
