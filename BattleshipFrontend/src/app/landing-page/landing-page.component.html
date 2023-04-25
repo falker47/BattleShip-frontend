@@ -2,14 +2,14 @@
     <h1 class="title">Battleship</h1>
 
     <div class="add-player-container">
-        <input 
+        <input
             #newPlayer
             type="text"
             placeholder="Enter player name"
             (keyup.enter)="addPlayer(newPlayer.value); newPlayer.value = ''"
         />
 
-        <button 
+        <button
             (click)="addPlayer(newPlayer.value); newPlayer.value = ''"
         >+</button>
     </div>
@@ -26,8 +26,8 @@
     </span>
 
 
-    <button 
-        *ngIf="players.length >= 2" 
+    <button
+        *ngIf="players.length >= 2"
         class="confirm-players-btn"
         (click)="confirmPlayers()"
     >

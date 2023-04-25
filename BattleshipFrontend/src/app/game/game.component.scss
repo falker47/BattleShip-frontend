@@ -1,0 +1,73 @@
+.userBoard,
+.shotBoard {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgba(0, 162, 255, 0.3);
+  margin: 0 1.5em 1em 1.5em;
+}
+
+.userRow,
+.shotRow {
+  display: inline-block;
+}
+
+.userCell,
+.shotCell {
+  width: 20px;
+  height: 20px;
+  border: 1px var(--board-line-color) solid;
+}
+
+#boards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.general-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-color);
+  padding-bottom: 4em;
+}
+
+h2 {
+  font-family: var(--font-log);
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 2em 0 1em 0;
+}
+
+h3 {
+  font-family: var(--font-log);
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--white-color);
+  margin-bottom: 1.5em;
+
+  span {
+    font-family: var(--font-log);
+  }
+}
+
+#info {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+#leaderboard {
+  margin-right: 3em;
+}
+
+#logs {
+  overflow-y: scroll;
+  overflow-x: visible;
+  height: 400px;
+  max-width: 400px;
+}

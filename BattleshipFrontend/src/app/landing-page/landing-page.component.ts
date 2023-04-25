@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import { PlayerInitialData } from '../api/models';
 import { Router } from '@angular/router';
 
+window.addEventListener('beforeunload', (event) => {
+  event.returnValue = `Are you sure you want to leave?`;
+});
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss', '../../styles.scss']
+  styleUrls: ['./landing-page.component.scss', '../../styles.scss'],
 })
 export class LandingPageComponent {
 
@@ -27,7 +30,6 @@ export class LandingPageComponent {
       });
       return;
     }
-
     if (this.players.length === 1) {
       this.players.push({
         name: name,
@@ -35,7 +37,6 @@ export class LandingPageComponent {
       });
       return;
     }
-
     if (this.players.length < this.limitNumPlayers) {
       this.players.push({
         name: name,

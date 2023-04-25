@@ -1,9 +1,13 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { PlayerAPI, PlayerFrontend, DragModel, PlayerShipsData, Coordinates } from '../api/models';
+import { PlayerApi, PlayerFrontend, DragModel, PlayerShipsData, Coordinates } from '../api/models';
 import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { ShipComponent } from './ship/ship.component';
 import { Router } from '@angular/router';
 import { PlayerService } from '../api/player.service';
+
+window.addEventListener('beforeunload', (event) => {
+  event.returnValue = `Are you sure you want to leave?`;
+});
 
 @Component({
   selector: 'app-board',
@@ -12,8 +16,8 @@ import { PlayerService } from '../api/player.service';
 })
 export class BoardComponent implements OnInit {
 
-  @Input() players!: PlayerAPI[];     // TODO receive information from backend
-  playersTemporary: PlayerAPI[] = [   // TODO replace with information from backend
+  @Input() players!: PlayerApi[];     // TODO receive information from backend
+  playersTemporary: PlayerApi[] = [   // TODO replace with information from backend
     { id: '1', name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
     { id: '2', name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
     { id: '3', name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
@@ -108,7 +112,6 @@ export class BoardComponent implements OnInit {
 
     this.playersFinalData.push({
       playerId: this.currentPlayer.id,
-      team: this.currentPlayer.team,
       ships: occupiedCoords
     });
   }
