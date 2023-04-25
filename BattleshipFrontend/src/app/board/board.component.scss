@@ -2,6 +2,10 @@
   color: var(--white-color);
   font-family: var(--font-paragraph);
   padding-bottom: 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .content-container {
@@ -20,27 +24,19 @@
 }
 
 .config {
-  width: 60%;
-  margin: 3em 1em;
+  width: 90%;
+  max-width: 1000px;
+  margin: 2em 1em;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 
-  .player {
-    font-size: 1.5em;
-    letter-spacing: 1px;
-    margin-right: 2em;
-
-    span {
-      color: coral;
-      text-shadow: 1px 1px 5px black;
-    }
-  }
-
-  .instructions {
+  .config-instructions {
     max-width: 600px;
     background-color: rgba(0, 0, 0, 0.6);
     padding: 1em 2em;
+    margin-bottom: 1.5em;
     border-radius: 10px;
 
     h4 {
@@ -52,6 +48,23 @@
 
     p {
       font-size: 0.9em;
+    }
+  }
+
+  .config-player {
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .player {
+      font-size: 1.5em;
+      letter-spacing: 1px;
+  
+      span {
+        color: var(--btn-bg-color);
+        text-shadow: 1px 1px 5px black;
+      }
     }
   }
 }
@@ -66,8 +79,6 @@
 
 .start-btn,
 .confirm-btn {
-  margin-top: 2em;
-  margin-bottom: 2em;
   text-transform: uppercase;
   font-size: 1.2em;
   font-weight: 700;
@@ -79,7 +90,12 @@
   padding: 0.5em 1em;
 }
 
+.confirm-btn {
+  margin-left: 2em;
+}
+
 .start-btn {
+  margin: 2em .5em;
   font-size: 2em;
   transition: 250ms ease-in-out;
 }
@@ -115,8 +131,6 @@
 }
 
 .ships {
-  height: 150px;
-
   h3 {
     font-family: var(--font-log);
     font-size: 1.2em;
@@ -129,6 +143,14 @@
       font-family: var(--font-log);
     }
   }
+}
+
+.ships-not-empty {
+  height: 150px;
+}
+
+.ships-empty {
+  height: 70px;
 }
 
 app-ship {
@@ -161,4 +183,75 @@ app-ship {
 .cell-small {
   width: 20px;
   height: 20px;
+}
+
+@media(min-width: 1605px) {
+  .config-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5em;
+
+    h2 {
+      margin: auto;
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .config {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 500px;
+    margin-right: 3em;
+
+    .config-instructions {
+      margin: 0;
+      width: 100%;
+      margin-bottom: 2em;
+    }
+
+    .config-player {
+      margin: 0;
+      width: 100%;
+      margin: 0 1em;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-content: center;
+
+      .confirm-btn {
+        margin: 0;
+        margin-right: 1.5em;
+      }
+    }
+  }
+}
+
+@media(max-width: 930px) {
+  .lists-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-1 {
+    margin: 0;
+  }
+
+  .ships-not-empty {
+    height: 230px;
+  }
 }
