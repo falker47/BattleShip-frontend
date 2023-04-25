@@ -1,5 +1,4 @@
 .container {
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,7 +7,7 @@
 
 .title {
     font-family: var(--font-title);
-    font-size: 10em;
+    font-size: 8em;
     text-shadow: 1px 1px 5px black;
     color: var(--white-color);
     margin-top: .2em;

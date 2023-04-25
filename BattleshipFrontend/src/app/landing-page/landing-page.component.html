@@ -1,15 +1,15 @@
-<div class="container" *ngIf="!confirmedPlayers">
+<div class="container">
     <h1 class="title">Battleship</h1>
 
     <div class="add-player-container">
-        <input 
+        <input
             #newPlayer
             type="text"
             placeholder="Enter player name"
             (keyup.enter)="addPlayer(newPlayer.value); newPlayer.value = ''"
         />
 
-        <button 
+        <button
             (click)="addPlayer(newPlayer.value); newPlayer.value = ''"
         >+</button>
     </div>
@@ -17,7 +17,7 @@
 
     <ul class="players-list">
         <li *ngFor="let player of players">
-            <app-player (remove)="removePlayer(player)" [player]="player"></app-player>
+            <app-player (remove)="removePlayer(player)" [player]="player"></app-player> 
         </li>
     </ul>
 
@@ -26,15 +26,11 @@
     </span>
 
 
-    <button 
-        *ngIf="players.length >= 2" 
+    <button
+        *ngIf="players.length >= 2"
         class="confirm-players-btn"
         (click)="confirmPlayers()"
     >
         Confirm players
     </button>
 </div>
-
-
-
-<app-board *ngIf="confirmedPlayers" [players]="players"></app-board>

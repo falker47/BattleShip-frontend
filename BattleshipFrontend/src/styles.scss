@@ -1,5 +1,5 @@
-// GENERAL CSS RESET
-/* Box sizing rules */
+// *GENERAL CSS RESET
+
 *,
 *::before,
 *::after {
@@ -7,7 +7,6 @@
   font-size: 1em;
 }
 
-/* Remove default margin */
 body,
 h1,
 h2,
@@ -22,37 +21,31 @@ dd {
   padding: 0;
 }
 
-/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
 ul[role="list"],
 ol[role="list"] {
   list-style: none;
 }
 
-/* Set core root defaults */
 html:focus-within {
   scroll-behavior: smooth;
 }
 
-/* Set core body defaults */
 body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
 }
 
-/* A elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
 }
 
-/* Make images easier to work with */
 img,
 picture {
   max-width: 100%;
   display: block;
 }
 
-/* Inherit fonts for inputs and buttons */
 input,
 button,
 textarea,
@@ -60,7 +53,6 @@ select {
   font: inherit;
 }
 
-/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;
@@ -76,32 +68,40 @@ select {
   }
 }
 
+// *GLOBAL VARIABLES
 
-// GLOBAL VARIABLES
 :root {
-    --font-title: "Aboreto", sans-serif;
-    --font-paragraph: "Karla", sans-serif;
-    --font-log: "Chivo Mono", sans-serif;
+  --font-title: "Aboreto", sans-serif;
+  --font-paragraph: "Karla", sans-serif;
+  --font-log: "Chivo Mono", sans-serif;
 
-    --white-color: whitesmoke;
-    --black-color: #474040;
-    --highlight-color: #09a13e;
-    --link-color: #090993;
+  --white-color: whitesmoke;
+  --black-color: #474040;
+  --highlight-color: #09a13e;
+  --link-color: #090993;
 
-    --board-bg-color: #0077b6;
-    --board-line-color: #0096c7;
+  --board-bg-color: #0077b6;
+  --board-bg-transparent-color: rgba(0, 162, 255, 0.3);
+  --board-line-color: #0096c7;
 
-    --btn-bg-color: #51ba76;
-    --btn-hover-color: #24af55;
-} 
+  --btn-bg-color: #51ba76;
+  --btn-hover-color: #24af55;
+}
+
+// *GENERAL STYLES
 
 body {
-    background: 
-      linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-      url(./assets/battleship-bg.svg);
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    font-family: var(--font-paragraph);
-    font-size: 1em;
-} 
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url(./assets/images/ships-bg.jpeg);
+  background-repeat: repeat;
+  min-height: 100vh;
+  padding: 0 0 4em 0;
+  font-family: var(--font-paragraph);
+  font-size: 1em;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: .9em;
+  }
+}

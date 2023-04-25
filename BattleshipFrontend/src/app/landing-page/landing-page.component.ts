@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
-import { PlayerFront } from '../api/models';
+import { PlayerInitialData } from '../api/models';
 import { Router } from '@angular/router';
 
+window.addEventListener('beforeunload', (event) => {
+  event.returnValue = `Are you sure you want to leave?`;
+});
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss', '../../styles.scss']
+  styleUrls: ['./landing-page.component.scss', '../../styles.scss'],
 })
 export class LandingPageComponent {
 
-  players: PlayerFront[] = [];
-  limitNumPlayers = 6;
-  confirmedPlayers = false;
+  public players: PlayerInitialData[] = [];
+  public limitNumPlayers = 6;
 
 
   constructor(private router: Router) {}
@@ -24,11 +26,10 @@ export class LandingPageComponent {
     if (this.players.length === 0) {
       this.players.push({
         name: name,
-        team: 0, 
+        team: 0,
       });
       return;
     }
-
     if (this.players.length === 1) {
       this.players.push({
         name: name,
@@ -36,7 +37,6 @@ export class LandingPageComponent {
       });
       return;
     }
-
     if (this.players.length < this.limitNumPlayers) {
       this.players.push({
         name: name,
@@ -46,17 +46,17 @@ export class LandingPageComponent {
   }
 
 
-  removePlayer(player: PlayerFront) {
+  removePlayer(player: PlayerInitialData) {
     this.players.splice(this.players.indexOf(player), 1);
   }
 
 
   confirmPlayers() {
-    // PLAYER SERVICE! --> backend connection
-    
+    console.log(this.players);
 
-    this.confirmedPlayers = true;
-    // this.router.navigate(['/board']); // maybe delete later
+    // TODO send players information to backend
+    
+    this.router.navigate(['/board']); 
   }
 
 }
