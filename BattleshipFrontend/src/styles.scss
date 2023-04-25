@@ -144,3 +144,9 @@ body {
   font-family: var(--font-paragraph);
   font-size: 1em;
 }
+
+@media (max-width: 768px) {
+  body {
+    font-size: .9em;
+  }
+}
