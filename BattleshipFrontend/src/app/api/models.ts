@@ -81,3 +81,17 @@ export interface Player {
   team: number;
   // points: number;
 }
+
+export interface PlayerShipsData {
+  playerId: number;
+  ships: Coordinates[][];
+}
+
+export interface PlayerAPI {
+  id: string;
+  name: string;
+  userGridId: number;
+  shotGridId: number;
+  team: number;
+  points: number;
+}

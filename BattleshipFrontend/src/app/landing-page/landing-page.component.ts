@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { PlayerFront } from '../api/models';
 import { Router } from '@angular/router';
 
+window.addEventListener('beforeunload', (event) => {
+  event.returnValue = `Are you sure you want to leave?`;
+});
+
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',

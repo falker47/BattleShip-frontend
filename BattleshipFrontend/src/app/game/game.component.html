@@ -1,1 +1,92 @@
-<p>game works!</p>
+<div class="general-container">
+  <h2>Battleship Game</h2>
+  <div id="game-info">
+    <h3>Player: <span id="player-display"></span></h3>
+  </div>
+
+  <div id="boards-container">
+    <div class="userBoard" #userBoard>
+      <!-- TODO: This board has to have the player's id -->
+      <div
+        class="userRow"
+        #userRows
+        *ngFor="let row of playerBoard; let x = index"
+        id="{{ x + 1 }}"
+      >
+        <div
+          class="userCol"
+          #userCols
+          *ngFor="let box of row; let y = index"
+          id="{{ y + 1 }}"
+        >
+          <div class="userCell" #userCell></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shotBoard" #shotBoard>
+      <!-- TODO: This board has to have the player's id -->
+      <div
+        class="shotRow"
+        #shotRows
+        *ngFor="let row of playerBoard; let x = index"
+        id="{{ x + 1 }}"
+      >
+        <div
+          class="shotCol"
+          #shotCols
+          *ngFor="let box of row; let y = index"
+          id="{{ y + 1 }}"
+        >
+          <div class="shotCell" #shotCell></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="info">
+    <div id="leaderboard">
+      <h4>Leaderboard</h4>
+      <!--TODO-->
+      <!-- <p *ngFor="let player of players; let i = index">
+        <span>{{ i }}</span> <span>{{ player.name }}</span>
+        <span>{{ player.points }}</span>
+      </p> -->
+    </div>
+
+    <div id="logs">
+      <!--TODO-->
+      <!-- <p *ngFor="let log of logs">log</p> -->
+      <p>
+        placeholderplaceholderplaceholderplacehol
+        derplaceholderplaceholderplaceholderpl aceholderplaceholderpla
+        ceholderplaceholderplaceholder
+      </p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+      <p>placeholder</p>
+    </div>
+  </div>
+</div>
