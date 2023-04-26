@@ -14,17 +14,15 @@ window.addEventListener('beforeunload', (event) => {
 export class GameComponent implements OnInit {
   @ViewChild('board') boardElement!: ElementRef<HTMLElement>;
   public width: number = 10;
-  public shipName: string = '';
   public playerBoard!: number[][];
-  public xInitial: number = 0;
-  public yInitial: number = 0;
   public isReady: boolean = false;
   public currentPlayer!: PlayerFrontendGame;
   public currentIndex: number = 0;
   public playersData: PlayerFrontendGame[] = [];
-  public shot: Shot[] = [];
+  public playersLeaderboard: PlayerFrontendGame[] = [];
   public team0: PlayerFrontendGame[] = [];
   public team1: PlayerFrontendGame[] = [];
+  public shot: Shot[] = [];
   public players: PlayerApi[] = [
     { id: 1, name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 111 },
     { id: 2, name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 10 },
@@ -75,9 +73,11 @@ export class GameComponent implements OnInit {
       if (player.team === 1) {
         this.team1.push(player);
       }
+      this.playersLeaderboard.push(player);
     });
 
     this.playersData[2].isPlaying = false; // TODO: delete later
+    console.log(this.playersLeaderboard); // TODO: delete later
   }
 
 
@@ -153,7 +153,12 @@ export class GameComponent implements OnInit {
   }
 
 
-  sortLeaderboard(): PlayerFrontendGame[] | undefined {
+  sortLeaderboard(): PlayerFrontendGame[] {
+    return this.playersLeaderboard.sort((a, b) => b.points - a.points);
+  }
+
+
+  sortFinalLeaderboard(): PlayerFrontendGame[] | undefined {
     let totalPointsTeam0 = 0;
     this.team0.forEach(player => totalPointsTeam0 += player.points);
     let totalPointsTeam1 = 0;
