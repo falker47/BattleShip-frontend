@@ -9,38 +9,41 @@
     <h4>Player: <span class="player-name">{{currentPlayer.name}}</span></h4>
   </div>
 
-  <div class="flex">
-    <p>Your board</p>
-    <p>Enemy's board</p>
-  </div>
   <div id="boards-container">
-    <div class="userBoard" #userBoard>
-      <div class="userRow" #userRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
-        <div class="userCol" #userCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
-          <div class="userCell" #userCell 
-            [ngClass]="{  
-              'water': getCellState(x+1, y+1, 'user') === 0,
-              'ship': getCellState(x+1, y+1, 'user') === 1,
-              'ship-shooted': getCellState(x+1, y+1, 'user') === 2,
-            }"
-          ></div>
+    <div class="flex">
+      <p class="board-title">Your board:</p>
+      <div class="userBoard" #userBoard>
+        <div class="userRow" #userRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
+          <div class="userCol" #userCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
+            <div class="userCell" #userCell 
+              [ngClass]="{  
+                'water': getCellState(x+1, y+1, 'user') === 0,
+                'ship': getCellState(x+1, y+1, 'user') === 1,
+                'ship-shooted': getCellState(x+1, y+1, 'user') === 2,
+              }"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="shotBoard" #shotBoard>
-      <div class="shotRow" #shotRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
-        <div class="shotCol" #shotCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
-          <div class="shotCell" #shotCell (click)="saveShot(x+1, y+1)"
-            [ngClass]="{  
-              'water': getCellState(x+1, y+1, 'shot') === 0,
-              'enemy-ship-shooted': getCellState(x+1, y+1, 'shot') === 2,
-              'water-shooted': getCellState(x+1, y+1, 'shot') === 3
-            }"
-          ></div>
+    <div class="flex">
+      <p class="board-title">Enemy's board:</p>
+      <div class="shotBoard" #shotBoard>
+        <div class="shotRow" #shotRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
+          <div class="shotCol" #shotCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
+            <div class="shotCell" #shotCell (click)="saveShot(x+1, y+1)"
+              [ngClass]="{  
+                'water': getCellState(x+1, y+1, 'shot') === 0,
+                'enemy-ship-shooted': getCellState(x+1, y+1, 'shot') === 2,
+                'water-shooted': getCellState(x+1, y+1, 'shot') === 3
+              }"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="next-player-container">
@@ -61,7 +64,7 @@
       </p>
     </div>
 
-    <div class="logs-container">
+    <div class="logs-container" *ngIf="logs[0] !== undefined">
       <div *ngFor="let log of logs; let i = index;">
         <p id="{{i}}" class="new-log">
           <!-- [ngClass]="{'new-log': i === 0, 'old-log': i !== 0}" -->

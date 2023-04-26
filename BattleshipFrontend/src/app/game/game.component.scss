@@ -77,6 +77,17 @@
   flex-wrap: wrap;
 }
 
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-family: var(--font-paragraph);
+  }
+}
+
 .userBoard,
 .shotBoard {
   display: flex;
@@ -148,6 +159,11 @@
     margin-top: 1.5em;
   }
 
+  .next-player-btn:disabled {
+    background-color: rgba(128, 128, 128, .8);
+    color: rgb(222, 222, 222);
+  }
+
   .next-player-btn:hover,
   .next-player-btn:focus {
     cursor: pointer;
@@ -194,6 +210,7 @@
 
     .name {
       width: 190px;
+      text-transform: capitalize;
     }
 
     .points {
@@ -213,6 +230,7 @@
   overflow-y: scroll;
   background-color: rgba(42, 41, 41, 0.6);
   padding: 1em 2em;
+  border-radius: 10px;
 
   .new-log {
     font-family: var(--font-paragraph);
@@ -278,6 +296,7 @@
 
       .name {
         width: 500px;
+        text-transform: capitalize;
       }
 
       .team {
@@ -311,5 +330,29 @@
   .restart-btn:focus {
     cursor: pointer;
     background-color: var(--btn-hover-color);
+  }
+}
+
+@media(max-width: 1240px) {
+  .game-info {
+    width: 90%;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+
+    .leaderboard {
+      margin: 0;
+    }
+
+    .logs-container {
+      max-width: 900px;
+      height: 250px;
+      margin-bottom: 2em;
+    
+      .new-log {
+        max-width: 850px;
+      }
+    }
   }
 }
