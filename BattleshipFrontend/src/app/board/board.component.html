@@ -1,5 +1,5 @@
 <div class="config-page-container">
-  <h2 class="title">Position your ships</h2>
+  <h2 class="title" *ngIf="areAllPlayersReady() === false">Position your ships</h2>
 
   <div class="content-container" *ngIf="areAllPlayersReady() === false">
     

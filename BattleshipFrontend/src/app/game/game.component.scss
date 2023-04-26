@@ -41,6 +41,7 @@
 .player-name {
   color: var(--btn-bg-color);
   text-shadow: 1px 1px 5px black;
+  text-transform: capitalize;
 }
 
 // GAME SCREEN
@@ -76,6 +77,17 @@
   flex-wrap: wrap;
 }
 
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-family: var(--font-paragraph);
+  }
+}
+
 .userBoard,
 .shotBoard {
   display: flex;
@@ -91,9 +103,154 @@
 
 .userCell,
 .shotCell {
+  border: 1px var(--board-line-color) solid;
+}
+
+// LARGE CELLS
+
+.cell-large-water {
+  width: 30px;
+  height: 30px;
+}
+.cell-large-water-shooted {
+  width: 30px;
+  height: 30px;
+}
+.cell-large-water-shooted::before {
+  content: 'X';
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-large-ship {
+  width: 30px;
+  height: 30px;
+  background-color: grey;
+}
+.cell-large-ship-shooted {
+  width: 30px;
+  height: 30px;
+  background-color: grey;
+}
+.cell-large-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-large-enemy-ship-shooted {
+  width: 30px;
+  height: 30px;
+}
+.cell-large-enemy-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// MEDIUM CELLS
+
+.cell-medium-water {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-water-shooted {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-water-shooted::before {
+  content: 'X';
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-medium-ship {
+  width: 25px;
+  height: 25px;
+  background-color: grey;
+}
+.cell-medium-ship-shooted {
+  width: 25px;
+  height: 25px;
+  background-color: grey;
+}
+.cell-medium-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-medium-enemy-ship-shooted {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-enemy-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// SMALL CELLS
+
+.cell-small-water {
   width: 20px;
   height: 20px;
-  border: 1px var(--board-line-color) solid;
+}
+.cell-small-water-shooted {
+  width: 20px;
+  height: 20px;
+}
+.cell-small-water-shooted::before {
+  content: 'X';
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-small-ship {
+  width: 20px;
+  height: 20px;
+  background-color: grey;
+}
+.cell-small-ship-shooted {
+  width: 20px;
+  height: 20px;
+  background-color: grey;
+}
+.cell-small-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-small-enemy-ship-shooted {
+  width: 20px;
+  height: 20px;
+}
+.cell-small-enemy-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .next-player-container {
@@ -108,6 +265,13 @@
     background-color: var(--btn-bg-color);
     padding: 0.5em 1em;
     margin-top: 1.5em;
+  }
+
+  .next-player-btn:disabled,
+  .next-player-btn:disabled:hover {
+    background-color: rgba(128, 128, 128, .8);
+    color: rgb(222, 222, 222);
+    cursor: default;
   }
 
   .next-player-btn:hover,
@@ -156,6 +320,7 @@
 
     .name {
       width: 190px;
+      text-transform: capitalize;
     }
 
     .points {
@@ -175,6 +340,7 @@
   overflow-y: scroll;
   background-color: rgba(42, 41, 41, 0.6);
   padding: 1em 2em;
+  border-radius: 10px;
 
   .new-log {
     font-family: var(--font-paragraph);
@@ -211,7 +377,7 @@
   margin-top: 10em;
 
   .final-leaderboard {
-    width: 800px;
+    max-width: 800px;
     background-color: rgba(0, 0, 0, 0.6);
     padding: 1em 2em;
     border-radius: 10px;
@@ -239,7 +405,8 @@
       }
 
       .name {
-        width: 500px;
+        width: 400px;
+        text-transform: capitalize;
       }
 
       .team {
@@ -273,5 +440,29 @@
   .restart-btn:focus {
     cursor: pointer;
     background-color: var(--btn-hover-color);
+  }
+}
+
+@media(max-width: 1240px) {
+  .game-info {
+    width: 90%;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+
+    .leaderboard {
+      margin: 0;
+    }
+
+    .logs-container {
+      max-width: 900px;
+      height: 250px;
+      margin-bottom: 2em;
+    
+      .new-log {
+        max-width: 850px;
+      }
+    }
   }
 }
