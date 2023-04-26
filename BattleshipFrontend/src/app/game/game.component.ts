@@ -28,10 +28,10 @@ export class GameComponent implements OnInit {
   public players: PlayerApi[] = [
     { id: 1, name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 111 },
     { id: 2, name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 10 },
-    { id: 3, name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 70 },
-    // { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 47 },
-    // { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 50 },
-    // { id: 6, name: 'Nicola', userGridId: 0, shotGridId: 0, team: 1, points: 666 },
+    { id: 3, name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 7000 },
+    { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 1000 },
+    { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 50 },
+    { id: 6, name: 'Nicola', userGridId: 0, shotGridId: 0, team: 1, points: 666 },
   ] // TODO replace with information from backend;
 
   //   public grid: GridApi = {
@@ -48,14 +48,15 @@ export class GameComponent implements OnInit {
   //    ]]
   // }
 
-  public logs = ["gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", // TODO delete later
-  "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
-  "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wsdgsndg DFU qwme fj MF jsad f arjwjr ewjkTJWjf kSDFje t", 
-  "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
-  "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
-  "asjdfbDF  qer fQW FHJq we f A FNW eh fh SFGSEG JWE TBEW FJ ASJf weNM FC e HJ WE  WJ gfk", 
-  "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
-  "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
+  public logs = [ // TODO delete later
+    "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
+    "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
+    "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wsdgsndg DFU qwme fj MF jsad f arjwjr ewjkTJWjf kSDFje t", 
+    "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
+    "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
+    "asjdfbDF  qer fQW FHJq we f A FNW eh fh SFGSEG JWE TBEW FJ ASJf weNM FC e HJ WE  WJ gfk", 
+    "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
+    "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk"
   ]
 
 
@@ -66,6 +67,25 @@ export class GameComponent implements OnInit {
     this.playerBoard = this.getEmptyBoard();
     this.preparePlayers();
     this.currentPlayer = this.getCurrentPlayer(0);
+
+    this.playersData.forEach((player) => {
+      if (player.team === 0) {
+        this.team0.push(player);
+      }
+      if (player.team === 1) {
+        this.team1.push(player);
+      }
+    });
+
+    this.playersData[2].isPlaying = false; // TODO: delete later
+  }
+
+
+  private getEmptyBoard(): number[][] {
+    for (let i = 0; i <= this.players.length; i++) {
+      if (i > 2) this.width += 5;
+    }
+    return Array.from({ length: this.width }, () => Array(this.width).fill(0));
   }
 
 
@@ -83,17 +103,14 @@ export class GameComponent implements OnInit {
         shotGridId: player.shotGridId,
         team: player.team,
         points: player.points,
-        isPlaying: false,
+        isPlaying: true,
       });
     });
   }
 
 
-  private getEmptyBoard(): number[][] {
-    for (let i = 0; i <= this.players.length; i++) {
-      if (i > 2) this.width += 5;
-    }
-    return Array.from({ length: this.width }, () => Array(this.width).fill(0));
+  toggleIsReady() {
+    this.isReady = !this.isReady;
   }
 
 
@@ -101,7 +118,6 @@ export class GameComponent implements OnInit {
     let index: number = ++this.currentIndex;
     this.currentPlayer = this.playersData[this.currentIndex];
     this.shot.pop();
-    this.playersData[2].isPlaying = true; // TODO: delete later
 
     if (this.players.length === index) {
       this.currentIndex = 0;
@@ -129,50 +145,34 @@ export class GameComponent implements OnInit {
 
 
   isGameOver(): boolean {
-    this.playersData.forEach((player) => {
-      if (player.team === 0) {
-        this.team0.push(player);
-      }
-      if (player.team === 1) {
-        this.team1.push(player);
-      }
-    });
-
-    const isTeam0StillAlive = this.team0.find(
-      (player) => player.isPlaying === true
-    );
-    const isTeam1StillAlive = this.team1.find(
-      (player) => player.isPlaying === true
-    );
-    console.log(isTeam0StillAlive, isTeam1StillAlive);
+    const isTeam0StillAlive = this.team0.find((player) => player.isPlaying === true);
+    const isTeam1StillAlive = this.team1.find((player) => player.isPlaying === true);
     
-    if (!isTeam0StillAlive || !isTeam1StillAlive) {
-      return true;
-    } else {
-      return false;
-    }
+    if (!isTeam0StillAlive || !isTeam1StillAlive) return true;
+    else return false;
   }
 
 
   sortLeaderboard(): PlayerFrontendGame[] | undefined {
-    const isTeam0StillAlive = this.team0.find(
-      (player) => player.isPlaying === true
-    );
-    const isTeam1StillAlive = this.team1.find(
-      (player) => player.isPlaying === true
-    );
-    if (isTeam0StillAlive) {
-      return this.team0.sort((a, b) => b.points - a.points);
+    let totalPointsTeam0 = 0;
+    this.team0.forEach(player => totalPointsTeam0 += player.points);
+    let totalPointsTeam1 = 0;
+    this.team1.forEach(player => totalPointsTeam1 += player.points);
+
+    let playersByPoints = this.playersData.sort((a, b) => b.points - a.points);
+
+    if (totalPointsTeam0 > totalPointsTeam1) {
+      return playersByPoints.sort((a, b) => a.team - b.team);
     }
-    if (isTeam1StillAlive) {
-      return this.team1.sort((a, b) => b.points - a.points);
+    if (totalPointsTeam0 < totalPointsTeam1) {
+      return playersByPoints.sort((a, b) => b.team - a.team);
     }
-    return undefined;
+    else return undefined;
   }
 
 
-  toggleIsReady() {
-    this.isReady = !this.isReady;
+  restartGame() {
+    this.router.navigate(['/']);
   }
 
 }
