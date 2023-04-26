@@ -1,5 +1,5 @@
 <div class="config-page-container">
-  <h2 class="title">Position your ships</h2>
+  <h2 class="title" *ngIf="areAllPlayersReady() === false">Position your ships</h2>
 
   <div class="content-container" *ngIf="areAllPlayersReady() === false">
     
@@ -7,7 +7,7 @@
       <div class="config-instructions">
         <h4>Instructions</h4>
         <p>1. To place a ship inside the board drag it from the "Available Ships" section and drop it into the board.</p>
-        <p>2. To rotate a ship double click the ship above "Available Ships".</p>
+        <p>2. To rotate a ship double click the ship below "Available Ships".</p>
         <p>3. To reset a ship that's already inside the board double click it.</p>
       </div>
 

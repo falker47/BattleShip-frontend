@@ -1,10 +1,10 @@
-// *GENERAL CSS RESET
+// GENERAL CSS RESET
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  font-size: 1em;
+  font-size: 1em;     
 }
 
 body,
@@ -68,7 +68,7 @@ select {
   }
 }
 
-// *GLOBAL VARIABLES
+// GLOBAL VARIABLES
 
 :root {
   --font-title: "Aboreto", sans-serif;
@@ -88,12 +88,13 @@ select {
   --btn-hover-color: #24af55;
 }
 
-// *GENERAL STYLES
+// GENERAL STYLES
 
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
     url(./assets/images/ships-bg.jpeg);
   background-repeat: repeat;
+  background-position-x: center;
   min-height: 100vh;
   padding: 0 0 4em 0;
   font-family: var(--font-paragraph);
@@ -102,6 +103,6 @@ body {
 
 @media (max-width: 768px) {
   body {
-    font-size: .9em;
+    font-size: 0.9em;
   }
 }

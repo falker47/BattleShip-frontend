@@ -1,92 +1,101 @@
-<div class="general-container">
+<div class="ready-container" *ngIf="!isReady && !isGameOver()">
+  <h3><span class="player-name">{{currentPlayer.name}}</span> it's your turn!</h3>
+  <button class="is-ready-btn" (click)="toggleIsReady()">Ready!</button>
+</div>
+
+<div class="general-container" *ngIf="isReady && !isGameOver()">
   <h2>Battleship Game</h2>
-  <div id="game-info">
-    <h3>Player: <span id="player-display"></span></h3>
+  <div class="player-info">
+    <h4>Player: <span class="player-name">{{currentPlayer.name}}</span></h4>
   </div>
 
   <div id="boards-container">
-    <div class="userBoard" #userBoard>
-      <!-- TODO: This board has to have the player's id -->
-      <div
-        class="userRow"
-        #userRows
-        *ngFor="let row of playerBoard; let x = index"
-        id="{{ x + 1 }}"
-      >
-        <div
-          class="userCol"
-          #userCols
-          *ngFor="let box of row; let y = index"
-          id="{{ y + 1 }}"
-        >
-          <div class="userCell" #userCell></div>
+    <div class="flex">
+      <p class="board-title">Your board:</p>
+      <div class="userBoard" #userBoard>
+        <div class="userRow" #userRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
+          <div class="userCol" #userCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
+            <div class="userCell" #userCell 
+              [ngClass]="{  
+                'cell-large-water': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'user') === 0, 
+                'cell-medium-water': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'user') === 0,
+                'cell-small-water': playerBoard.length === 30 && getCellState(x+1, y+1, 'user') === 0,
+                'cell-large-ship': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'user') === 1, 
+                'cell-medium-ship': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'user') === 1,
+                'cell-small-ship': playerBoard.length === 30 && getCellState(x+1, y+1, 'user') === 1,
+                'cell-large-ship-shooted': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'user') === 2, 
+                'cell-medium-ship-shooted': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'user') === 2,
+                'cell-small-ship-shooted': playerBoard.length === 30 && getCellState(x+1, y+1, 'user') === 2,
+              }"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="shotBoard" #shotBoard>
-      <!-- TODO: This board has to have the player's id -->
-      <div
-        class="shotRow"
-        #shotRows
-        *ngFor="let row of playerBoard; let x = index"
-        id="{{ x + 1 }}"
-      >
-        <div
-          class="shotCol"
-          #shotCols
-          *ngFor="let box of row; let y = index"
-          id="{{ y + 1 }}"
-        >
-          <div class="shotCell" #shotCell></div>
+    <div class="flex">
+      <p class="board-title">Enemy's board:</p>
+      <div class="shotBoard" #shotBoard>
+        <div class="shotRow" #shotRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
+          <div class="shotCol" #shotCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
+            <div class="shotCell" #shotCell (click)="saveShot(x+1, y+1)"
+              [ngClass]="{  
+                'cell-large-water': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'shot') === 0, 
+                'cell-medium-water': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'shot') === 0,
+                'cell-small-water': playerBoard.length === 30 && getCellState(x+1, y+1, 'shot') === 0,
+                'cell-large-enemy-ship-shooted': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'shot') === 2, 
+                'cell-medium-enemy-ship-shooted': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'shot') === 2,
+                'cell-small-enemy-ship-shooted': playerBoard.length === 30 && getCellState(x+1, y+1, 'shot') === 2,
+                'cell-large-water-shooted': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'shot') === 3, 
+                'cell-medium-water-shooted': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'shot') === 3,
+                'cell-small-water-shooted': playerBoard.length === 30 && getCellState(x+1, y+1, 'shot') === 3,
+              }"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="info">
-    <div id="leaderboard">
+  <div class="next-player-container">
+    <button 
+      [disabled]="shot.length === 0 ? 'disabled' : null" 
+      class="next-player-btn" 
+      (click)="getNextPlayer()"
+    >Next player</button>
+  </div>
+
+  <div class="game-info">
+    <div class="leaderboard">
       <h4>Leaderboard</h4>
-      <!--TODO-->
-      <!-- <p *ngFor="let player of players; let i = index">
-        <span>{{ i }}</span> <span>{{ player.name }}</span>
-        <span>{{ player.points }}</span>
-      </p> -->
+      <p class="leaderboard-content" *ngFor="let player of sortLeaderboard(); let i = index">
+        <span class="position">{{ i + 1 }}</span> 
+        <span class="name">{{ player.name }}</span>
+        <span class="points">{{ player.points }}</span>
+      </p>
     </div>
 
-    <div id="logs">
-      <!--TODO-->
-      <!-- <p *ngFor="let log of logs">log</p> -->
-      <p>
-        placeholderplaceholderplaceholderplacehol
-        derplaceholderplaceholderplaceholderpl aceholderplaceholderpla
-        ceholderplaceholderplaceholder
-      </p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
+    <div class="logs-container" *ngIf="logs[0] !== undefined">
+      <div *ngFor="let log of logs; let i = index;">
+        <p id="{{i}}" class="new-log">
+          <span>></span>{{ log }}
+        </p>
+      </div>
     </div>
   </div>
+</div>
+
+
+<div class="final-leaderboard-container" *ngIf="isGameOver()">
+  <div class="final-leaderboard">
+    <h4>Leaderboard</h4>
+    <p class="final-leaderboard-content" *ngFor="let player of sortFinalLeaderboard(); let i = index">
+      <span class="position">{{ i + 1 }}</span>
+      <span class="name">{{ player.name }}</span>
+      <span class="team">Team {{ player.team + 1 }}</span>
+      <span class="points">{{ player.points }}</span>
+    </p>
+  </div>
+
+  <button class="restart-btn" (click)="restartGame()">Play again</button>
 </div>
