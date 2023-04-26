@@ -16,15 +16,7 @@ window.addEventListener('beforeunload', (event) => {
 })
 export class BoardComponent implements OnInit {
 
-  @Input() players!: PlayerApi[]; // TODO receive information from backend
-  playersTemporary: PlayerApi[] = [   
-    { id: 1, name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-    { id: 2, name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
-    { id: 3, name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-    { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 0 },
-    { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-    { id: 6, name: 'Nicola', userGridId: 0, shotGridId: 0, team: 0, points: 0 },
-  ] // TODO replace with information from backend
+ 
   @ViewChild("board") boardElement!: ElementRef<HTMLElement>;
   public width: number = 10;
   public shipName: string = '';
@@ -42,8 +34,13 @@ export class BoardComponent implements OnInit {
   public playersFinalData: PlayerShipsData[] = [];
   public playersData: PlayerFrontend[] = [];
 
+  public gamePlayers: PlayerApi[] = [];
 
-  constructor(private playerService: PlayerService, private router: Router) {}
+
+  constructor(private playerService: PlayerService, private router: Router) {
+    this.gamePlayers = this.playerService.getGamePlayers();
+    console.log(this.gamePlayers);
+  }
 
 
   ngOnInit () {
@@ -57,7 +54,7 @@ export class BoardComponent implements OnInit {
   
 
   private addConfirmedPropertyToPlayer() {
-    this.playersTemporary.forEach(player => {
+    this.gamePlayers.forEach(player => {
       this.playersData.push({
         id: player.id, 
         name: player.name, 

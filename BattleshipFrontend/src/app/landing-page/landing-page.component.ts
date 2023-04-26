@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PlayerInitialData } from '../api/models';
+import { PlayerApi, PlayerInitialData } from '../api/models';
 import { Router } from '@angular/router';
 import { PlayerService } from '../api/player.service';
 
@@ -15,6 +15,7 @@ window.addEventListener('beforeunload', (event) => {
 export class LandingPageComponent {
   public players: PlayerInitialData[] = [];
   public limitNumPlayers = 6;
+  public gamePlayers: PlayerApi[] = [];
 
   constructor(private router: Router, private playerService: PlayerService) {}
 
@@ -52,7 +53,8 @@ export class LandingPageComponent {
       .postCreateGame(this.players)
       .subscribe((res) => console.log(res));
     if (res) {
-      setTimeout(() => this.router.navigate(['/board']), 3000);
+      setTimeout(() => this.playerService.getPlayers().subscribe(res => this.playerService.setGamePlayers(res)), 5000);
+      setTimeout(() => this.router.navigate(['/board']), 6000);
     }
   }
 }
