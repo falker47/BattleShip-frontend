@@ -14,16 +14,23 @@
       <!-- TODO: This board has to have the player's id -->
       <div class="userRow" #userRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
         <div class="userCol" #userCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
-          <div class="userCell" #userCell></div>
+          <div class="userCell" #userCell id="{{ cellState.at(x)?.at(y) }}"></div>
         </div>
       </div>
     </div>
+    <!-- [ngClass]="{
+              'water': getCellState(x+1, y+1) === 0,
+              'ship': getCellState(x+1, y+1) === 1,
+              'water-shooted': getCellState(x+1, y+1) === 2,
+              'ship-shooted': getCellState(x+1, y+1) === 3
+            }" -->
 
     <div class="shotBoard" #shotBoard>
       <!-- TODO: This board has to have the player's id -->
       <div class="shotRow" #shotRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
         <div class="shotCol" #shotCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
-          <div class="shotCell" #shotCell (click)="saveShot(x+1, y+1)"></div>
+          <div class="shotCell" #shotCell (click)="saveShot(x+1, y+1)"
+          ></div>
         </div>
       </div>
     </div>
