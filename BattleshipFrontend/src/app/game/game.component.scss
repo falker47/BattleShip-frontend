@@ -103,40 +103,20 @@
 
 .userCell,
 .shotCell {
-  width: 20px;
-  height: 20px;
   border: 1px var(--board-line-color) solid;
 }
 
-// .water {}
+// LARGE CELLS
 
-.ship {
-  background-color: grey;
+.cell-large-water {
+  width: 30px;
+  height: 30px;
 }
-
-.ship-shooted {
-  background-color: grey;
+.cell-large-water-shooted {
+  width: 30px;
+  height: 30px;
 }
-
-.ship-shooted::before {
-  content: 'X';
-  color: red;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.enemy-ship-shooted::before {
-  content: 'X';
-  color: red;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.water-shooted::before {
+.cell-large-water-shooted::before {
   content: 'X';
   color: white;
   height: 100%;
@@ -144,6 +124,135 @@
   justify-content: center;
   align-items: center;
 }
+.cell-large-ship {
+  width: 30px;
+  height: 30px;
+  background-color: grey;
+}
+.cell-large-ship-shooted {
+  width: 30px;
+  height: 30px;
+  background-color: grey;
+}
+.cell-large-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-large-enemy-ship-shooted {
+  width: 30px;
+  height: 30px;
+}
+.cell-large-enemy-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// MEDIUM CELLS
+
+.cell-medium-water {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-water-shooted {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-water-shooted::before {
+  content: 'X';
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-medium-ship {
+  width: 25px;
+  height: 25px;
+  background-color: grey;
+}
+.cell-medium-ship-shooted {
+  width: 25px;
+  height: 25px;
+  background-color: grey;
+}
+.cell-medium-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-medium-enemy-ship-shooted {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-enemy-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// SMALL CELLS
+
+.cell-small-water {
+  width: 20px;
+  height: 20px;
+}
+.cell-small-water-shooted {
+  width: 20px;
+  height: 20px;
+}
+.cell-small-water-shooted::before {
+  content: 'X';
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-small-ship {
+  width: 20px;
+  height: 20px;
+  background-color: grey;
+}
+.cell-small-ship-shooted {
+  width: 20px;
+  height: 20px;
+  background-color: grey;
+}
+.cell-small-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-small-enemy-ship-shooted {
+  width: 20px;
+  height: 20px;
+}
+.cell-small-enemy-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .next-player-container {
   .next-player-btn {
@@ -159,9 +268,11 @@
     margin-top: 1.5em;
   }
 
-  .next-player-btn:disabled {
+  .next-player-btn:disabled,
+  .next-player-btn:disabled:hover {
     background-color: rgba(128, 128, 128, .8);
     color: rgb(222, 222, 222);
+    cursor: default;
   }
 
   .next-player-btn:hover,
