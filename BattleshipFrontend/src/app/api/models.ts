@@ -20,13 +20,13 @@ export interface ShipData {
 }
 
 export interface Coordinates {
-  x: number;
-  y: number;
+  X: number;
+  Y: number;
 }
 
 export interface PlayerShipsData {
   playerId: number;
-  ships: Coordinates[][];
+  PlayerShipsPosition: Coordinates[][];
 }
 
 export interface PlayerFrontend {
@@ -61,15 +61,15 @@ export interface Shot {
 
 export interface CellApi {
   id: string;
-  gridId: number;
-  xaxis: number;
-  yaxis: number;
-  state: number;
-  shipId?: number;
+  GridId: number;
+  Xaxis: number;
+  Yaxis: number;
+  State: number;
+  ShipId?: number;
 }
 
 export interface GridApi {
-  id: number;
+  gridId: number;
   cells: CellApi[][];
 }
 

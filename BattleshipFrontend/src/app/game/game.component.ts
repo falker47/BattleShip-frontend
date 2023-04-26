@@ -59,7 +59,10 @@ export class GameComponent implements OnInit {
   // ]
 
 
-  constructor(private router: Router, private playerService: PlayerService) {}
+  constructor(private router: Router, private playerService: PlayerService) {
+    console.log(this.playerService.getUserGrid());
+    console.log(this.playerService.getShotGrid());
+  }
 
 
   ngOnInit() {

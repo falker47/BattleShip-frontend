@@ -8,7 +8,12 @@ import { PlayerInitialData, Shot, GridApi, PlayerApi, ShipApi, PlayerShipsData, 
 export class PlayerService {
   // quando ci sarà il db online:
   URL = 'https://api-battleship.azurewebsites.net/api/Players/';
-  // URL = 'https://localhost:7100/api/Players/';
+  // private URL = 'https://localhost:7100/api/Players/';
+
+  private gamePlayer: PlayerApi[] = [];
+  private gamePlayerUserGrid!: GridApi;
+  private gamePlayerShotGrid!: GridApi;
+
 
   constructor(private httpClient: HttpClient) {}
 
@@ -50,5 +55,29 @@ export class PlayerService {
 
   postShot(shot: Shot) {
     return this.httpClient.post<Res>(this.URL + 'postShot', shot);
+  }
+
+  setGamePlayers(gamePlayer: PlayerApi[]) {
+    this.gamePlayer = gamePlayer;
+  }
+
+  setUserGrid(userGrid: GridApi) {
+    this.gamePlayerUserGrid = userGrid;
+  }
+
+  setShotGrid(shotGrid: GridApi) {
+    this.gamePlayerShotGrid = shotGrid;
+  }
+
+  getGamePlayers(): PlayerApi[]{
+    return this.gamePlayer;
+  }
+
+  getUserGrid(): GridApi{
+    return this.gamePlayerUserGrid;
+  }
+
+  getShotGrid(): GridApi{
+    return this.gamePlayerShotGrid;
   }
 }
