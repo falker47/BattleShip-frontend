@@ -18,20 +18,13 @@ export class GameComponent implements OnInit {
   public isReady: boolean = false;
   public currentPlayer!: PlayerFrontendGame;
   public currentIndex: number = 0;
+  public players: PlayerApi[] = [];
   public playersData: PlayerFrontendGame[] = [];
-  public playersLeaderboard: PlayerFrontendGame[] = [];
-  public team0: PlayerFrontendGame[] = [];
-  public team1: PlayerFrontendGame[] = [];
+  public playersLeaderboard: PlayerApi[] = [];
+  public team0: PlayerApi[] = [];
+  public team1: PlayerApi[] = [];
   public shot: Shot[] = [];
   public logs: string[] = [];
-  public players: PlayerApi[] = [
-    { id: 1, name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 111 },
-    { id: 2, name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 10 },
-    { id: 3, name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 70 },
-    // { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 1000 },
-    // { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 50 },
-    // { id: 6, name: 'Nicola', userGridId: 0, shotGridId: 0, team: 1, points: 666 },
-  ] // TODO replace with information from backend;
 
   //   public grid: GridApi = {
   //    id: 0,
@@ -47,21 +40,9 @@ export class GameComponent implements OnInit {
   //    ]]
   // }
 
-  // public logs = [ // TODO delete later
-  //   "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
-  //   "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
-  //   "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wsdgsndg DFU qwme fj MF jsad f arjwjr ewjkTJWjf kSDFje t", 
-  //   "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
-  //   "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
-  //   "asjdfbDF  qer fQW FHJq we f A FNW eh fh SFGSEG JWE TBEW FJ ASJf weNM FC e HJ WE  WJ gfk", 
-  //   "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
-  //   "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk"
-  // ]
-
 
   constructor(private router: Router, private playerService: PlayerService) {
-    console.log(this.playerService.getUserGrid());
-    console.log(this.playerService.getShotGrid());
+    this.players = this.playerService.getGamePlayers();
   }
 
 
@@ -70,7 +51,7 @@ export class GameComponent implements OnInit {
     this.preparePlayers();
     this.currentPlayer = this.getCurrentPlayer(0);
 
-    this.playersData.forEach((player) => {
+    this.players.forEach((player) => {
       if (player.team === 0) {
         this.team0.push(player);
       }
@@ -100,10 +81,6 @@ export class GameComponent implements OnInit {
       this.playersData.push({
         id: player.id,
         name: player.name,
-        userGridId: player.userGridId,
-        shotGridId: player.shotGridId,
-        team: player.team,
-        points: player.points,
         isPlaying: true,
       });
     });
@@ -145,35 +122,65 @@ export class GameComponent implements OnInit {
           let logArray = res.log.split(';');
           logArray.forEach(log => {
             if (log !== "") {
-              this.logs.push(log);
+              this.logs.unshift(log);
             }
           });
         }})
       }
+      this.playerService.getPlayers().subscribe(
+        res => this.playerService.setGamePlayers(res)
+      );
+
+      this.playersLeaderboard = this.playerService.getGamePlayers();
   }
 
 
+
   isGameOver(): boolean {
-    const isTeam0StillAlive = this.team0.find((player) => player.isPlaying === true);
-    const isTeam1StillAlive = this.team1.find((player) => player.isPlaying === true);
+    let isTeam0StillAlive: boolean[] = [];
+    this.team0.forEach((player) => {
+      this.playersData.forEach(p => {
+        if (player.id === p.id) {
+          if (p.isPlaying === true) {
+            isTeam0StillAlive.push(true);
+          }
+          else isTeam0StillAlive.push(false);
+        } else isTeam0StillAlive.push(false);
+      })
+    });
+
+    let isTeam1StillAlive: boolean[] = [];
+    this.team1.forEach((player) => {
+      this.playersData.forEach(p => {
+        if (player.id === p.id) {
+          if (p.isPlaying === true) {
+            isTeam1StillAlive.push(true);
+          }
+          else isTeam1StillAlive.push(false);
+        } else isTeam1StillAlive.push(false);
+      })
+    });
     
-    if (!isTeam0StillAlive || !isTeam1StillAlive) return true;
+    const team0Alive = isTeam0StillAlive.find(el => el === true);
+    const team1Alive = isTeam1StillAlive.find(el => el === true);
+
+    if (!team0Alive || !team1Alive) return true;
     else return false;
   }
 
 
-  sortLeaderboard(): PlayerFrontendGame[] {
+  sortLeaderboard(): PlayerApi[] {
     return this.playersLeaderboard.sort((a, b) => b.points - a.points);
   }
 
 
-  sortFinalLeaderboard(): PlayerFrontendGame[] | undefined {
+  sortFinalLeaderboard(): PlayerApi[] | undefined {
     let totalPointsTeam0 = 0;
     this.team0.forEach(player => totalPointsTeam0 += player.points);
     let totalPointsTeam1 = 0;
     this.team1.forEach(player => totalPointsTeam1 += player.points);
 
-    let playersByPoints = this.playersData.sort((a, b) => b.points - a.points);
+    let playersByPoints = this.players.sort((a, b) => b.points - a.points);
 
     if (totalPointsTeam0 > totalPointsTeam1) {
       return playersByPoints.sort((a, b) => a.team - b.team);
