@@ -211,38 +211,54 @@ export class BoardComponent implements OnInit {
     this.playersFinalData.PlayerShipsPosition = occupiedCoords;
   }
 
-  public confirmShips() {
+  public async confirmShips() {
     this.getFinalData();
 
-    let res = this.playerService
+    await this.playerService
       .postPlaceShips(this.playersFinalData)
-      .subscribe(res => console.log(res));
+      .toPromise()
+      .then((res) => {
+        if (res) {
+          console.log(res);
+          this.playersData.map((player) => {
+            if (player.id === this.currentPlayer.id) {
+              player.confirmed = true;
+            }
+          });
 
-    if (res) {
-      setTimeout(() => {
-        this.playersData.map((player) => {
-          if (player.id === this.currentPlayer.id) {
-            player.confirmed = true;
+          let nextIndex = ++this.currentIndex;
+          if (this.playersData[nextIndex] !== undefined) {
+            this.currentPlayer = this.getCurrentPlayer(nextIndex);
+            this.shipList1 = this.createFleet();
+            this.shipList2 = [];
           }
-        });
-        let nextIndex = ++this.currentIndex;
-        if (this.playersData[nextIndex] !== undefined) {
-          this.currentPlayer = this.getCurrentPlayer(nextIndex);
-          this.shipList1 = this.createFleet();
-          this.shipList2 = [];
         }
-      }, 4000);
-    }
+      });
   }
 
   public areAllPlayersReady(): boolean {
     return this.playersData.every((player) => player.confirmed === true);
   }
 
-  public startGame(): void {
-    setTimeout(() => this.playerService.getGridByPlayerId(1, this.width, true).subscribe(res => this.playerService.setUserGrid(res)), 5000);
-    setTimeout(() => this.playerService.getGridByPlayerId(1, this.width, false).subscribe(res => this.playerService.setShotGrid(res)), 5000);
-    setTimeout(() => this.router.navigate(['/game']), 6000);
+  public async startGame() {
+    await this.playerService
+      .getGridByPlayerId(1, this.width, true)
+      .toPromise()
+      .then((res) => {
+        if (res) {
+          this.playerService.setUserGrid(res);
+          console.log(res.Cells); //todo
+        }
+      });
+    await this.playerService
+      .getGridByPlayerId(1, this.width, false)
+      .toPromise()
+      .then((res) => {
+        if (res) {
+          this.playerService.setShotGrid(res);
+        }
+      });
+    this.router.navigate(['/game']);
   }
 
   // ------------- SHIPS POSITIONING - DRAG & DROP ------------------ //

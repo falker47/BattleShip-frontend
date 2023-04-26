@@ -48,13 +48,16 @@ export class LandingPageComponent {
     this.players.splice(this.players.indexOf(player), 1);
   }
 
-  confirmPlayers() {
-    let res = this.playerService
-      .postCreateGame(this.players)
-      .subscribe((res) => console.log(res));
-    if (res) {
-      setTimeout(() => this.playerService.getPlayers().subscribe(res => this.playerService.setGamePlayers(res)), 5000);
-      setTimeout(() => this.router.navigate(['/board']), 6000);
-    }
+  async confirmPlayers() {
+    await this.playerService.postCreateGame(this.players).toPromise().then(async (res) => {
+      if (res) {
+        await this.playerService.getPlayers().toPromise().then(res => {
+          if (res) {
+            this.playerService.setGamePlayers(res);
+          }
+        });
+      }
+      this.router.navigate(['/board']);
+    });
   }
 }

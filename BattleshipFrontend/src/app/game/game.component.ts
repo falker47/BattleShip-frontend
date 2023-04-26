@@ -26,7 +26,6 @@ export class GameComponent implements OnInit {
   public currentIndex: number = 0;
   public players: PlayerApi[] = [];
   public playersData: PlayerFrontendGame[] = [];
-  public playersLeaderboard: PlayerApi[] = [];
   public shot: Shot[] = [];
   public logs: string[] = [];
   public userGrid!: GridApi;
@@ -36,6 +35,7 @@ export class GameComponent implements OnInit {
     this.players = this.playerService.getGamePlayers();
     this.userGrid = this.playerService.getUserGrid();
     this.shotGrid = this.playerService.getShotGrid();
+    console.log(this.userGrid.Cells)
   }
 
   ngOnInit() {
@@ -131,7 +131,6 @@ export class GameComponent implements OnInit {
           this.shotGrid = this.playerService.getShotGrid();
         }
       });
-    console.log(this.playersData + 'dopo');
   }
 
   async saveShot(x: number, y: number) {
@@ -194,7 +193,7 @@ export class GameComponent implements OnInit {
               }
             });
           }
-          if (shipsHP.length === 8) {
+          if (shipsHP.length === 0) {
             this.playersData.splice(i, 1);
           }
         });
