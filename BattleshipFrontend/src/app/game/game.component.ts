@@ -29,9 +29,9 @@ export class GameComponent implements OnInit {
     { id: 1, name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 111 },
     { id: 2, name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 10 },
     { id: 3, name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 70 },
-    { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 47 },
-    { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 50 },
-    { id: 6, name: 'Nicola', userGridId: 0, shotGridId: 0, team: 1, points: 666 },
+    // { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 47 },
+    // { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 50 },
+    // { id: 6, name: 'Nicola', userGridId: 0, shotGridId: 0, team: 1, points: 666 },
   ] // TODO replace with information from backend;
 
   //   public grid: GridApi = {
@@ -48,7 +48,19 @@ export class GameComponent implements OnInit {
   //    ]]
   // }
 
-  constructor(private router: Router, private playerService: PlayerService) { }
+  public logs = ["gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", // TODO delete later
+  "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
+  "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wsdgsndg DFU qwme fj MF jsad f arjwjr ewjkTJWjf kSDFje t", 
+  "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
+  "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
+  "asjdfbDF  qer fQW FHJq we f A FNW eh fh SFGSEG JWE TBEW FJ ASJf weNM FC e HJ WE  WJ gfk", 
+  "gjndsjgbasjbgjbjfskbagllsdkgna jertw retjwet WE T wje t", 
+  "asjdfbDF  qer fQW FHJq we f A FNW eh fh e HJ WE  WJ gfk", 
+  ]
+
+
+  constructor(private router: Router, private playerService: PlayerService) {}
+
 
   ngOnInit() {
     this.playerBoard = this.getEmptyBoard();
@@ -56,12 +68,14 @@ export class GameComponent implements OnInit {
     this.currentPlayer = this.getCurrentPlayer(0);
   }
 
+
   getCurrentPlayer(i: number): PlayerFrontendGame {
-    return this.playersData[i]
+    return this.playersData[i];
   }
 
+
   preparePlayers() {
-    this.players.forEach(player => {
+    this.players.forEach((player) => {
       this.playersData.push({
         id: player.id,
         name: player.name,
@@ -69,16 +83,26 @@ export class GameComponent implements OnInit {
         shotGridId: player.shotGridId,
         team: player.team,
         points: player.points,
-        isPlaying: true
-      })
+        isPlaying: false,
+      });
     });
   }
+
+
+  private getEmptyBoard(): number[][] {
+    for (let i = 0; i <= this.players.length; i++) {
+      if (i > 2) this.width += 5;
+    }
+    return Array.from({ length: this.width }, () => Array(this.width).fill(0));
+  }
+
 
   getNextPlayer() {
     let index: number = ++this.currentIndex;
     this.currentPlayer = this.playersData[this.currentIndex];
     this.shot.pop();
-    this.playersData[2].isPlaying = false; // TODO: delete later
+    this.playersData[2].isPlaying = true; // TODO: delete later
+
     if (this.players.length === index) {
       this.currentIndex = 0;
       this.currentPlayer = this.playersData[this.currentIndex];
@@ -86,8 +110,9 @@ export class GameComponent implements OnInit {
     if (this.currentPlayer.isPlaying === false) {
       this.currentPlayer = this.playersData[++index];
     }
-    this.turnHandler();
+    this.toggleIsReady();
   }
+
 
   saveShot(x: number, y: number) {
     if (this.shot.length === 0) {
@@ -95,60 +120,59 @@ export class GameComponent implements OnInit {
         id: this.currentPlayer.id,
         xAxis: x,
         yAxis: y,
-      }
+      };
       this.shot.push(playerShot);
       // this.playerService.postShot(shot);
       this.isGameOver();
     }
   }
 
+
   isGameOver(): boolean {
-    this.playersData.forEach(player => {
+    this.playersData.forEach((player) => {
       if (player.team === 0) {
         this.team0.push(player);
       }
       if (player.team === 1) {
         this.team1.push(player);
       }
-    })
+    });
 
-    const isTeam0StillAlive = this.team0.find(player => player.isPlaying === true);
-    const isTeam1StillAlive = this.team1.find(player => player.isPlaying === true);
+    const isTeam0StillAlive = this.team0.find(
+      (player) => player.isPlaying === true
+    );
+    const isTeam1StillAlive = this.team1.find(
+      (player) => player.isPlaying === true
+    );
     console.log(isTeam0StillAlive, isTeam1StillAlive);
-    if (!isTeam0StillAlive || !isTeam1StillAlive){
+    
+    if (!isTeam0StillAlive || !isTeam1StillAlive) {
       return true;
-    }
-
-    else {
+    } else {
       return false;
     }
   }
 
-  sortLeaderboard():PlayerFrontendGame[]|undefined{
-    const isTeam0StillAlive = this.team0.find(player => player.isPlaying === true);
-    const isTeam1StillAlive = this.team1.find(player => player.isPlaying === true);
-    if(isTeam0StillAlive){
-      return this.team0.sort((a,b) => b.points - a.points);
+
+  sortLeaderboard(): PlayerFrontendGame[] | undefined {
+    const isTeam0StillAlive = this.team0.find(
+      (player) => player.isPlaying === true
+    );
+    const isTeam1StillAlive = this.team1.find(
+      (player) => player.isPlaying === true
+    );
+    if (isTeam0StillAlive) {
+      return this.team0.sort((a, b) => b.points - a.points);
     }
-    if(isTeam1StillAlive){
-      return this.team1.sort((a,b) => b.points - a.points);
+    if (isTeam1StillAlive) {
+      return this.team1.sort((a, b) => b.points - a.points);
     }
     return undefined;
   }
 
-  private getEmptyBoard(): number[][] {
-    for (let i = 0; i <= 2; i++) {
-      if (i > 2) this.width += 5;
-    }
-    return Array.from({ length: this.width }, () => Array(this.width).fill(0));
-  }
 
-  turnHandler() {
+  toggleIsReady() {
     this.isReady = !this.isReady;
   }
 
-
-
 }
-
-

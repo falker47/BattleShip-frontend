@@ -1,12 +1,12 @@
-<div class="start-turn" *ngIf="!isReady">
-  <h3><span id="player-display">{{currentPlayer.name}} it's your turn!</span></h3>
-  <button class="isReady-btn" (click)="turnHandler()">READY!</button>
+<div class="ready-container" *ngIf="!isReady">
+  <h3><span class="player-name">{{currentPlayer.name}}</span> it's your turn!</h3>
+  <button class="is-ready-btn" (click)="toggleIsReady()">Ready!</button>
 </div>
 
 <div class="general-container" *ngIf="isReady && !isGameOver()">
   <h2>Battleship Game</h2>
-  <div id="game-info">
-    <h3>Player: <span id="player-display">{{currentPlayer.name}}</span></h3>
+  <div class="player-info">
+    <h4>Player: <span class="player-name">{{currentPlayer.name}}</span></h4>
   </div>
 
   <div id="boards-container">
@@ -29,62 +29,40 @@
     </div>
   </div>
 
-  <div class="start-turn">
-    <button [disabled]="shot.length === 0 ? 'disabled' : null" class="isReady-btn" (click)=" getNextPlayer()">NEXT PLAYER</button>
+  <div class="next-player-container">
+    <button 
+      [disabled]="shot.length === 0 ? 'disabled' : null" 
+      class="next-player-btn" 
+      (click)=" getNextPlayer()"
+    >Next player</button>
   </div>
 
-  <div id="info">
-    <div id="leaderboard">
+  <div class="game-info">
+    <div class="leaderboard">
       <h4>Leaderboard</h4>
-      <!--TODO-->
-      <!-- <p *ngFor="let player of players; let i = index">
-        <span>{{ i }}</span> <span>{{ player.name }}</span>
-        <span>{{ player.points }}</span>
-      </p> -->
+      <p class="leaderboard-content" *ngFor="let player of playersData; let i = index">
+        <span class="position">{{ i + 1 }}</span> 
+        <span class="name">{{ player.name }}</span>
+        <span class="points">{{ player.points }}</span>
+      </p>
     </div>
 
-    <div id="logs">
-      <!--TODO-->
-      <!-- <p *ngFor="let log of logs">log</p> -->
-      <p>
-        placeholderplaceholderplaceholderplacehol
-        derplaceholderplaceholderplaceholderpl aceholderplaceholderpla
-        ceholderplaceholderplaceholder
-      </p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
-      <p>placeholder</p>
+    <div class="logs-container">
+      <div *ngFor="let log of logs; let i = index;">
+        <p id="{{i}}" [ngClass]="{'new-log': i === 0, 'old-log': i !== 0}"><span>></span>{{ log }}</p>
+      </div>
     </div>
   </div>
 </div>
 
-<div id="leaderboard" *ngIf="isGameOver()">
-  <h4>Leaderboard</h4>
-  <p *ngFor="let player of sortLeaderboard(); let i = index">
-    <span>{{ i+1 }}</span>
-    <span>{{ player.name }}</span>
-    <span>{{ player.points }}</span>
-  </p>
+
+<div class="final-leaderboard-container">
+  <div class="final-leaderboard" *ngIf="isGameOver()">
+    <h4>Leaderboard</h4>
+    <p class="final-leaderboard-content" *ngFor="let player of sortLeaderboard(); let i = index">
+      <span class="position">{{ i+1 }}</span>
+      <span class="name">{{ player.name }}</span>
+      <span class="points">{{ player.points }}</span>
+    </p>
+  </div>
 </div>
