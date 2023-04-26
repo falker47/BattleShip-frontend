@@ -39,11 +39,23 @@ export interface PlayerFrontend {
   confirmed: boolean;
 }
 
-export interface Shot {
+export interface PlayerFrontendGame {
   id: number;
+  name: string;
+  userGridId: number;
+  shotGridId: number;
+  team: number;
+  points: number;
+  isPlaying: boolean;
+}
+
+export interface Shot {
+  id: number; // playerId
   xAxis: number;
   yAxis: number;
 }
+
+
 
 // Backend - Response chiamate get
 
@@ -75,4 +87,8 @@ export interface ShipApi {
   playerId: number;
   length: number;
   hp: number;
+}
+
+export interface Res {
+  log: string;
 }

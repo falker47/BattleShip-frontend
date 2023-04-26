@@ -1,3 +1,81 @@
+// READY SCREEN
+
+.ready-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding-top: 2em;
+
+  h3 {
+    font-family: var(--font-paragraph);
+    font-size: 2em;
+    margin-top: 5em;
+    color: var(--white-color);
+  }
+
+  .is-ready-btn {
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--white-color);
+    border: none;
+    border-radius: 5px;
+    background-color: var(--btn-bg-color);
+    padding: 0.5em 1em;
+    margin-top: 1.5em;
+    transition: 250ms ease-in-out;
+  }
+
+  .is-ready-btn:hover,
+  .is-ready-btn:focus {
+    transform: scale(1.2);
+    cursor: pointer;
+    background-color: var(--btn-hover-color);
+  }
+}
+
+.player-name {
+  color: var(--btn-bg-color);
+  text-shadow: 1px 1px 5px black;
+}
+
+// GAME SCREEN
+
+.general-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-color);
+  padding-bottom: 4em;
+
+  h2 {
+    font-family: var(--font-log);
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 2em 0 1em 0;
+  }
+
+  .player-info {
+    h4 {
+      font-size: 1.4em;
+      margin-bottom: 1.5em;
+    }
+  }
+}
+
+#boards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .userBoard,
 .shotBoard {
   display: flex;
@@ -18,56 +96,182 @@
   border: 1px var(--board-line-color) solid;
 }
 
-#boards-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+.next-player-container {
+  .next-player-btn {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--white-color);
+    border: none;
+    border-radius: 5px;
+    background-color: var(--btn-bg-color);
+    padding: 0.5em 1em;
+    margin-top: 1.5em;
+  }
+
+  .next-player-btn:hover,
+  .next-player-btn:focus {
+    cursor: pointer;
+    background-color: var(--btn-hover-color);
+  }
 }
 
-.general-container {
+.game-info {
+  width: 1200px;
+  margin-top: 3em;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+// LEADERBOARD
+
+.leaderboard {
+  margin-right: 5em;
+  width: 500px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1em 2em;
+  border-radius: 10px;
+  font-family: var(--font-log);
+  font-size: 1.1em;
+
+  h4 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    letter-spacing: 2px;
+    color: var(--btn-bg-color);
+  }
+
+  .leaderboard-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .position {
+      width: 30px;
+    }
+
+    .name {
+      width: 190px;
+    }
+
+    .points {
+      width: 50px;
+      text-align: right;
+      color: coral;
+    }
+  }
+}
+
+// LOGS 
+
+.logs-container {
+  width: 100%;
+  height: 300px;
+  padding: 1em 1em 0.5em 1em;
+  overflow-y: scroll;
+  background-color: rgba(42, 41, 41, 0.6);
+  padding: 1em 2em;
+
+  .new-log {
+    font-family: var(--font-paragraph);
+    margin-bottom: 0.5em;
+    width: 795px;
+    color: var(--white-color);
+
+    span {
+      color: var(--board-line-color);
+      margin-right: 0.3em;
+    }
+  }
+
+  // .old-log {
+  //   font-family: var(--font-paragraph);
+  //   margin-bottom: 0.5em;
+  //   width: 795px;
+  //   color: grey;
+
+  //   span {
+  //     color: grey;
+  //     margin-right: 0.3em;
+  //   }
+  // }
+}
+
+// FINAL LEADERBOARD SCREEN
+
+.final-leaderboard-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--white-color);
-  padding-bottom: 4em;
-}
+  margin-top: 10em;
 
-h2 {
-  font-family: var(--font-log);
-  font-size: 2em;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin: 2em 0 1em 0;
-}
-
-h3 {
-  font-family: var(--font-log);
-  font-size: 1.2em;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  border-bottom: 1px solid var(--white-color);
-  margin-bottom: 1.5em;
-
-  span {
+  .final-leaderboard {
+    width: 800px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 1em 2em;
+    border-radius: 10px;
     font-family: var(--font-log);
+    font-size: 1.3em;
+    color: var(--white-color);
+
+    h4 {
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 1.5em;
+      margin-bottom: 0.5em;
+      letter-spacing: 2px;
+      color: var(--btn-bg-color);
+    }
+
+    .final-leaderboard-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .position {
+        width: 30px;
+        color: lightblue;
+      }
+
+      .name {
+        width: 500px;
+      }
+
+      .team {
+        width: 100px;
+        text-align: left;
+        color: lightblue;
+      }
+
+      .points {
+        width: 100px;
+        text-align: right;
+        color: coral;
+      }
+    }
   }
-}
 
-#info {
-  margin-top: 2em;
-  display: flex;
-  justify-content: center;
-}
+  .restart-btn {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--white-color);
+    border: none;
+    border-radius: 5px;
+    background-color: var(--btn-bg-color);
+    padding: 0.5em 1em;
+    margin-top: 1.5em;
+  }
 
-#leaderboard {
-  margin-right: 3em;
-}
-
-#logs {
-  overflow-y: scroll;
-  overflow-x: visible;
-  height: 400px;
-  max-width: 400px;
+  .restart-btn:hover,
+  .restart-btn:focus {
+    cursor: pointer;
+    background-color: var(--btn-hover-color);
+  }
 }

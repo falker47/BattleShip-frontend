@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PlayerInitialData, Shot, GridApi, PlayerApi, ShipApi, PlayerShipsData } from './models';
+import { PlayerInitialData, Shot, GridApi, PlayerApi, ShipApi, PlayerShipsData, Res } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,7 @@ export class PlayerService {
   private gamePlayer: PlayerApi[] = [];
   private gamePlayerUserGrid!: GridApi;
   private gamePlayerShotGrid!: GridApi;
+
 
   constructor(private httpClient: HttpClient) {}
 
@@ -53,7 +54,7 @@ export class PlayerService {
   }
 
   postShot(shot: Shot) {
-    return this.httpClient.post<string>(this.URL + 'postShot', shot);
+    return this.httpClient.post<Res>(this.URL + 'postShot', shot);
   }
 
   setGamePlayers(gamePlayer: PlayerApi[]) {
