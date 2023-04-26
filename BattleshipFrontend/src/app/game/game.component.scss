@@ -41,6 +41,7 @@
 .player-name {
   color: var(--btn-bg-color);
   text-shadow: 1px 1px 5px black;
+  text-transform: capitalize;
 }
 
 // GAME SCREEN
@@ -96,20 +97,41 @@
   border: 1px var(--board-line-color) solid;
 }
 
-#water {
-  background-color: blue;
-}
+// .water {}
 
-#ship {
+.ship {
   background-color: grey;
 }
 
-#ship-shooted {
-  background-color: red;
+.ship-shooted {
+  background-color: grey;
 }
 
-#water-shooted {
-  background-color: white;
+.ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enemy-ship-shooted::before {
+  content: 'X';
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.water-shooted::before {
+  content: 'X';
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .next-player-container {

@@ -42,6 +42,7 @@ export interface PlayerFrontend {
 export interface PlayerFrontendGame {
   id: number;
   name: string;
+  team: number;
   isPlaying: boolean;
 }
 
@@ -63,8 +64,8 @@ export interface CellApi {
 }
 
 export interface GridApi {
-  gridId: number;
-  cells: CellApi[][];
+  GridId: number;
+  Cells: CellApi[][];
 }
 
 export interface PlayerApi {

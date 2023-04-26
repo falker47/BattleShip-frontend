@@ -21,32 +21,16 @@ export class GameComponent implements OnInit {
   public players: PlayerApi[] = [];
   public playersData: PlayerFrontendGame[] = [];
   public playersLeaderboard: PlayerApi[] = [];
-  public team0: PlayerApi[] = [];
-  public team1: PlayerApi[] = [];
   public shot: Shot[] = [];
   public logs: string[] = [];
   public userGrid!: GridApi;
   public shotGrid!: GridApi;
-  public cellState!: string[][];
- 
-
-  //   public grid: GridApi = {
-  //    id: 0,
-  //    cells: [[
-  //     {
-  //       id: 1,
-  //       gridId: 0,
-  //       xaxis: number,
-  //       yaxis: number,
-  //       state: number, // 0: water, 1: ship, 2: shooted ship, 3: shooted water
-  //       shipId?: number,
-  //     }
-  //    ]]
-  // }
 
 
   constructor(private router: Router, private playerService: PlayerService) {
     this.players = this.playerService.getGamePlayers();
+    this.userGrid = this.playerService.getUserGrid();
+    this.shotGrid = this.playerService.getShotGrid();
   }
 
 
@@ -56,34 +40,36 @@ export class GameComponent implements OnInit {
     this.currentPlayer = this.getCurrentPlayer(0);
 
     this.players.forEach((player) => {
-      if (player.team === 0) {
-        this.team0.push(player);
-      }
-      if (player.team === 1) {
-        this.team1.push(player);
-      }
       this.playersLeaderboard.push(player);
     });
   }
 
-  getCellState(): void {
-    for (let i = 0; i < this.width; i++) {
-      for (let j = 0; j < this.width; j++) {
-        if (this.userGrid.cells.at(i)?.at(j)?.State === 0) {
-          this.cellState[i][j] = 'water';
-        }
-        if (this.userGrid.cells.at(i)?.at(j)?.State === 1) {
-          this.cellState[i][j] = 'ship';
-        }
-        if (this.userGrid.cells.at(i)?.at(j)?.State === 2) {
-          this.cellState[i][j] = 'ship-shooted';
-        }
-        if (this.userGrid.cells.at(i)?.at(j)?.State === 3) {
-          this.cellState[i][j] = 'water-shooted';
-        }
-      }
+
+  getCellState(x: number, y: number, type: string): number {
+    let cells: CellApi[] = [];
+    if (type === 'user') {
+      this.userGrid.Cells.forEach(cells1 => {
+        cells1.forEach(cell => {
+          cells.push(cell);
+        })
+      })
+  
+      let foundCell = cells.find(cell => x === cell.Xaxis && y === cell.Yaxis);
+      return Number(foundCell?.State);
     }
 
+    if (type === 'shot') {
+      this.shotGrid.Cells.forEach(cells1 => {
+        cells1.forEach(cell => {
+          cells.push(cell);
+        })
+      })
+  
+      let foundCell = cells.find(cell => x === cell.Xaxis && y === cell.Yaxis);
+      return Number(foundCell?.State);
+    }
+
+    return 0;
   }
 
 
@@ -105,6 +91,7 @@ export class GameComponent implements OnInit {
       this.playersData.push({
         id: player.id,
         name: player.name,
+        team: player.team,
         isPlaying: true,
       });
     });
@@ -113,39 +100,38 @@ export class GameComponent implements OnInit {
 
   toggleIsReady() {
     this.isReady = !this.isReady;
-    this.userGrid = this.playerService.getUserGrid();
-    this.shotGrid = this.playerService.getShotGrid();
-    console.log(this.userGrid )
-    console.log(this.shotGrid )
-    this.getCellState();
   }
 
 
   async getNextPlayer() {
     let index: number = ++this.currentIndex;
-    this.currentPlayer = this.playersData[this.currentIndex];
-    this.shot.pop();
-
-    if (this.players.length === index) {
+    console.log('current index: GET NEXT PLAYER ' + this.currentIndex)
+    console.log('index: (has to be equal to current index!) ' + index)
+    
+    if (this.playersData.length === index) {
       this.currentIndex = 0;
       this.currentPlayer = this.playersData[this.currentIndex];
+      console.log('this.currentIndex = 0' + this.currentIndex)
     }
-    if (this.currentPlayer.isPlaying === false) {
-      this.currentPlayer = this.playersData[++index];
+    else {
+      this.currentPlayer = this.playersData[index];
+      console.log('this.currentIndex !== 0' + this.currentIndex)
     }
+    this.shot.pop();
+    this.toggleIsReady();
     
-    this.playerService.getGridByPlayerId(this.currentPlayer.id, this.width, true).toPromise().then(res => {
+    await this.playerService.getGridByPlayerId(this.currentPlayer.id, this.width, true).toPromise().then(res => {
       if (res) {
         this.playerService.setUserGrid(res);
+        this.userGrid = this.playerService.getUserGrid();
       }
     });
-    this.playerService.getGridByPlayerId(this.currentPlayer.id, this.width, false).toPromise().then(res => {
+    await this.playerService.getGridByPlayerId(this.currentPlayer.id, this.width, false).toPromise().then(res => {
       if (res) {
         this.playerService.setShotGrid(res);
+        this.shotGrid = this.playerService.getShotGrid();
       }
     });
-
-    this.toggleIsReady();
   }
 
 
@@ -156,7 +142,7 @@ export class GameComponent implements OnInit {
         xAxis: x,
         yAxis: y,
       };
-      this.shot.push(playerShot);
+    this.shot.push(playerShot);
       
       await this.playerService.postShot(playerShot).toPromise().then(res => {
         if (res) {
@@ -168,36 +154,45 @@ export class GameComponent implements OnInit {
           });
         }})
       }
-      this.playerService.getPlayers().subscribe(
-        res => this.playerService.setGamePlayers(res)
-      );
 
-      this.playersLeaderboard = this.playerService.getGamePlayers();
+      this.playerService.getPlayers().toPromise().then(res => {
+        if (res) {
+          this.playerService.setGamePlayers(res);
+          this.playersLeaderboard = this.playerService.getGamePlayers();
+        }
+      });
+
+    this.isPlayerAlive();
+    this.isGameOver();
   }
 
 
   isGameOver(): boolean {
-    const team0Alive = this.isTeamAlive(this.team0).find(el => el === true);
-    const team1Alive = this.isTeamAlive(this.team1).find(el => el === true);
-
+    const team0Alive = this.playersData.find(player => player.team === 0);
+    const team1Alive = this.playersData.find(player => player.team === 1);
+    
     if (!team0Alive || !team1Alive) return true;
     else return false;
   }
 
 
-  isTeamAlive(team: PlayerApi[]): boolean[] {
-    let isTeamStillAlive: boolean[] = [];
-    team.forEach((player) => {
-      this.playersData.forEach(p => {
-        if (player.id === p.id) {
-          if (p.isPlaying === true) {
-            isTeamStillAlive.push(true);
+  isPlayerAlive() {
+    let shipsHP: number[] = [];
+    let index: number = this.currentIndex + 1;
+    console.log('this.currentIndex IS PLAYER ALIVE: ' + this.currentIndex)
+    let newIndex = this.players.length === index ? 0 : index;
+    this.playerService.getShipsByPlayerId(this.playersData[newIndex].id).toPromise().then(res => {
+      if (res) {
+        res.forEach(ship => {
+          if (ship.hp !== 0) {
+            shipsHP.push(ship.hp)
           }
-          else isTeamStillAlive.push(false);
-        } else isTeamStillAlive.push(false);
-      })
+        })
+      }
     });
-    return isTeamStillAlive;
+    if (shipsHP.length === 0) {
+      this.playersData.slice(this.currentIndex, 1);
+    } 
   }
 
 
@@ -207,8 +202,8 @@ export class GameComponent implements OnInit {
 
 
   sortFinalLeaderboard(): PlayerApi[] {
-    const team0Alive = this.isTeamAlive(this.team0).find(el => el === true);
-    const team1Alive = this.isTeamAlive(this.team1).find(el => el === true);
+    const team0Alive = this.playersData.find(player => player.team === 0);
+    const team1Alive = this.playersData.find(player => player.team === 1);
     let playersByPoints = this.players.sort((a, b) => b.points - a.points);
 
     if (team0Alive && !team1Alive) {
