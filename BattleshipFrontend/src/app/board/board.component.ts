@@ -247,7 +247,6 @@ export class BoardComponent implements OnInit {
       .then((res) => {
         if (res) {
           this.playerService.setUserGrid(res);
-          console.log(res.Cells); //todo
         }
       });
     await this.playerService
