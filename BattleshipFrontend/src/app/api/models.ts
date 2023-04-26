@@ -88,3 +88,7 @@ export interface ShipApi {
   length: number;
   hp: number;
 }
+
+export interface Res {
+  log: string;
+}
