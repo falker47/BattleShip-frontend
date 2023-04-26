@@ -11,6 +11,8 @@ export class PlayerService {
   // private URL = 'https://localhost:7100/api/Players/';
 
   private gamePlayer: PlayerApi[] = [];
+  private gamePlayerUserGrid!: GridApi;
+  private gamePlayerShotGrid!: GridApi;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -58,7 +60,23 @@ export class PlayerService {
     this.gamePlayer = gamePlayer;
   }
 
+  setUserGrid(userGrid: GridApi) {
+    this.gamePlayerUserGrid = userGrid;
+  }
+
+  setShotGrid(shotGrid: GridApi) {
+    this.gamePlayerShotGrid = shotGrid;
+  }
+
   getGamePlayers(): PlayerApi[]{
     return this.gamePlayer;
+  }
+
+  getUserGrid(): GridApi{
+    return this.gamePlayerUserGrid;
+  }
+
+  getShotGrid(): GridApi{
+    return this.gamePlayerShotGrid;
   }
 }
