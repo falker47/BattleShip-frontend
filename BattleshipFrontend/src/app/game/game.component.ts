@@ -26,10 +26,10 @@ export class GameComponent implements OnInit {
   public players: PlayerApi[] = [
     { id: 1, name: 'Alexía', userGridId: 0, shotGridId: 0, team: 0, points: 111 },
     { id: 2, name: 'Flavio', userGridId: 0, shotGridId: 0, team: 1, points: 10 },
-    { id: 3, name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 7000 },
-    { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 1000 },
-    { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 50 },
-    { id: 6, name: 'Nicola', userGridId: 0, shotGridId: 0, team: 1, points: 666 },
+    // { id: 3, name: 'Artiom', userGridId: 0, shotGridId: 0, team: 0, points: 70 },
+    // { id: 4, name: 'Maurizio', userGridId: 0, shotGridId: 0, team: 1, points: 1000 },
+    // { id: 5, name: 'Daniele', userGridId: 0, shotGridId: 0, team: 0, points: 50 },
+    // { id: 6, name: 'Nicola', userGridId: 0, shotGridId: 0, team: 1, points: 666 },
   ] // TODO replace with information from backend;
 
   //   public grid: GridApi = {
@@ -76,7 +76,11 @@ export class GameComponent implements OnInit {
       this.playersLeaderboard.push(player);
     });
 
-    this.playersData[2].isPlaying = false; // TODO: delete later
+    console.log('players:')
+    console.log(this.players)
+    console.log('playersData:')
+    console.log(this.playersData)
+    console.log('playersLeaderboard:')
     console.log(this.playersLeaderboard); // TODO: delete later
   }
 
@@ -130,7 +134,7 @@ export class GameComponent implements OnInit {
   }
 
 
-  saveShot(x: number, y: number) {
+  saveShot (x: number, y: number) {
     if (this.shot.length === 0) {
       const playerShot: Shot = {
         id: this.currentPlayer.id,
@@ -138,8 +142,10 @@ export class GameComponent implements OnInit {
         yAxis: y,
       };
       this.shot.push(playerShot);
-      // this.playerService.postShot(shot);
-      this.isGameOver();
+      console.log(playerShot) // todo delete
+      
+      // setTimeout(() => this.playerService.postShot(playerShot).subscribe(res => console.log(res)), 5000);
+      setTimeout(() => this.playerService.getPlayers().subscribe(res => console.log(res)), 5000);
     }
   }
 

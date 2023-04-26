@@ -50,7 +50,7 @@ export interface PlayerFrontendGame {
 }
 
 export interface Shot {
-  id: number; // player-id
+  id: number; // playerId
   xAxis: number;
   yAxis: number;
 }

@@ -49,7 +49,9 @@
 
     <div class="logs-container">
       <div *ngFor="let log of logs; let i = index;">
-        <p id="{{i}}" [ngClass]="{'new-log': i === 0, 'old-log': i !== 0}"><span>></span>{{ log }}</p>
+        <p id="{{i}}" [ngClass]="{'new-log': i === 0, 'old-log': i !== 0}">
+          <span>></span>{{ log }}
+        </p>
       </div>
     </div>
   </div>
