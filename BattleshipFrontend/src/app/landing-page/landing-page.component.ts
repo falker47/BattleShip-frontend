@@ -19,7 +19,7 @@ export class LandingPageComponent {
   constructor(private router: Router, private playerService: PlayerService) {}
 
   public addPlayer(inputName: string) {
-    const name = inputName.replace(/\s/g, '');
+    const name = inputName.replace(/\s/g, '').charAt(0).toUpperCase() + inputName.slice(1);
     if (!inputName || name === "" || this.isNameTaken(name)) {
       return;
     }
