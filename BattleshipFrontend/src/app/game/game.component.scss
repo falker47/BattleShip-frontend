@@ -127,12 +127,14 @@
 .cell-large-ship {
   width: 30px;
   height: 30px;
-  background-color: grey;
+  border: 1px dotted;
+  background-color: red;
 }
 .cell-large-ship-shooted {
   width: 30px;
   height: 30px;
-  background-color: grey;
+  border: 1px dotted;
+  background-color: red;
 }
 .cell-large-ship-shooted::before {
   content: 'X';
@@ -176,12 +178,14 @@
 .cell-medium-ship {
   width: 25px;
   height: 25px;
-  background-color: grey;
+  border: 1px dotted;
+  background-color: red;
 }
 .cell-medium-ship-shooted {
   width: 25px;
   height: 25px;
-  background-color: grey;
+  border: 1px dotted;
+  background-color: red;
 }
 .cell-medium-ship-shooted::before {
   content: 'X';
@@ -225,12 +229,14 @@
 .cell-small-ship {
   width: 20px;
   height: 20px;
-  background-color: grey;
+  border: 1px dotted;
+  background-color: red;
 }
 .cell-small-ship-shooted {
   width: 20px;
   height: 20px;
-  background-color: grey;
+  border: 1px dotted;
+  background-color: red;
 }
 .cell-small-ship-shooted::before {
   content: 'X';

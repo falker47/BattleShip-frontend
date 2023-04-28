@@ -35,7 +35,7 @@ export class GameComponent implements OnInit {
     this.players = this.playerService.getGamePlayers();
     this.userGrid = this.playerService.getUserGrid();
     this.shotGrid = this.playerService.getShotGrid();
-    console.log(this.userGrid.Cells)
+    console.log(this.userGrid.Cells);
   }
 
   ngOnInit() {
@@ -73,6 +73,20 @@ export class GameComponent implements OnInit {
     }
 
     return 0;
+  }
+
+  getShipId(x: number, y: number): number {
+    let cells: CellApi[] = [];
+
+    this.userGrid.Cells.forEach((rows) => {
+      rows.forEach((cell) => {
+        cells.push(cell);
+      });
+    });
+
+    let foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
+    console.log(Number(foundCell?.ShipId))
+    return Number(foundCell?.ShipId);
   }
 
   private getEmptyBoard(): number[][] {
@@ -157,7 +171,7 @@ export class GameComponent implements OnInit {
         });
     }
 
-    this.playerService
+    await this.playerService
       .getPlayers()
       .toPromise()
       .then((res) => {
@@ -180,9 +194,9 @@ export class GameComponent implements OnInit {
   }
 
   isPlayersAlive() {
-    this.playersData.forEach((playerPlaying, i) => {
+    this.playersData.forEach(async (playerPlaying, i) => {
       let shipsHP: number[] = [];
-      this.playerService
+      await this.playerService
         .getShipsByPlayerId(playerPlaying.id)
         .toPromise()
         .then((res) => {
