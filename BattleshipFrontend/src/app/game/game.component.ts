@@ -13,6 +13,8 @@ window.addEventListener('beforeunload', (event) => {
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
+  @ViewChild('shotCol') shotCol!: ElementRef<HTMLElement>;
+  @ViewChild('shotCell') shotCell!: ElementRef<HTMLElement>;
   public width: number = 10;
   public playerBoard!: number[][];
   public isReady: boolean = false;
@@ -45,24 +47,20 @@ export class GameComponent implements OnInit {
     let cells: CellApi[] = [];
 
     if (type === 'user') {
-      this.userGrid.Cells.forEach((cells1) => {
-        cells1.forEach((cell) => cells.push(cell));
+      this.userGrid.Cells.forEach((row) => {
+        row.forEach((cell) => cells.push(cell));
       });
 
-      let foundCell = cells.find(
-        (cell) => x === cell.Xaxis && y === cell.Yaxis
-      );
+      let foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
       return Number(foundCell?.State);
     }
 
     if (type === 'shot') {
-      this.shotGrid.Cells.forEach((cells1) => {
-        cells1.forEach((cell) => cells.push(cell));
+      this.shotGrid.Cells.forEach((row) => {
+        row.forEach((cell) => cells.push(cell));
       });
 
-      let foundCell = cells.find(
-        (cell) => x === cell.Xaxis && y === cell.Yaxis
-      );
+      let foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
       return Number(foundCell?.State);
     }
 
@@ -133,6 +131,12 @@ export class GameComponent implements OnInit {
     this.toggleIsReady();
     // this.showNextPlayer();
 
+    await this.updateUserGrid();
+    await this.updateShotGrid();
+  }
+
+
+  public async updateUserGrid() {
     await this.playerService
       .getGridByPlayerId(this.currentPlayer.id, this.width, true)
       .toPromise()
@@ -142,6 +146,10 @@ export class GameComponent implements OnInit {
           this.userGrid = this.playerService.getUserGrid();
         }
       });
+  }
+
+
+  public async updateShotGrid() {
     await this.playerService
       .getGridByPlayerId(this.currentPlayer.id, this.width, false)
       .toPromise()
@@ -154,27 +162,7 @@ export class GameComponent implements OnInit {
   }
 
 
-  public async saveShot(x: number, y: number) {
-    if (this.shot.length === 0) {
-      const playerShot: Shot = {
-        id: this.currentPlayer.id,
-        xAxis: x,
-        yAxis: y,
-      };
-      this.shot.push(playerShot);
-
-      await this.playerService
-        .postShot(playerShot)
-        .toPromise()
-        .then((res) => {
-          if (res) {
-            let logArray = res.log.split(';');
-            logArray.forEach((log) => {
-              if (log !== '') this.logs.unshift(log);
-            });
-          }
-        });
-    }
+  public async updateGamePlayers() {
     await this.playerService
       .getPlayers()
       .toPromise()
@@ -184,7 +172,38 @@ export class GameComponent implements OnInit {
           this.players = this.playerService.getGamePlayers();
         }
       });
+  }
 
+
+  public async updateShot(playerShot: Shot) {
+    await this.playerService
+      .postShot(playerShot)
+      .toPromise()
+      .then((res) => {
+        if (res) {
+          let logArray = res.log.split(';');
+          logArray.forEach((log) => {
+            if (log !== '') this.logs.unshift(log);
+          });
+        }
+      });
+  }
+
+
+  public async saveShot(x: number, y: number) {
+    if (this.shot.length === 0) {
+      const playerShot: Shot = {
+        id: this.currentPlayer.id,
+        xAxis: x,
+        yAxis: y,
+      };
+
+      this.shot.push(playerShot);
+      await this.updateShot(playerShot);
+      await this.updateShotGrid();
+    }
+
+    await this.updateGamePlayers();
     this.checkAlivePlayers();
     this.playerService.setPlayersData(this.playersData);
   }
@@ -203,7 +222,7 @@ export class GameComponent implements OnInit {
               if (ship.hp !== 0) shipsHP.push(ship.hp);
             });
           }
-          if (shipsHP.length === 8) {
+          if (shipsHP.length === 0) {
             this.playersData.splice(i, 1);
           }
           if (this.isGameOver() === true) {
