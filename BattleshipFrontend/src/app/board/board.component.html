@@ -2,19 +2,21 @@
   <h2 class="title">Position your ships</h2>
 
   <div class="content-container">
-    <div class="config">
-      <div class="config-instructions">
+    <div class="info">
+      <div class="info-instructions">
         <h4>Instructions</h4>
         <p>1. To place a ship inside the board drag it from the "Available Ships" section and drop it into the board.</p>
         <p>2. To rotate a ship double click the ship below "Available Ships".</p>
         <p>3. To reset a ship that's already inside the board double click it.</p>
       </div>
-
-      <div class="config-player">
-        <p class="player">Player: <span>{{ currentPlayer.name }}</span></p>
-
+    
+      <div class="info-player">
+        <p class="player">
+          Player: <span>{{ currentPlayer.name }}</span>
+        </p>
+    
         <button
-          *ngIf="this.shipList1.length === 0"
+          *ngIf="shipList1.length === 0"
           class="confirm-btn"
           (click)="confirmShips()"
         >
@@ -23,16 +25,17 @@
       </div>
     </div>
 
+
     <div class="lists-container">
       <div class="container-1">
         <div
           class="ships"
           [ngClass]="{
-            'ships-not-empty': this.shipList1.length > 0,
-            'ships-empty': this.shipList1.length !== 0
+            'ships-not-empty': shipList1.length > 0,
+            'ships-empty': shipList1.length !== 0
           }"
         >
-          <h3>Available ships: <span>{{ this.shipList1.length }}</span></h3>
+          <h3>Available ships: <span>{{ shipList1.length }}</span></h3>
 
           <div
             class="list-1"
@@ -91,15 +94,14 @@
                     'cell-medium': playerBoard.length === 20 || playerBoard.length === 25,
                     'cell-small': playerBoard.length === 30
                   }"
-                  (mouseover)="hoveredPlace(cell.getBoundingClientRect(), 'cell', y+1, x+1)"
+                  (mouseover)="hoveredPlace(cell.getBoundingClientRect(), 'cell', y + 1, x + 1)"
                 ></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-
+    
   </div>
 </div>

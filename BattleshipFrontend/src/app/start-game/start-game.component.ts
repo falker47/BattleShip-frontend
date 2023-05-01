@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./start-game.component.scss'],
 })
 export class StartGameComponent {
-  public width!: number;
+  public width;
 
   constructor(private playerService: PlayerService, private router: Router) {
-    this.width = playerService.getBoardSize();
+    this.width = this.playerService.getBoardSize();
   }
+
 
   public async startGame() {
     await this.playerService
@@ -23,6 +24,7 @@ export class StartGameComponent {
           this.playerService.setUserGrid(res);
         }
       });
+
     await this.playerService
       .getGridByPlayerId(1, this.width, false)
       .toPromise()
@@ -31,6 +33,8 @@ export class StartGameComponent {
           this.playerService.setShotGrid(res);
         }
       });
+
+    // this.router.navigate(['/player-ready']);
     this.router.navigate(['/game']);
   }
 }

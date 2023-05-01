@@ -14,6 +14,8 @@ import { BoardComponent } from './board/board.component';
 import { GameComponent } from './game/game.component';
 import { ShipComponent } from './ship/ship.component';
 import { StartGameComponent } from './start-game/start-game.component';
+import { FinalLeaderboardComponent } from './final-leaderboard/final-leaderboard.component';
+// import { PlayerReadyComponent } from './player-ready/player-ready.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { StartGameComponent } from './start-game/start-game.component';
     GameComponent,
     ShipComponent,
     StartGameComponent,
+    FinalLeaderboardComponent,
+    // PlayerReadyComponent,
   ],
   imports: [
     BrowserModule,

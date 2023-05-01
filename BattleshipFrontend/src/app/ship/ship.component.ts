@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Coordinates } from 'src/app/api/models';
+import { Coordinates } from '../api/models';
 
 @Component({
     selector: 'app-ship',

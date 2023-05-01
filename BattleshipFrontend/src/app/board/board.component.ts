@@ -1,11 +1,5 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import {
-  PlayerApi,
-  PlayerFrontend,
-  DragModel,
-  PlayerShipsData,
-  Coordinates,
-} from '../api/models';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { PlayerApi, PlayerFrontend, DragModel, PlayerShipsData, Coordinates } from '../api/models';
 import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { ShipComponent } from '../ship/ship.component';
 import { Router } from '@angular/router';
@@ -44,6 +38,7 @@ export class BoardComponent implements OnInit {
     this.gamePlayers = this.playerService.getGamePlayers();
   }
 
+
   ngOnInit() {
     this.addConfirmedPropertyToPlayer();
     this.currentPlayer = this.getCurrentPlayer(this.currentIndex);
@@ -53,6 +48,7 @@ export class BoardComponent implements OnInit {
     this.shipList2 = [];
     this.playerService.setBoardSize(this.width);
   }
+
 
   private addConfirmedPropertyToPlayer() {
     this.gamePlayers.forEach((player) => {
@@ -68,9 +64,11 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  private getCurrentPlayer(index: number): PlayerFrontend {
+
+  public getCurrentPlayer(index: number): PlayerFrontend {
     return this.playersData[index];
   }
+
 
   private getEmptyBoard(): number[][] {
     for (let i = 0; i <= this.playersData.length; i++) {
@@ -79,19 +77,19 @@ export class BoardComponent implements OnInit {
     return Array.from({ length: this.width }, () => Array(this.width).fill(0));
   }
 
+
   public calculateCellPixels(): number {
-    if (this.playersData.length === 2 || this.playersData.length === 3)
-      return 30;
-    if (this.playersData.length === 4 || this.playersData.length === 5)
-      return 25;
+    if (this.playersData.length === 2 || this.playersData.length === 3) return 30;
+    if (this.playersData.length === 4 || this.playersData.length === 5) return 25;
     if (this.playersData.length >= 6) return 20;
     else return 30;
   }
 
-  private createFleet(): Array<ShipComponent> {
+
+  public createFleet(): Array<ShipComponent> {
     return [
       {
-        name: 'ship_5_1_red',
+        name: 'ship_5_1_lightblue',
         size: 5,
         isVertical: false,
         top: 0,
@@ -163,7 +161,7 @@ export class BoardComponent implements OnInit {
         boardSize: 0,
       },
       {
-        name: 'ship_2_3_lightgreen',
+        name: 'ship_2_3_violet',
         size: 2,
         isVertical: false,
         top: 0,
@@ -175,7 +173,7 @@ export class BoardComponent implements OnInit {
         boardSize: 0,
       },
       {
-        name: 'ship_1_1_violet',
+        name: 'ship_1_1_lightgreen',
         size: 1,
         isVertical: false,
         top: 0,
@@ -187,7 +185,7 @@ export class BoardComponent implements OnInit {
         boardSize: 0,
       },
       {
-        name: 'ship_1_2_lightblue',
+        name: 'ship_1_2_grey',
         size: 1,
         isVertical: false,
         top: 0,
@@ -201,6 +199,7 @@ export class BoardComponent implements OnInit {
     ];
   }
 
+
   public setPlayerFinalData(): void {
     const occupiedCoords: Coordinates[][] = [];
     this.shipList2.forEach((ship) => occupiedCoords.push(ship.occupiedCoords));
@@ -208,6 +207,7 @@ export class BoardComponent implements OnInit {
     this.playerFinalData.playerId = this.currentPlayer.id;
     this.playerFinalData.PlayerShipsPosition = occupiedCoords;
   }
+
 
   public async confirmShips() {
     this.setPlayerFinalData();
@@ -229,6 +229,7 @@ export class BoardComponent implements OnInit {
       });
   }
 
+
   public getNextPlayer(): void {
     let nextIndex = ++this.currentIndex;
       if (this.playersData[nextIndex] !== undefined) {
@@ -238,9 +239,11 @@ export class BoardComponent implements OnInit {
       }
   }
 
+
   public areAllPlayersReady(): boolean {
     return this.playersData.every((player) => player.confirmed === true);
   }
+
 
   public goToStartGame(): void {
     if (this.areAllPlayersReady() === true) {
@@ -248,12 +251,14 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  
 
   // ------------- SHIPS POSITIONING - DRAG & DROP ------------------ //
 
   public rotateAvailableShip(i: number): void {
     this.shipList1[i].isVertical = !this.shipList1[i].isVertical;
   }
+
 
   public resetShip(i: number): void {
     this.moveFromshipList2To1(i.toString());
@@ -263,17 +268,14 @@ export class BoardComponent implements OnInit {
     }
   }
 
+
   public dragStarted(shipName: string): void {
     this.dragStart = this.hoverPlace;
     this.shipName = shipName;
   }
 
-  public hoveredPlace(
-    position: any,
-    elementType: string,
-    row: number,
-    col: number
-  ): void {
+
+  public hoveredPlace(position: any, elementType: string, row: number, col: number): void {
     let dropPlace = {} as DragModel;
     dropPlace.cellX = position.x;
     dropPlace.cellY = position.y;
@@ -282,6 +284,7 @@ export class BoardComponent implements OnInit {
     dropPlace.col = col;
     this.dropValidation(dropPlace, row, col);
   }
+
 
   public dropValidation(dropPlace: DragModel, row: number, col: number): void {
     this.hoverPlace = dropPlace ? dropPlace : this.dragStart;
@@ -399,6 +402,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
+
   public dragEnded(event: CdkDragEnd): void {
     this.dragEnd = this.hoverPlace;
     this.increaseZIndex(event.source.element);
@@ -437,6 +441,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
+
   private moveFromshipList2To1(id: string): void {
     let index = Number(id);
     let item = this.shipList2[index];
@@ -445,6 +450,7 @@ export class BoardComponent implements OnInit {
     this.shipList2.splice(index, 1);
   }
 
+
   private moveFromshipList1To2(id: string): void {
     let index = Number(id);
     let item = this.updateShip(this.shipList1[index]);
@@ -452,17 +458,14 @@ export class BoardComponent implements OnInit {
     this.shipList1.splice(index, 1);
   }
 
+
   public updateShip(ship: ShipComponent): ShipComponent {
-    ship.left =
-      this.dragEnd.cellX -
-      this.boardElement.nativeElement.getBoundingClientRect().x;
-    ship.top =
-      this.dragEnd.cellY -
-      this.boardElement.nativeElement.getBoundingClientRect().y;
+    ship.left = this.dragEnd.cellX - this.boardElement.nativeElement.getBoundingClientRect().x;
+    ship.top = this.dragEnd.cellY - this.boardElement.nativeElement.getBoundingClientRect().y;
     ship.col = this.dragEnd.col;
     ship.row = this.dragEnd.row;
     ship.occupiedCoords =
-      ship.size === 5 && !ship.isVertical
+        ship.size === 5 && !ship.isVertical
         ? [
             { X: ship.col, Y: ship.row },
             { X: ship.col + 1, Y: ship.row },
@@ -520,15 +523,18 @@ export class BoardComponent implements OnInit {
     return ship;
   }
 
+
   public dragMoved(event: CdkDragMove): void {
     this.decreaseZIndex(event.source.element);
   }
+
 
   private decreaseZIndex(element: ElementRef): void {
     element.nativeElement.style.zIndex = '-1';
     let elem = element.nativeElement.children[0] as HTMLElement;
     elem.style.zIndex = '-1';
   }
+
 
   private increaseZIndex(element: ElementRef): void {
     element.nativeElement.style.zIndex = '100';

@@ -8,13 +8,13 @@ import {
   ShipApi,
   PlayerShipsData,
   Res,
+  PlayerFrontendGame,
 } from './models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlayerService {
-  // quando ci sarà il db online:
   URL = 'https://api-battleship.azurewebsites.net/api/Players/';
   // private URL = 'https://localhost:7100/api/Players/';
 
@@ -22,8 +22,13 @@ export class PlayerService {
   private gamePlayerUserGrid!: GridApi;
   private gamePlayerShotGrid!: GridApi;
   public width!: number;
+  // public currentIndex!: number;
+  // public currentPlayer!: PlayerFrontendGame;
+  public playersData!: PlayerFrontendGame[];
+
 
   constructor(private httpClient: HttpClient) {}
+
 
   getPlayers() {
     return this.httpClient.get<PlayerApi[]>(this.URL + 'getPlayers');
@@ -81,6 +86,10 @@ export class PlayerService {
     return this.gamePlayerShotGrid;
   }
 
+  // ------- Sharing information between components ------- //
+
+  // BoardComponent | StartGameComponent
+
   getBoardSize(): number {
     return this.width;
   }
@@ -88,4 +97,30 @@ export class PlayerService {
   setBoardSize(width: number) {
     this.width = width;
   }
+
+  // PlayerReadyComponent | GameComponent | FinalLeaderboardComponent
+
+  // getCurrentPlayer(): PlayerFrontendGame {
+  //   return this.currentPlayer;
+  // }
+
+  // setCurrentPlayer(currentPlayer: PlayerFrontendGame) {
+  //   this.currentPlayer = currentPlayer;
+  // }
+
+  getPlayersData() {
+    return this.playersData;
+  }
+  
+  setPlayersData(playersData: PlayerFrontendGame[]) {
+    this.playersData = playersData;
+  }
+
+  // getCurrentIndex() {
+  //   return this.currentIndex;
+  // }
+
+  // setCurrentIndex(currentIndex: number) {
+  //   this.currentIndex = currentIndex;
+  // }
 }

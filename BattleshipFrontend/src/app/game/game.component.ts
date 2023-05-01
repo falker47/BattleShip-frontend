@@ -1,24 +1,18 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerService } from '../api/player.service';
-import {
-  PlayerFrontendGame,
-  CellApi,
-  GridApi,
-  PlayerApi,
-  Shot,
-} from '../api/models';
+import { PlayerFrontendGame, CellApi, GridApi, PlayerApi, Shot } from '../api/models';
 
 window.addEventListener('beforeunload', (event) => {
   event.returnValue = `Are you sure you want to leave?`;
 });
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
-  @ViewChild('board') boardElement!: ElementRef<HTMLElement>;
   public width: number = 10;
   public playerBoard!: number[][];
   public isReady: boolean = false;
@@ -31,25 +25,28 @@ export class GameComponent implements OnInit {
   public userGrid!: GridApi;
   public shotGrid!: GridApi;
 
+
   constructor(private router: Router, private playerService: PlayerService) {
     this.players = this.playerService.getGamePlayers();
     this.userGrid = this.playerService.getUserGrid();
     this.shotGrid = this.playerService.getShotGrid();
   }
 
+
   ngOnInit() {
     this.playerBoard = this.getEmptyBoard();
     this.preparePlayers();
-    this.currentPlayer = this.getCurrentPlayer(0);
+    this.playerService.setPlayersData(this.playersData);
+    this.currentPlayer = this.getCurrentPlayer(this.currentIndex);
   }
 
-  getCellState(x: number, y: number, type: string): number {
+
+  public getCellState(x: number, y: number, type: string): number {
     let cells: CellApi[] = [];
+
     if (type === 'user') {
       this.userGrid.Cells.forEach((cells1) => {
-        cells1.forEach((cell) => {
-          cells.push(cell);
-        });
+        cells1.forEach((cell) => cells.push(cell));
       });
 
       let foundCell = cells.find(
@@ -60,9 +57,7 @@ export class GameComponent implements OnInit {
 
     if (type === 'shot') {
       this.shotGrid.Cells.forEach((cells1) => {
-        cells1.forEach((cell) => {
-          cells.push(cell);
-        });
+        cells1.forEach((cell) => cells.push(cell));
       });
 
       let foundCell = cells.find(
@@ -74,7 +69,8 @@ export class GameComponent implements OnInit {
     return 0;
   }
 
-  getShipId(x: number, y: number): number {
+
+  public getShipId(x: number, y: number): number {
     let cells: CellApi[] = [];
 
     this.userGrid.Cells.forEach((rows) => {
@@ -87,6 +83,7 @@ export class GameComponent implements OnInit {
     return Number(foundCell?.ShipId);
   }
 
+
   private getEmptyBoard(): number[][] {
     for (let i = 0; i <= this.players.length; i++) {
       if (i > 2) this.width += 5;
@@ -94,11 +91,13 @@ export class GameComponent implements OnInit {
     return Array.from({ length: this.width }, () => Array(this.width).fill(0));
   }
 
-  getCurrentPlayer(i: number): PlayerFrontendGame {
+
+  public getCurrentPlayer(i: number): PlayerFrontendGame {
     return this.playersData[i];
   }
 
-  preparePlayers() {
+
+  private preparePlayers() {
     this.players.forEach((player) => {
       this.playersData.push({
         id: player.id,
@@ -109,9 +108,16 @@ export class GameComponent implements OnInit {
     });
   }
 
-  toggleIsReady() {
+
+  public toggleIsReady() {
     this.isReady = !this.isReady;
   }
+
+
+  // public showNextPlayer(): void {
+  //   this.router.navigate(["/player-ready"]);
+  // }
+
 
   async getNextPlayer() {
     let index: number = ++this.currentIndex;
@@ -122,8 +128,10 @@ export class GameComponent implements OnInit {
     } else {
       this.currentPlayer = this.playersData[index];
     }
+
     this.shot.pop();
     this.toggleIsReady();
+    // this.showNextPlayer();
 
     await this.playerService
       .getGridByPlayerId(this.currentPlayer.id, this.width, true)
@@ -145,7 +153,8 @@ export class GameComponent implements OnInit {
       });
   }
 
-  async saveShot(x: number, y: number) {
+
+  public async saveShot(x: number, y: number) {
     if (this.shot.length === 0) {
       const playerShot: Shot = {
         id: this.currentPlayer.id,
@@ -161,14 +170,11 @@ export class GameComponent implements OnInit {
           if (res) {
             let logArray = res.log.split(';');
             logArray.forEach((log) => {
-              if (log !== '') {
-                this.logs.unshift(log);
-              }
+              if (log !== '') this.logs.unshift(log);
             });
           }
         });
     }
-
     await this.playerService
       .getPlayers()
       .toPromise()
@@ -179,11 +185,36 @@ export class GameComponent implements OnInit {
         }
       });
 
-    this.isPlayersAlive();
-    this.isGameOver();
+    this.checkAlivePlayers();
+    this.playerService.setPlayersData(this.playersData);
   }
 
-  isGameOver(): boolean {
+
+  public async checkAlivePlayers() {
+    this.playersData.forEach(async (player, i) => {
+      let shipsHP: number[] = [];
+
+      await this.playerService
+        .getShipsByPlayerId(player.id)
+        .toPromise()
+        .then((res) => {
+          if (res) {
+            res.forEach((ship) => {
+              if (ship.hp !== 0) shipsHP.push(ship.hp);
+            });
+          }
+          if (shipsHP.length === 8) {
+            this.playersData.splice(i, 1);
+          }
+          if (this.isGameOver() === true) {
+            this.router.navigate(["/leaderboard"]);
+          }
+        });
+    });
+  }
+
+
+  public isGameOver(): boolean {
     const team0Alive = this.playersData.find((player) => player.team === 0);
     const team1Alive = this.playersData.find((player) => player.team === 1);
 
@@ -191,45 +222,8 @@ export class GameComponent implements OnInit {
     else return false;
   }
 
-  isPlayersAlive() {
-    this.playersData.forEach(async (playerPlaying, i) => {
-      let shipsHP: number[] = [];
-      await this.playerService
-        .getShipsByPlayerId(playerPlaying.id)
-        .toPromise()
-        .then((res) => {
-          if (res) {
-            res.forEach((ship) => {
-              if (ship.hp !== 0) {
-                shipsHP.push(ship.hp);
-              }
-            });
-          }
-          if (shipsHP.length === 0) {
-            this.playersData.splice(i, 1);
-          }
-        });
-    });
-  }
 
-  sortLeaderboard(): PlayerApi[] {
+  public sortLeaderboard(): PlayerApi[] {
     return this.players.sort((a, b) => b.points - a.points);
-  }
-
-  sortFinalLeaderboard(): PlayerApi[] {
-    const team0Alive = this.playersData.find((player) => player.team === 0);
-    const team1Alive = this.playersData.find((player) => player.team === 1);
-    let playersByPoints = this.players.sort((a, b) => b.points - a.points);
-
-    if (team0Alive && !team1Alive) {
-      return playersByPoints.sort((a, b) => a.team - b.team);
-    }
-    if (team1Alive && !team0Alive) {
-      return playersByPoints.sort((a, b) => b.team - a.team);
-    } else return playersByPoints;
-  }
-
-  restartGame() {
-    this.router.navigate(['/']);
   }
 }

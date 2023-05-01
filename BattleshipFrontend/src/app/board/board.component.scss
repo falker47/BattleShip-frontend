@@ -23,7 +23,7 @@
   margin-top: 2em;
 }
 
-.config {
+.info {
   width: 90%;
   max-width: 1000px;
   margin: 2em 1em;
@@ -32,7 +32,7 @@
   justify-content: center;
   align-items: center;
 
-  .config-instructions {
+  .info-instructions {
     max-width: 600px;
     background-color: rgba(0, 0, 0, 0.6);
     padding: 1em 2em;
@@ -51,7 +51,7 @@
     }
   }
 
-  .config-player {
+  .info-player {
     max-width: 600px;
     display: flex;
     justify-content: space-between;
@@ -163,7 +163,7 @@ app-ship {
 }
 
 @media(min-width: 1605px) {
-  .config-page-container {
+  .info-page-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -184,7 +184,7 @@ app-ship {
     align-items: flex-start;
   }
 
-  .config {
+  .info {
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -193,13 +193,13 @@ app-ship {
     width: 500px;
     margin-right: 3em;
 
-    .config-instructions {
+    .info-instructions {
       margin: 0;
       width: 100%;
       margin-bottom: 2em;
     }
 
-    .config-player {
+    .info-player {
       margin: 0;
       width: 100%;
       margin: 0 1em;

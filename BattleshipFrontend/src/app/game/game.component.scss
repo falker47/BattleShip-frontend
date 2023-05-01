@@ -128,13 +128,13 @@
   width: 30px;
   height: 30px;
   border: 1px dotted;
-  background-color: red;
+  background-color: #5dc1e2;
 }
 .cell-large-ship-shooted {
   width: 30px;
   height: 30px;
   border: 1px dotted;
-  background-color: red;
+  background-color: #5dc1e2;
 }
 .cell-large-ship-shooted::before {
   content: 'X';
@@ -179,13 +179,13 @@
   width: 25px;
   height: 25px;
   border: 1px dotted;
-  background-color: red;
+  background-color: #5dc1e2;
 }
 .cell-medium-ship-shooted {
   width: 25px;
   height: 25px;
   border: 1px dotted;
-  background-color: red;
+  background-color: #5dc1e2;
 }
 .cell-medium-ship-shooted::before {
   content: 'X';
@@ -230,13 +230,13 @@
   width: 20px;
   height: 20px;
   border: 1px dotted;
-  background-color: red;
+  background-color: #5dc1e2;
 }
 .cell-small-ship-shooted {
   width: 20px;
   height: 20px;
   border: 1px dotted;
-  background-color: red;
+  background-color: #5dc1e2;
 }
 .cell-small-ship-shooted::before {
   content: 'X';
@@ -359,95 +359,83 @@
       margin-right: 0.3em;
     }
   }
-
-  // .old-log {
-  //   font-family: var(--font-paragraph);
-  //   margin-bottom: 0.5em;
-  //   width: 795px;
-  //   color: grey;
-
-  //   span {
-  //     color: grey;
-  //     margin-right: 0.3em;
-  //   }
-  // }
 }
 
 // FINAL LEADERBOARD SCREEN
 
-.final-leaderboard-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10em;
+// .final-leaderboard-container {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 10em;
 
-  .final-leaderboard {
-    max-width: 800px;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 1em 2em;
-    border-radius: 10px;
-    font-family: var(--font-log);
-    font-size: 1.3em;
-    color: var(--white-color);
+//   .final-leaderboard {
+//     max-width: 800px;
+//     background-color: rgba(0, 0, 0, 0.6);
+//     padding: 1em 2em;
+//     border-radius: 10px;
+//     font-family: var(--font-log);
+//     font-size: 1.3em;
+//     color: var(--white-color);
 
-    h4 {
-      text-align: center;
-      text-transform: uppercase;
-      font-size: 1.5em;
-      margin-bottom: 0.5em;
-      letter-spacing: 2px;
-      color: var(--btn-bg-color);
-    }
+//     h4 {
+//       text-align: center;
+//       text-transform: uppercase;
+//       font-size: 1.5em;
+//       margin-bottom: 0.5em;
+//       letter-spacing: 2px;
+//       color: var(--btn-bg-color);
+//     }
 
-    .final-leaderboard-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+//     .final-leaderboard-content {
+//       display: flex;
+//       justify-content: space-between;
+//       align-items: center;
 
-      .position {
-        width: 30px;
-        color: lightblue;
-      }
+//       .position {
+//         width: 30px;
+//         color: lightblue;
+//       }
 
-      .name {
-        width: 400px;
-        text-transform: capitalize;
-      }
+//       .name {
+//         width: 400px;
+//         text-transform: capitalize;
+//       }
 
-      .team {
-        width: 100px;
-        text-align: left;
-        color: lightblue;
-      }
+//       .team {
+//         width: 100px;
+//         text-align: left;
+//         color: lightblue;
+//       }
 
-      .points {
-        width: 100px;
-        text-align: right;
-        color: coral;
-      }
-    }
-  }
+//       .points {
+//         width: 100px;
+//         text-align: right;
+//         color: coral;
+//       }
+//     }
+//   }
 
-  .restart-btn {
-    text-transform: uppercase;
-    font-size: 1.2em;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--white-color);
-    border: none;
-    border-radius: 5px;
-    background-color: var(--btn-bg-color);
-    padding: 0.5em 1em;
-    margin-top: 1.5em;
-  }
+//   .restart-btn {
+//     text-transform: uppercase;
+//     font-size: 1.2em;
+//     font-weight: 700;
+//     letter-spacing: 1px;
+//     color: var(--white-color);
+//     border: none;
+//     border-radius: 5px;
+//     background-color: var(--btn-bg-color);
+//     padding: 0.5em 1em;
+//     margin-top: 1.5em;
+//   }
 
-  .restart-btn:hover,
-  .restart-btn:focus {
-    cursor: pointer;
-    background-color: var(--btn-hover-color);
-  }
-}
+//   .restart-btn:hover,
+//   .restart-btn:focus {
+//     cursor: pointer;
+//     background-color: var(--btn-hover-color);
+//   }
+// }
 
 @media(max-width: 1240px) {
   .game-info {

@@ -14,11 +14,13 @@ window.addEventListener('beforeunload', (event) => {
 })
 export class LandingPageComponent {
   public players: PlayerInitialData[] = [];
-  public limitNumPlayers = 6;
+  public limitNumPlayers: number = 6;
+
 
   constructor(private router: Router, private playerService: PlayerService) {}
 
-  public addPlayer(inputName: string) {
+
+  public addPlayer(inputName: string): void {
     const name = inputName.replace(/\s/g, '').charAt(0).toUpperCase() + inputName.slice(1);
     if (!inputName || name === "" || this.isNameTaken(name)) {
       return;
@@ -46,6 +48,7 @@ export class LandingPageComponent {
     }
   }
 
+
   private isNameTaken(name: string): boolean {
     let repeatedNames: boolean[] = [];
     this.players.forEach(player => {
@@ -57,19 +60,17 @@ export class LandingPageComponent {
     else return false;
   }
 
-  public removePlayer(player: PlayerInitialData) {
+
+  public removePlayer(player: PlayerInitialData): void {
     this.players.splice(this.players.indexOf(player), 1);
   }
 
+
   public async confirmPlayers() {
     await this.playerService.postCreateGame(this.players).toPromise().then(async (res) => {
-      if (res) {
-        await this.playerService.getPlayers().toPromise().then(res => {
-          if (res) {
-            this.playerService.setGamePlayers(res);
-          }
-        });
-      }
+      if (res) await this.playerService.getPlayers().toPromise().then(res => {
+        if (res) this.playerService.setGamePlayers(res);
+      });
       this.router.navigate(['/board']);
     });
   }
