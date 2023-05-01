@@ -12,7 +12,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PlayerComponent } from './player/player.component';
 import { BoardComponent } from './board/board.component';
 import { GameComponent } from './game/game.component';
-import { ShipComponent } from './board/ship/ship.component';
+import { ShipComponent } from './ship/ship.component';
+import { StartGameComponent } from './start-game/start-game.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ShipComponent } from './board/ship/ship.component';
     BoardComponent,
     GameComponent,
     ShipComponent,
+    StartGameComponent,
   ],
   imports: [
     BrowserModule,

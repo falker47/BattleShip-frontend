@@ -62,7 +62,6 @@ export class LandingPageComponent {
   }
 
   public async confirmPlayers() {
-    console.log(this.players)
     await this.playerService.postCreateGame(this.players).toPromise().then(async (res) => {
       if (res) {
         await this.playerService.getPlayers().toPromise().then(res => {

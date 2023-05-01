@@ -70,15 +70,6 @@
   }
 }
 
-.center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5em;
-}
-
-.start-btn,
 .confirm-btn {
   text-transform: uppercase;
   font-size: 1.2em;
@@ -89,30 +80,15 @@
   border-radius: 5px;
   background-color: var(--btn-bg-color);
   padding: 0.5em 1em;
-}
-
-.confirm-btn {
   margin-left: 2em;
 }
 
-.start-btn {
-  margin: 2em .5em;
-  font-size: 2em;
-  transition: 250ms ease-in-out;
-}
-
-.start-btn:hover,
-.start-btn:focus,
 .confirm-btn:hover,
 .confirm-btn:focus {
   cursor: pointer;
   background-color: var(--btn-hover-color);
 }
 
-.start-btn:hover,
-.start-btn:focus {
-  transform: scale(1.2);
-}
 
 .lists-container {
   display: flex;

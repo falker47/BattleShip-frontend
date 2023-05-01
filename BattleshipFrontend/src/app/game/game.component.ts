@@ -35,7 +35,6 @@ export class GameComponent implements OnInit {
     this.players = this.playerService.getGamePlayers();
     this.userGrid = this.playerService.getUserGrid();
     this.shotGrid = this.playerService.getShotGrid();
-    console.log(this.userGrid.Cells);
   }
 
   ngOnInit() {
@@ -85,7 +84,6 @@ export class GameComponent implements OnInit {
     });
 
     let foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
-    console.log(Number(foundCell?.ShipId))
     return Number(foundCell?.ShipId);
   }
 

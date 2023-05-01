@@ -1,6 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PlayerInitialData, Shot, GridApi, PlayerApi, ShipApi, PlayerShipsData, Res } from './models';
+import {
+  PlayerInitialData,
+  Shot,
+  GridApi,
+  PlayerApi,
+  ShipApi,
+  PlayerShipsData,
+  Res,
+} from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +21,7 @@ export class PlayerService {
   private gamePlayer: PlayerApi[] = [];
   private gamePlayerUserGrid!: GridApi;
   private gamePlayerShotGrid!: GridApi;
-
+  public width!: number;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -25,24 +33,16 @@ export class PlayerService {
     return this.httpClient.get<PlayerApi>(this.URL + 'getPlayer/' + id);
   }
 
-  getGridByPlayerId(
-    id: number,
-    gridSize: number,
-    userGridTRUE_shotGridFALSE: boolean
-  ) {
+  getGridByPlayerId(id: number, gridSize: number, userGridTRUE_shotGridFALSE: boolean) {
     return this.httpClient.get<GridApi>(
-      this.URL +
-        'getGridByPlayerId/' +
-        id +
-        '/' +
-        gridSize +
-        '/' +
-        userGridTRUE_shotGridFALSE
+      this.URL + 'getGridByPlayerId/' + id + '/' + gridSize + '/' + userGridTRUE_shotGridFALSE
     );
   }
 
   getShipsByPlayerId(id: number) {
-    return this.httpClient.get<ShipApi[]>(this.URL + 'getShipsByPlayerId/' + id);
+    return this.httpClient.get<ShipApi[]>(
+      this.URL + 'getShipsByPlayerId/' + id
+    );
   }
 
   postCreateGame(players: PlayerInitialData[]) {
@@ -69,15 +69,23 @@ export class PlayerService {
     this.gamePlayerShotGrid = shotGrid;
   }
 
-  getGamePlayers(): PlayerApi[]{
+  getGamePlayers(): PlayerApi[] {
     return this.gamePlayer;
   }
 
-  getUserGrid(): GridApi{
+  getUserGrid(): GridApi {
     return this.gamePlayerUserGrid;
   }
 
-  getShotGrid(): GridApi{
+  getShotGrid(): GridApi {
     return this.gamePlayerShotGrid;
+  }
+
+  getBoardSize(): number {
+    return this.width;
+  }
+
+  setBoardSize(width: number) {
+    this.width = width;
   }
 }

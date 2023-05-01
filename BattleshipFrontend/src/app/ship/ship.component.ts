@@ -4,7 +4,7 @@ import { Coordinates } from 'src/app/api/models';
 @Component({
     selector: 'app-ship',
     templateUrl: './ship.component.html',
-    styleUrls: ['./ship.component.scss', '../../../styles.scss']
+    styleUrls: ['./ship.component.scss', '../../styles.scss']
 })
 
 export class ShipComponent  {

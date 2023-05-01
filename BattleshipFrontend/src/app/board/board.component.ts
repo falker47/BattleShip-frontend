@@ -7,12 +7,12 @@ import {
   Coordinates,
 } from '../api/models';
 import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
-import { ShipComponent } from './ship/ship.component';
+import { ShipComponent } from '../ship/ship.component';
 import { Router } from '@angular/router';
 import { PlayerService } from '../api/player.service';
 
 window.addEventListener('beforeunload', (event) => {
-  event.returnValue = `Are you sure you want to leave?`;
+  event.returnValue = 'Are you sure you want to leave?';
 });
 
 @Component({
@@ -35,13 +35,10 @@ export class BoardComponent implements OnInit {
   public dragEnd = {} as DragModel;
   public currentPlayer!: PlayerFrontend;
   public currentIndex: number = 0;
-  public playersFinalData: PlayerShipsData = {
-    playerId: 0,
-    PlayerShipsPosition: [],
-  };
+  public playerFinalData: PlayerShipsData = { playerId: 0, PlayerShipsPosition: [] };
   public playersData: PlayerFrontend[] = [];
-
   public gamePlayers: PlayerApi[] = [];
+
 
   constructor(private playerService: PlayerService, private router: Router) {
     this.gamePlayers = this.playerService.getGamePlayers();
@@ -54,6 +51,7 @@ export class BoardComponent implements OnInit {
     this.cellPixels = this.calculateCellPixels();
     this.shipList1 = this.createFleet();
     this.shipList2 = [];
+    this.playerService.setBoardSize(this.width);
   }
 
   private addConfirmedPropertyToPlayer() {
@@ -74,119 +72,6 @@ export class BoardComponent implements OnInit {
     return this.playersData[index];
   }
 
-  private createFleet(): Array<ShipComponent> {
-    return [
-      {
-        size: 5,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_5_1_red',
-      },
-      {
-        size: 4,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_4_1_green',
-      },
-      {
-        size: 3,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_3_1_blue',
-      },
-      {
-        size: 3,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_3_2_pink',
-      },
-      {
-        size: 2,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_2_1_orange',
-      },
-      {
-        size: 2,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_2_2_yellow',
-      },
-      {
-        size: 2,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_2_3_lightgreen',
-      },
-      {
-        size: 1,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_1_1_violet',
-      },
-      {
-        size: 1,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-        name: 'ship_1_2_lightblue',
-      },
-    ];
-  }
-
   private getEmptyBoard(): number[][] {
     for (let i = 0; i <= this.playersData.length; i++) {
       if (i > 2) this.width += 5;
@@ -203,62 +88,166 @@ export class BoardComponent implements OnInit {
     else return 30;
   }
 
-  public getFinalData(): void {
+  private createFleet(): Array<ShipComponent> {
+    return [
+      {
+        name: 'ship_5_1_red',
+        size: 5,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+      {
+        name: 'ship_4_1_green',
+        size: 4,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+      {
+        name: 'ship_3_1_blue',
+        size: 3,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+      {
+        name: 'ship_3_2_pink',
+        size: 3,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+      {
+        name: 'ship_2_1_orange',
+        size: 2,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+      {
+        name: 'ship_2_2_yellow',
+        size: 2,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+      {
+        name: 'ship_2_3_lightgreen',
+        size: 2,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+      {
+        name: 'ship_1_1_violet',
+        size: 1,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+      {
+        name: 'ship_1_2_lightblue',
+        size: 1,
+        isVertical: false,
+        top: 0,
+        left: 0,
+        col: 0,
+        row: 0,
+        occupiedCoords: [],
+        cellPixels: 30,
+        boardSize: 0,
+      },
+    ];
+  }
+
+  public setPlayerFinalData(): void {
     const occupiedCoords: Coordinates[][] = [];
     this.shipList2.forEach((ship) => occupiedCoords.push(ship.occupiedCoords));
 
-    this.playersFinalData.playerId = this.currentPlayer.id;
-    this.playersFinalData.PlayerShipsPosition = occupiedCoords;
+    this.playerFinalData.playerId = this.currentPlayer.id;
+    this.playerFinalData.PlayerShipsPosition = occupiedCoords;
   }
 
   public async confirmShips() {
-    this.getFinalData();
+    this.setPlayerFinalData();
 
     await this.playerService
-      .postPlaceShips(this.playersFinalData)
+      .postPlaceShips(this.playerFinalData)
       .toPromise()
       .then((res) => {
         if (res) {
-          console.log(res);
           this.playersData.map((player) => {
             if (player.id === this.currentPlayer.id) {
               player.confirmed = true;
             }
           });
 
-          let nextIndex = ++this.currentIndex;
-          if (this.playersData[nextIndex] !== undefined) {
-            this.currentPlayer = this.getCurrentPlayer(nextIndex);
-            this.shipList1 = this.createFleet();
-            this.shipList2 = [];
-          }
+          this.goToStartGame();
+          this.getNextPlayer();
         }
       });
+  }
+
+  public getNextPlayer(): void {
+    let nextIndex = ++this.currentIndex;
+      if (this.playersData[nextIndex] !== undefined) {
+        this.currentPlayer = this.getCurrentPlayer(nextIndex);
+        this.shipList1 = this.createFleet();
+        this.shipList2 = [];
+      }
   }
 
   public areAllPlayersReady(): boolean {
     return this.playersData.every((player) => player.confirmed === true);
   }
 
-  public async startGame() {
-    await this.playerService
-      .getGridByPlayerId(1, this.width, true)
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          this.playerService.setUserGrid(res);
-        }
-      });
-    await this.playerService
-      .getGridByPlayerId(1, this.width, false)
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          this.playerService.setShotGrid(res);
-        }
-      });
-    this.router.navigate(['/game']);
+  public goToStartGame(): void {
+    if (this.areAllPlayersReady() === true) {
+      this.router.navigate(["/start-game"]);
+    }
   }
+
 
   // ------------- SHIPS POSITIONING - DRAG & DROP ------------------ //
 
