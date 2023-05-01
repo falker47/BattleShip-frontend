@@ -1,11 +1,6 @@
-<!-- <div class="ready-container" *ngIf="!isReady">
-  <h2 class="title"><span class="player-name">{{ currentPlayer.name }}</span> it's your turn!</h2>
-  <button class="is-ready-btn" (click)="toggleIsReady()">Ready!</button>
-</div> -->
-
-<!-- <div class="general-container" *ngIf="isReady"> -->
 <div class="general-container">
   <h2>Battleship Game</h2>
+
   <div class="player-info">
     <h4>Player: <span class="player-name">{{ currentPlayer.name }}</span></h4>
   </div>
@@ -78,6 +73,7 @@
     </div>
   </div>
 
+
   <div class="next-player-container">
     <button 
       [disabled]="shot.length === 0 ? 'disabled' : null" 
@@ -88,22 +84,6 @@
     </button>
   </div>
 
-  <div class="game-info">
-    <div class="leaderboard">
-      <h4>Leaderboard</h4>
-      <p class="leaderboard-content" *ngFor="let player of sortLeaderboard(); let i = index">
-        <span class="position">{{ i + 1 }}</span> 
-        <span class="name">{{ player.name }}</span>
-        <span class="points">{{ player.points }}</span>
-      </p>
-    </div>
 
-    <div class="logs-container" *ngIf="logs[0] !== undefined">
-      <div *ngFor="let log of logs; let i = index;">
-        <p id="{{ i }}" class="new-log">
-          <span>></span>{{ log }}
-        </p>
-      </div>
-    </div>
-  </div>
+  <app-game-info [players]="players" [logs]="logs"></app-game-info>
 </div>

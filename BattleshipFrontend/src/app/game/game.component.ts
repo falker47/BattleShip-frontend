@@ -88,10 +88,23 @@ export class GameComponent implements OnInit {
     }
     return Array.from({ length: this.width }, () => Array(this.width).fill(0));
   }
+  
 
+  public async saveShot(x: number, y: number) {
+    if (this.shot.length === 0) {
+      const playerShot: Shot = {
+        id: this.currentPlayer.id,
+        xAxis: x,
+        yAxis: y,
+      };
 
-  public showNextPlayer(): void { 
-    this.router.navigate(['/player']);
+      this.shot.push(playerShot);
+      await this.updateShot(playerShot);
+      await this.updateShotGrid();
+      await this.updateGamePlayers();
+      this.checkAlivePlayers();
+      this.playerService.setPlayersData(this.playersData);
+    }
   }
 
 
@@ -107,31 +120,15 @@ export class GameComponent implements OnInit {
 
     this.playerService.setCurrentIndex(this.currentIndex); 
     this.playerService.setCurrentPlayer(this.currentPlayer);
-
     this.shot.pop();
     this.showNextPlayer();
-
     await this.updateUserGrid();
     await this.updateShotGrid();
   }
 
 
-  public async saveShot(x: number, y: number) {
-    if (this.shot.length === 0) {
-      const playerShot: Shot = {
-        id: this.currentPlayer.id,
-        xAxis: x,
-        yAxis: y,
-      };
-
-      this.shot.push(playerShot);
-      await this.updateShot(playerShot);
-      await this.updateShotGrid();
-    }
-
-    await this.updateGamePlayers();
-    this.checkAlivePlayers();
-    this.playerService.setPlayersData(this.playersData);
+  public showNextPlayer(): void { 
+    this.router.navigate(['/player']);
   }
 
 
@@ -182,10 +179,7 @@ export class GameComponent implements OnInit {
         if (res) {
           const logArray = res.log.split(';');
           logArray.forEach((log) => {
-            if (log !== '') {
-              this.logs.unshift(log);
-              this.playerService.setLogs(log);
-            }
+            if (log !== '') this.playerService.setLogs(log);
           });
         }
       });
@@ -222,10 +216,5 @@ export class GameComponent implements OnInit {
 
     if (!team0Alive || !team1Alive) return true;
     else return false;
-  }
-
-
-  public sortLeaderboard(): PlayerApi[] {
-    return this.players.sort((a, b) => b.points - a.points);
   }
 }

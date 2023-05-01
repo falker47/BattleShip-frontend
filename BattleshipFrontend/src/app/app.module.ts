@@ -15,6 +15,7 @@ import { GameComponent } from './game/game.component';
 import { ShipComponent } from './ship/ship.component';
 import { StartGameComponent } from './start-game/start-game.component';
 import { PlayerReadyComponent } from './player-ready/player-ready.component';
+import { GameInfoComponent } from './game-info/game-info.component';
 import { FinalLeaderboardComponent } from './final-leaderboard/final-leaderboard.component';
 
 @NgModule({
@@ -28,6 +29,7 @@ import { FinalLeaderboardComponent } from './final-leaderboard/final-leaderboard
     ShipComponent,
     StartGameComponent,
     PlayerReadyComponent,
+    GameInfoComponent,
     FinalLeaderboardComponent,
   ],
   imports: [

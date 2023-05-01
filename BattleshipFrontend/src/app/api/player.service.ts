@@ -27,7 +27,6 @@ export class PlayerService {
   public playersData: PlayerFrontendGame[] = [];
   public logs: string[] = [];
 
-
   constructor(private httpClient: HttpClient) {}
 
 
@@ -88,7 +87,7 @@ export class PlayerService {
   }
 
   // ------- Sharing information between components ------- //
-
+  
   // BoardComponent | StartGameComponent
 
   getBoardSize(): number {
@@ -125,6 +124,6 @@ export class PlayerService {
     return this.logs;
   }
   setLogs(logs: string) {
-    this.logs.push(logs);
+    this.logs.unshift(logs);
   }
 }

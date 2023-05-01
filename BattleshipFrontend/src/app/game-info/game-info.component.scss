@@ -1,0 +1,98 @@
+.game-info {
+  width: 1200px;
+  margin: auto;
+  margin-top: 3em;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+// LEADERBOARD
+
+.leaderboard {
+  margin-right: 5em;
+  width: 500px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1em 2em;
+  border-radius: 10px;
+  font-family: var(--font-log);
+  font-size: 1.1em;
+
+  h4 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    letter-spacing: 2px;
+    color: var(--btn-bg-color);
+  }
+
+  .leaderboard-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .position {
+      width: 30px;
+    }
+
+    .name {
+      width: 190px;
+      text-transform: capitalize;
+    }
+
+    .points {
+      width: 50px;
+      text-align: right;
+      color: coral;
+    }
+  }
+}
+
+// LOGS
+
+.logs-container {
+  width: 100%;
+  height: 300px;
+  padding: 1em 1em 0.5em 1em;
+  overflow-y: scroll;
+  background-color: rgba(42, 41, 41, 0.6);
+  padding: 1em 2em;
+  border-radius: 10px;
+
+  .new-log {
+    font-family: var(--font-paragraph);
+    margin-bottom: 0.5em;
+    width: 795px;
+    color: var(--white-color);
+
+    span {
+      color: var(--board-line-color);
+      margin-right: 0.3em;
+    }
+  }
+}
+
+@media (max-width: 1240px) {
+  .game-info {
+    width: 90%;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+
+    .leaderboard {
+      margin: 0;
+    }
+
+    .logs-container {
+      max-width: 900px;
+      height: 250px;
+      margin-bottom: 2em;
+
+      .new-log {
+        max-width: 850px;
+      }
+    }
+  }
+}
