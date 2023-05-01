@@ -1,10 +1,11 @@
 .container {
+  width: 100%;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 8em;
-  color: var(--white-color);
+  margin: auto;
 }
 
 .title {
@@ -12,12 +13,12 @@
   font-size: 2em;
   text-transform: uppercase;
   letter-spacing: 3px;
-  margin-top: 2em;
+  color: var(--white-color);
 }
 
 .start-btn {
   text-transform: uppercase;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: 700;
   letter-spacing: 1px;
   color: var(--white-color);

@@ -2,17 +2,17 @@
 
 .ready-container {
   width: 100%;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
-  padding-top: 2em;
 
-  h3 {
+  .title {
+    margin-top: -1em;
     font-family: var(--font-paragraph);
     font-size: 2em;
-    margin-top: 5em;
     color: var(--white-color);
   }
 
