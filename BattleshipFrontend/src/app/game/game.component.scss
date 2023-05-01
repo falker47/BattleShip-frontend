@@ -19,6 +19,12 @@
       font-size: 1.4em;
       margin-bottom: 1.5em;
     }
+
+    .player-name {
+      color: var(--btn-bg-color);
+      text-shadow: 1px 1px 5px black;
+      text-transform: capitalize;
+    }
   }
 }
 
