@@ -1,48 +1,47 @@
 // READY SCREEN
+// .ready-container {
+//   width: 100%;
+//   height: 80vh;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   margin: auto;
 
-.ready-container {
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+//   .title {
+//     margin-top: -1em;
+//     font-family: var(--font-paragraph);
+//     font-size: 2em;
+//     color: var(--white-color);
+//   }
 
-  .title {
-    margin-top: -1em;
-    font-family: var(--font-paragraph);
-    font-size: 2em;
-    color: var(--white-color);
-  }
+//   .is-ready-btn {
+//     text-transform: uppercase;
+//     font-size: 1.5em;
+//     font-weight: 700;
+//     letter-spacing: 1px;
+//     color: var(--white-color);
+//     border: none;
+//     border-radius: 5px;
+//     background-color: var(--btn-bg-color);
+//     padding: 0.5em 1em;
+//     margin-top: 1.5em;
+//     transition: 250ms ease-in-out;
+//   }
 
-  .is-ready-btn {
-    text-transform: uppercase;
-    font-size: 1.5em;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--white-color);
-    border: none;
-    border-radius: 5px;
-    background-color: var(--btn-bg-color);
-    padding: 0.5em 1em;
-    margin-top: 1.5em;
-    transition: 250ms ease-in-out;
-  }
+//   .is-ready-btn:hover,
+//   .is-ready-btn:focus {
+//     transform: scale(1.2);
+//     cursor: pointer;
+//     background-color: var(--btn-hover-color);
+//   }
+// }
 
-  .is-ready-btn:hover,
-  .is-ready-btn:focus {
-    transform: scale(1.2);
-    cursor: pointer;
-    background-color: var(--btn-hover-color);
-  }
-}
-
-.player-name {
-  color: var(--btn-bg-color);
-  text-shadow: 1px 1px 5px black;
-  text-transform: capitalize;
-}
+// .player-name {
+//   color: var(--btn-bg-color);
+//   text-shadow: 1px 1px 5px black;
+//   text-transform: capitalize;
+// }
 
 // GAME SCREEN
 
@@ -106,6 +105,8 @@
   border: 1px var(--board-line-color) solid;
 }
 
+// ----- start CELLS CSS ----- //
+
 // LARGE CELLS
 
 .cell-large-water {
@@ -117,7 +118,7 @@
   height: 30px;
 }
 .cell-large-water-shooted::before {
-  content: 'X';
+  content: "X";
   color: white;
   height: 100%;
   display: flex;
@@ -137,7 +138,7 @@
   background-color: #5dc1e2;
 }
 .cell-large-ship-shooted::before {
-  content: 'X';
+  content: "X";
   color: red;
   height: 100%;
   display: flex;
@@ -149,7 +150,7 @@
   height: 30px;
 }
 .cell-large-enemy-ship-shooted::before {
-  content: 'X';
+  content: "X";
   color: red;
   height: 100%;
   display: flex;
@@ -168,7 +169,7 @@
   height: 25px;
 }
 .cell-medium-water-shooted::before {
-  content: 'X';
+  content: "X";
   color: white;
   height: 100%;
   display: flex;
@@ -188,7 +189,7 @@
   background-color: #5dc1e2;
 }
 .cell-medium-ship-shooted::before {
-  content: 'X';
+  content: "X";
   color: red;
   height: 100%;
   display: flex;
@@ -200,7 +201,7 @@
   height: 25px;
 }
 .cell-medium-enemy-ship-shooted::before {
-  content: 'X';
+  content: "X";
   color: red;
   height: 100%;
   display: flex;
@@ -219,7 +220,7 @@
   height: 20px;
 }
 .cell-small-water-shooted::before {
-  content: 'X';
+  content: "X";
   color: white;
   height: 100%;
   display: flex;
@@ -239,7 +240,7 @@
   background-color: #5dc1e2;
 }
 .cell-small-ship-shooted::before {
-  content: 'X';
+  content: "X";
   color: red;
   height: 100%;
   display: flex;
@@ -251,13 +252,15 @@
   height: 20px;
 }
 .cell-small-enemy-ship-shooted::before {
-  content: 'X';
+  content: "X";
   color: red;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+// ----- end CELLS CSS ----- //
 
 .next-player-container {
   .next-player-btn {
@@ -275,7 +278,7 @@
 
   .next-player-btn:disabled,
   .next-player-btn:disabled:hover {
-    background-color: rgba(128, 128, 128, .8);
+    background-color: rgba(128, 128, 128, 0.8);
     color: rgb(222, 222, 222);
     cursor: default;
   }
@@ -337,7 +340,7 @@
   }
 }
 
-// LOGS 
+// LOGS
 
 .logs-container {
   width: 100%;
@@ -361,7 +364,7 @@
   }
 }
 
-@media(max-width: 1240px) {
+@media (max-width: 1240px) {
   .game-info {
     width: 90%;
     display: flex;
@@ -377,7 +380,7 @@
       max-width: 900px;
       height: 250px;
       margin-bottom: 2em;
-    
+
       .new-log {
         max-width: 850px;
       }

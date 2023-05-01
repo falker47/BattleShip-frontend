@@ -7,8 +7,6 @@ import { PlayerInitialData } from '../api/models';
   styleUrls: ['./player.component.scss', '../../styles.scss']
 })
 export class PlayerComponent {
-
   @Input() player!: PlayerInitialData;
   @Output() remove = new EventEmitter<PlayerInitialData>();
-
 }

@@ -1,6 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { PlayerService } from '../api/player.service';
 import { Router } from '@angular/router';
+
+window.addEventListener('beforeunload', (event) => {
+  event.returnValue = 'Are you sure you want to leave?';
+});
 
 @Component({
   selector: 'app-start-game',
@@ -14,7 +18,7 @@ export class StartGameComponent {
     this.width = this.playerService.getBoardSize();
   }
 
-
+  
   public async startGame() {
     await this.playerService
       .getGridByPlayerId(1, this.width, true)
@@ -34,7 +38,6 @@ export class StartGameComponent {
         }
       });
 
-    // this.router.navigate(['/player-ready']);
-    this.router.navigate(['/game']);
+    this.router.navigate(['/player']);
   }
 }

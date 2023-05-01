@@ -1,14 +1,15 @@
 .ready-container {
   width: 100%;
-  height: 90vh;
-  background-color: red;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
+  color: var(--white-color);
 
-  h2 {
+  .title {
+    margin-top: -1em;
     font-family: var(--font-paragraph);
     font-size: 2em;
     color: var(--white-color);

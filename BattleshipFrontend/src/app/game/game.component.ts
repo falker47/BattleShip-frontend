@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerService } from '../api/player.service';
-import { PlayerFrontendGame, CellApi, GridApi, PlayerApi, Shot } from '../api/models';
+import { CellApi, GridApi, PlayerApi, Shot } from '../api/models';
 
 window.addEventListener('beforeunload', (event) => {
-  event.returnValue = `Are you sure you want to leave?`;
+  event.returnValue = 'Are you sure you want to leave?';
 });
 
 @Component({
@@ -13,33 +13,33 @@ window.addEventListener('beforeunload', (event) => {
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
-  @ViewChild('shotCol') shotCol!: ElementRef<HTMLElement>;
-  @ViewChild('shotCell') shotCell!: ElementRef<HTMLElement>;
   public width: number = 10;
   public playerBoard!: number[][];
-  public isReady: boolean = false;
-  public currentPlayer!: PlayerFrontendGame;
-  public currentIndex: number = 0;
-  public players: PlayerApi[] = [];
-  public playersData: PlayerFrontendGame[] = [];
-  public shot: Shot[] = [];
-  public logs: string[] = [];
   public userGrid!: GridApi;
   public shotGrid!: GridApi;
+  public currentIndex;
+  public currentPlayer;
+  public players: PlayerApi[] = [];
+  public playersData;
+  public shot: Shot[] = [];
+  public logs: string[];
 
 
   constructor(private router: Router, private playerService: PlayerService) {
     this.players = this.playerService.getGamePlayers();
+    this.playersData = this.playerService.getPlayersData();
+
     this.userGrid = this.playerService.getUserGrid();
     this.shotGrid = this.playerService.getShotGrid();
+    this.logs = this.playerService.getLogs();
+    
+    this.currentIndex = this.playerService.getCurrentIndex();
+    this.currentPlayer = this.playerService.getCurrentPlayer();
   }
 
 
   ngOnInit() {
     this.playerBoard = this.getEmptyBoard();
-    this.preparePlayers();
-    this.playerService.setPlayersData(this.playersData);
-    this.currentPlayer = this.getCurrentPlayer(this.currentIndex);
   }
 
 
@@ -90,36 +90,14 @@ export class GameComponent implements OnInit {
   }
 
 
-  public getCurrentPlayer(i: number): PlayerFrontendGame {
-    return this.playersData[i];
+  public showNextPlayer(): void { 
+    this.router.navigate(['/player']);
   }
-
-
-  private preparePlayers() {
-    this.players.forEach((player) => {
-      this.playersData.push({
-        id: player.id,
-        name: player.name,
-        team: player.team,
-        isPlaying: true,
-      });
-    });
-  }
-
-
-  public toggleIsReady() {
-    this.isReady = !this.isReady;
-  }
-
-
-  // public showNextPlayer(): void {
-  //   this.router.navigate(["/player-ready"]);
-  // }
 
 
   async getNextPlayer() {
     let index: number = ++this.currentIndex;
-
+    
     if (this.playersData.length === index) {
       this.currentIndex = 0;
       this.currentPlayer = this.playersData[this.currentIndex];
@@ -127,12 +105,33 @@ export class GameComponent implements OnInit {
       this.currentPlayer = this.playersData[index];
     }
 
+    this.playerService.setCurrentIndex(this.currentIndex); 
+    this.playerService.setCurrentPlayer(this.currentPlayer);
+
     this.shot.pop();
-    this.toggleIsReady();
-    // this.showNextPlayer();
+    this.showNextPlayer();
 
     await this.updateUserGrid();
     await this.updateShotGrid();
+  }
+
+
+  public async saveShot(x: number, y: number) {
+    if (this.shot.length === 0) {
+      const playerShot: Shot = {
+        id: this.currentPlayer.id,
+        xAxis: x,
+        yAxis: y,
+      };
+
+      this.shot.push(playerShot);
+      await this.updateShot(playerShot);
+      await this.updateShotGrid();
+    }
+
+    await this.updateGamePlayers();
+    this.checkAlivePlayers();
+    this.playerService.setPlayersData(this.playersData);
   }
 
 
@@ -181,31 +180,15 @@ export class GameComponent implements OnInit {
       .toPromise()
       .then((res) => {
         if (res) {
-          let logArray = res.log.split(';');
+          const logArray = res.log.split(';');
           logArray.forEach((log) => {
-            if (log !== '') this.logs.unshift(log);
+            if (log !== '') {
+              this.logs.unshift(log);
+              this.playerService.setLogs(log);
+            }
           });
         }
       });
-  }
-
-
-  public async saveShot(x: number, y: number) {
-    if (this.shot.length === 0) {
-      const playerShot: Shot = {
-        id: this.currentPlayer.id,
-        xAxis: x,
-        yAxis: y,
-      };
-
-      this.shot.push(playerShot);
-      await this.updateShot(playerShot);
-      await this.updateShotGrid();
-    }
-
-    await this.updateGamePlayers();
-    this.checkAlivePlayers();
-    this.playerService.setPlayersData(this.playersData);
   }
 
 
@@ -226,7 +209,7 @@ export class GameComponent implements OnInit {
             this.playersData.splice(i, 1);
           }
           if (this.isGameOver() === true) {
-            this.router.navigate(["/leaderboard"]);
+            this.router.navigate(['/leaderboard']);
           }
         });
     });

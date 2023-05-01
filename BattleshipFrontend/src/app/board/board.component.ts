@@ -247,7 +247,7 @@ export class BoardComponent implements OnInit {
 
   public goToStartGame(): void {
     if (this.areAllPlayersReady() === true) {
-      this.router.navigate(["/start-game"]);
+      this.router.navigate(['/start']);
     }
   }
 

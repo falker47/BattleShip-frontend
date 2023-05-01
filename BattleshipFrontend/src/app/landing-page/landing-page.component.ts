@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { PlayerService } from '../api/player.service';
 
 window.addEventListener('beforeunload', (event) => {
-  event.returnValue = `Are you sure you want to leave?`;
+  event.returnValue = 'Are you sure you want to leave?';
 });
 
 @Component({

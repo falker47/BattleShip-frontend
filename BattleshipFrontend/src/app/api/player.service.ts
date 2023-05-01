@@ -22,9 +22,10 @@ export class PlayerService {
   private gamePlayerUserGrid!: GridApi;
   private gamePlayerShotGrid!: GridApi;
   public width!: number;
-  // public currentIndex!: number;
-  // public currentPlayer!: PlayerFrontendGame;
-  public playersData!: PlayerFrontendGame[];
+  public currentIndex: number = 0;
+  public currentPlayer!: PlayerFrontendGame;
+  public playersData: PlayerFrontendGame[] = [];
+  public logs: string[] = [];
 
 
   constructor(private httpClient: HttpClient) {}
@@ -93,34 +94,37 @@ export class PlayerService {
   getBoardSize(): number {
     return this.width;
   }
-
   setBoardSize(width: number) {
     this.width = width;
   }
 
   // PlayerReadyComponent | GameComponent | FinalLeaderboardComponent
 
-  // getCurrentPlayer(): PlayerFrontendGame {
-  //   return this.currentPlayer;
-  // }
-
-  // setCurrentPlayer(currentPlayer: PlayerFrontendGame) {
-  //   this.currentPlayer = currentPlayer;
-  // }
-
   getPlayersData() {
     return this.playersData;
   }
-  
   setPlayersData(playersData: PlayerFrontendGame[]) {
     this.playersData = playersData;
   }
 
-  // getCurrentIndex() {
-  //   return this.currentIndex;
-  // }
+  getCurrentIndex() {
+    return this.currentIndex;
+  }
+  setCurrentIndex(currentIndex: number) {
+    this.currentIndex = currentIndex;
+  }
 
-  // setCurrentIndex(currentIndex: number) {
-  //   this.currentIndex = currentIndex;
-  // }
+  getCurrentPlayer(): PlayerFrontendGame {
+    return this.currentPlayer;
+  }
+  setCurrentPlayer(currentPlayer: PlayerFrontendGame) {
+    this.currentPlayer = currentPlayer;
+  }
+
+  getLogs(): string[] {
+    return this.logs;
+  }
+  setLogs(logs: string) {
+    this.logs.push(logs);
+  }
 }
