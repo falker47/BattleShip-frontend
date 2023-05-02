@@ -50,7 +50,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  private addConfirmedPropertyToPlayer() {
+  private addConfirmedPropertyToPlayer(): void {
     this.gamePlayers.forEach((player) => {
       this.playersData.push({
         id: player.id,
@@ -110,7 +110,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  public confirmShips() {
+  public confirmShips(): void {
     this.setPlayerFinalData();
 
     this.playerService

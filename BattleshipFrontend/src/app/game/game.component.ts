@@ -90,7 +90,7 @@ export class GameComponent implements OnInit {
   }
   
 
-  public saveShot(x: number, y: number) {
+  public saveShot(x: number, y: number): void {
     if (this.shot.length === 0) {
       const playerShot: Shot = {
         id: this.currentPlayer.id,
@@ -118,7 +118,7 @@ export class GameComponent implements OnInit {
   }
 
 
-  public getNextPlayer() {
+  public getNextPlayer(): void {
     let index: number = ++this.currentIndex;
     
     if (this.playersData.length === index) {
@@ -137,12 +137,12 @@ export class GameComponent implements OnInit {
   }
 
 
-  private showNextPlayer() { 
+  private showNextPlayer(): void { 
     this.router.navigate(['/player']);
   }
 
 
-  private updateUserGrid() {
+  private updateUserGrid(): void {
     this.playerService
       .getGridByPlayerId(this.currentPlayer.id, this.width, true)
       .subscribe((userGrid) => {
@@ -152,7 +152,7 @@ export class GameComponent implements OnInit {
   }
 
 
-  private updateShotGrid() {
+  private updateShotGrid(): void {
     this.playerService
       .getGridByPlayerId(this.currentPlayer.id, this.width, false)
       .subscribe((shotGrid) => {
@@ -162,7 +162,7 @@ export class GameComponent implements OnInit {
   }
 
 
-  private updateGamePlayers() {
+  private updateGamePlayers(): void {
     this.playerService
       .getPlayers()
       .subscribe((players) => {
@@ -172,7 +172,7 @@ export class GameComponent implements OnInit {
   }
 
 
-  private checkAlivePlayers() {
+  private checkAlivePlayers(): void {
     this.playersData.forEach((player, index) => {
       let shipsHP: number[] = [];
 

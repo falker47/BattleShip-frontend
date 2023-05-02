@@ -12,6 +12,7 @@ export class FinalLeaderboardComponent {
   public playersData;
   public players;
 
+  
   constructor(private playerService: PlayerService, private router: Router) {
     this.playersData = this.playerService.getPlayersData();
     this.players = this.playerService.getGamePlayers();
@@ -34,7 +35,7 @@ export class FinalLeaderboardComponent {
   }
 
 
-  restartGame() {
+  restartGame(): void {
     this.router.navigate(['/']);
   }
 }

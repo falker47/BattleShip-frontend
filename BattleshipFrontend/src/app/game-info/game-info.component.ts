@@ -10,6 +10,7 @@ export class GameInfoComponent {
   @Input() players!: PlayerApi[];
   @Input() logs!: string[];
 
+  
   public sortLeaderboard(): PlayerApi[] {
     return this.players.sort((a, b) => b.points - a.points);
   }

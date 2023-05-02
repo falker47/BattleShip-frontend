@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PlayerInitialData, PlayerApi } from '../api/models';
+import { PlayerInitialData } from '../api/models';
 import { Router } from '@angular/router';
 import { PlayerService } from '../api/player.service';
 
@@ -16,6 +16,7 @@ export class LandingPageComponent {
   public players: PlayerInitialData[] = [];
   public limitNumPlayers: number = 6;
 
+  
   constructor(private router: Router, private playerService: PlayerService) {}
 
 
@@ -63,7 +64,7 @@ export class LandingPageComponent {
   }
 
 
-  public confirmPlayers() {
+  public confirmPlayers(): void {
     this.playerService
       .postCreateGame(this.players)
       .subscribe(() => {
@@ -71,8 +72,13 @@ export class LandingPageComponent {
           .getPlayers()
           .subscribe((players) => {
             this.playerService.setGamePlayers(players);
-            this.router.navigate(['/board']);
+            this.goToBoard();
           })
       })
+  }
+
+  
+  private goToBoard(): void {
+    this.router.navigate(['/board']);
   }
 }

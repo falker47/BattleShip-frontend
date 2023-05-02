@@ -18,6 +18,7 @@ export class PlayerReadyComponent {
   public currentPlayer!: PlayerFrontendGame;
   public currentIndex;
 
+  
   constructor(private playerService: PlayerService, private router: Router) {
     this.players = this.playerService.getGamePlayers();
     this.currentIndex = this.playerService.getCurrentIndex();
@@ -36,7 +37,7 @@ export class PlayerReadyComponent {
   }
 
 
-  private preparePlayers() {
+  private preparePlayers(): void {
     this.players.forEach((player) => {
       this.playersData.push({
         id: player.id,
@@ -48,7 +49,7 @@ export class PlayerReadyComponent {
   }
 
 
-  play() {
+  play(): void {
     this.router.navigate(['/game']);
   }
 }

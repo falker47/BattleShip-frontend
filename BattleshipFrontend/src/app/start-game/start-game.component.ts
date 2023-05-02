@@ -14,12 +14,13 @@ window.addEventListener('beforeunload', (event) => {
 export class StartGameComponent {
   public width;
 
+
   constructor(private playerService: PlayerService, private router: Router) {
     this.width = this.playerService.getBoardSize();
   }
 
   
-  public startGame() {
+  public startGame(): void {
     this.playerService
       .getGridByPlayerId(1, this.width, true)
       .subscribe((userGrid) => {

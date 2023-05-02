@@ -2,28 +2,11 @@
   <h2 class="title">Position your ships</h2>
 
   <div class="content-container">
-    <div class="info">
-      <div class="info-instructions">
-        <h4>Instructions</h4>
-        <p>1. To place a ship inside the board drag it from the "Available Ships" section and drop it into the board.</p>
-        <p>2. To rotate a ship double click the ship below "Available Ships".</p>
-        <p>3. To reset a ship that's already inside the board double click it.</p>
-      </div>
-    
-      <div class="info-player">
-        <p class="player">
-          Player: <span>{{ currentPlayer.name }}</span>
-        </p>
-    
-        <button
-          *ngIf="shipList1.length === 0"
-          class="confirm-btn"
-          (click)="confirmShips()"
-        >
-          Confirm ships
-        </button>
-      </div>
-    </div>
+    <app-board-info
+      [shipList1]="shipList1"
+      [currentPlayer]="currentPlayer"
+      (confirmShips)="confirmShips()"
+    ></app-board-info>
 
 
     <div class="lists-container">
