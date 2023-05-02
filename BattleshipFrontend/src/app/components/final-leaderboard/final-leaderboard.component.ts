@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PlayerApi } from '../api/models';
-import { PlayerService } from '../api/player.service';
+import { PlayerApi } from '../../models/models';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'app-final-leaderboard',

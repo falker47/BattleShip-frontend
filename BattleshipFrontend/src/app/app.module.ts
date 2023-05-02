@@ -7,17 +7,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 
 import { AppComponent } from './app.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { PlayerComponent } from './player/player.component';
-import { BoardComponent } from './board/board.component';
-import { BoardInfoComponent } from './board-info/board-info.component';
-import { ShipComponent } from './ship/ship.component';
-import { StartGameComponent } from './start-game/start-game.component';
-import { PlayerReadyComponent } from './player-ready/player-ready.component';
-import { GameComponent } from './game/game.component';
-import { GameInfoComponent } from './game-info/game-info.component';
-import { FinalLeaderboardComponent } from './final-leaderboard/final-leaderboard.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { PlayerComponent } from './components/player/player.component';
+import { BoardComponent } from './components/board/board.component';
+import { BoardInfoComponent } from './components/board-info/board-info.component';
+import { ShipComponent } from './components/ship/ship.component';
+import { StartGameComponent } from './components/start-game/start-game.component';
+import { PlayerReadyComponent } from './components/player-ready/player-ready.component';
+import { GameComponent } from './components/game/game.component';
+import { GameInfoComponent } from './components/game-info/game-info.component';
+import { FinalLeaderboardComponent } from './components/final-leaderboard/final-leaderboard.component';
 
 @NgModule({
   declarations: [

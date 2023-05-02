@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PlayerApi } from '../api/models';
+import { PlayerApi } from '../../models/models';
 
 @Component({
   selector: 'app-game-info',

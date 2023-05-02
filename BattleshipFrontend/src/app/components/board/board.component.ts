@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { PlayerApi, PlayerFrontend, DragModel, PlayerShipsData, Coordinates } from '../api/models';
+import { PlayerApi, PlayerFrontend, DragModel, PlayerShipsData, Coordinates } from '../../models/models';
 import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { ShipComponent } from '../ship/ship.component';
 import { Router } from '@angular/router';
-import { PlayerService } from '../api/player.service';
+import { PlayerService } from '../../services/player.service';
 
 window.addEventListener('beforeunload', (event) => {
   event.returnValue = 'Are you sure you want to leave?';
@@ -12,7 +12,7 @@ window.addEventListener('beforeunload', (event) => {
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss', '../../styles.scss'],
+  styleUrls: ['./board.component.scss', '../../../styles.scss'],
 })
 export class BoardComponent implements OnInit {
   @ViewChild('board') boardElement!: ElementRef<HTMLElement>;

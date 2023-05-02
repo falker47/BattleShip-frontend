@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PlayerFrontend } from '../api/models';
+import { PlayerFrontend } from '../../models/models';
 import { ShipComponent } from '../ship/ship.component';
 
 @Component({

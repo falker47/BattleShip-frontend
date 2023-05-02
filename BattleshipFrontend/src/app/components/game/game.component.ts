@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PlayerService } from '../api/player.service';
-import { CellApi, GridApi, PlayerApi, Shot } from '../api/models';
+import { PlayerService } from '../../services/player.service';
+import { CellApi, GridApi, PlayerApi, Shot } from '../../models/models';
 
 window.addEventListener('beforeunload', (event) => {
   event.returnValue = 'Are you sure you want to leave?';

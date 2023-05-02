@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { PlayerInitialData } from '../api/models';
+import { PlayerInitialData } from '../../models/models';
 import { Router } from '@angular/router';
-import { PlayerService } from '../api/player.service';
+import { PlayerService } from '../../services/player.service';
 
 window.addEventListener('beforeunload', (event) => {
   event.returnValue = 'Are you sure you want to leave?';
@@ -10,7 +10,7 @@ window.addEventListener('beforeunload', (event) => {
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss', '../../styles.scss'],
+  styleUrls: ['./landing-page.component.scss', '../../../styles.scss'],
 })
 export class LandingPageComponent {
   public players: PlayerInitialData[] = [];

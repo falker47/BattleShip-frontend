@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PlayerService } from '../api/player.service';
+import { PlayerService } from '../../services/player.service';
 import { Router } from '@angular/router';
 
 window.addEventListener('beforeunload', (event) => {

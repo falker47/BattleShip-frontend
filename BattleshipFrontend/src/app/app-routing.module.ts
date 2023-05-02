@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { BoardComponent } from './board/board.component';
-import { StartGameComponent } from './start-game/start-game.component';
-import { GameComponent } from './game/game.component';
-import { PlayerReadyComponent } from './player-ready/player-ready.component';
-import { FinalLeaderboardComponent } from './final-leaderboard/final-leaderboard.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { BoardComponent } from './components/board/board.component';
+import { StartGameComponent } from './components/start-game/start-game.component';
+import { GameComponent } from './components/game/game.component';
+import { PlayerReadyComponent } from './components/player-ready/player-ready.component';
+import { FinalLeaderboardComponent } from './components/final-leaderboard/final-leaderboard.component';
 
 const routes: Routes = [
   { path: "", component: LandingPageComponent },

@@ -9,7 +9,7 @@ import {
   ShipApi,
   Shot,
   LogApi,
-} from './models';
+} from '../models/models';
 
 @Injectable({
   providedIn: 'root',
