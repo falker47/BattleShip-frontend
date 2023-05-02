@@ -52,7 +52,7 @@ export interface Shot {
   yAxis: number;
 }
 
-// Backend - Response chiamate get
+// Backend - Response types
 
 export interface CellApi {
   id: string;
@@ -84,6 +84,6 @@ export interface ShipApi {
   hp: number;
 }
 
-export interface Res {
+export interface LogApi {
   log: string;
 }

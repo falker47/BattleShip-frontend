@@ -1,23 +1,23 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 import {
   PlayerInitialData,
-  Shot,
+  PlayerShipsData,
+  PlayerFrontendGame,
   GridApi,
   PlayerApi,
   ShipApi,
-  PlayerShipsData,
-  Res,
-  PlayerFrontendGame,
+  Shot,
+  LogApi,
 } from './models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlayerService {
-  URL = 'https://api-battleship.azurewebsites.net/api/Players/';
   // private URL = 'https://localhost:7100/api/Players/';
-
+  private URL = 'https://api-battleship.azurewebsites.net/api/Players/';
   private gamePlayer: PlayerApi[] = [];
   private gamePlayerUserGrid!: GridApi;
   private gamePlayerShotGrid!: GridApi;
@@ -39,19 +39,15 @@ export class PlayerService {
   }
 
   getGridByPlayerId(id: number, gridSize: number, userGridTRUE_shotGridFALSE: boolean) {
-    return this.httpClient.get<GridApi>(
-      this.URL + 'getGridByPlayerId/' + id + '/' + gridSize + '/' + userGridTRUE_shotGridFALSE
-    );
+    return this.httpClient.get<GridApi>(this.URL + 'getGridByPlayerId/' + id + '/' + gridSize + '/' + userGridTRUE_shotGridFALSE);
   }
 
   getShipsByPlayerId(id: number) {
-    return this.httpClient.get<ShipApi[]>(
-      this.URL + 'getShipsByPlayerId/' + id
-    );
+    return this.httpClient.get<ShipApi[]>(this.URL + 'getShipsByPlayerId/' + id);
   }
 
   postCreateGame(players: PlayerInitialData[]) {
-    return this.httpClient.post<string>(this.URL + 'postCreateGame', players);
+    return this.httpClient.post(this.URL + 'postCreateGame', players);
   }
 
   postPlaceShips(ships: PlayerShipsData) {
@@ -59,7 +55,7 @@ export class PlayerService {
   }
 
   postShot(shot: Shot) {
-    return this.httpClient.post<Res>(this.URL + 'postShot', shot);
+    return this.httpClient.post<LogApi>(this.URL + 'postShot', shot);
   }
 
   setGamePlayers(gamePlayer: PlayerApi[]) {
@@ -86,9 +82,7 @@ export class PlayerService {
     return this.gamePlayerShotGrid;
   }
 
-  // ------- Sharing information between components ------- //
-  
-  // BoardComponent | StartGameComponent
+  // ------- Sharing information between components ------- // 
 
   getBoardSize(): number {
     return this.width;
@@ -96,8 +90,6 @@ export class PlayerService {
   setBoardSize(width: number) {
     this.width = width;
   }
-
-  // PlayerReadyComponent | GameComponent | FinalLeaderboardComponent
 
   getPlayersData() {
     return this.playersData;

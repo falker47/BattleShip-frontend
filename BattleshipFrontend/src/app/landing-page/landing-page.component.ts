@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PlayerInitialData } from '../api/models';
+import { PlayerInitialData, PlayerApi } from '../api/models';
 import { Router } from '@angular/router';
 import { PlayerService } from '../api/player.service';
 
@@ -16,16 +16,13 @@ export class LandingPageComponent {
   public players: PlayerInitialData[] = [];
   public limitNumPlayers: number = 6;
 
-
   constructor(private router: Router, private playerService: PlayerService) {}
 
 
   public addPlayer(inputName: string): void {
     const name = inputName.replace(/\s/g, '').charAt(0).toUpperCase() + inputName.slice(1);
-    if (!inputName || name === "" || this.isNameTaken(name)) {
-      return;
-    }
-    
+    if (!inputName || name === '' || this.isNameTaken(name)) return;
+
     if (this.players.length === 0) {
       this.players.push({
         name: name,
@@ -51,12 +48,12 @@ export class LandingPageComponent {
 
   private isNameTaken(name: string): boolean {
     let repeatedNames: boolean[] = [];
-    this.players.forEach(player => {
+    this.players.forEach((player) => {
       if (player.name === name) repeatedNames.push(true);
       else repeatedNames.push(false);
-    })
+    });
 
-    if (repeatedNames.find(item => item === true)) return true;
+    if (repeatedNames.find((item) => item === true)) return true;
     else return false;
   }
 
@@ -66,12 +63,12 @@ export class LandingPageComponent {
   }
 
 
-  public async confirmPlayers() {
-    await this.playerService.postCreateGame(this.players).toPromise().then(async (res) => {
-      if (res) await this.playerService.getPlayers().toPromise().then(res => {
-        if (res) this.playerService.setGamePlayers(res);
-      });
-      this.router.navigate(['/board']);
-    });
+  public confirmPlayers() {
+    this.playerService.postCreateGame(this.players).subscribe(() => {
+      this.playerService.getPlayers().subscribe((players) => {
+        this.playerService.setGamePlayers(players);
+        this.router.navigate(['/board']);
+      })
+    })
   }
 }
