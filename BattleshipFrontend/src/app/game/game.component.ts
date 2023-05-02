@@ -51,16 +51,16 @@ export class GameComponent implements OnInit {
         row.forEach((cell) => cells.push(cell));
       });
 
-      let foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
+      const foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
       return Number(foundCell?.State);
     }
-
+    
     if (type === 'shot') {
       this.shotGrid.Cells.forEach((row) => {
         row.forEach((cell) => cells.push(cell));
       });
 
-      let foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
+      const foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
       return Number(foundCell?.State);
     }
 
@@ -70,14 +70,14 @@ export class GameComponent implements OnInit {
 
   public getShipId(x: number, y: number): number {
     let cells: CellApi[] = [];
-
+    
     this.userGrid.Cells.forEach((rows) => {
       rows.forEach((cell) => {
         cells.push(cell);
       });
     });
 
-    let foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
+    const foundCell = cells.find((cell) => x === cell.Xaxis && y === cell.Yaxis);
     return Number(foundCell?.ShipId);
   }
 
@@ -90,7 +90,7 @@ export class GameComponent implements OnInit {
   }
   
 
-  public async saveShot(x: number, y: number) {
+  public saveShot(x: number, y: number) {
     if (this.shot.length === 0) {
       const playerShot: Shot = {
         id: this.currentPlayer.id,
@@ -99,16 +99,26 @@ export class GameComponent implements OnInit {
       };
 
       this.shot.push(playerShot);
-      await this.updateShot(playerShot);
-      await this.updateShotGrid();
-      await this.updateGamePlayers();
-      this.checkAlivePlayers();
-      this.playerService.setPlayersData(this.playersData);
+
+      this.playerService
+        .postShot(playerShot)
+        .subscribe((res) => {
+          const logsArray = res.log.split(';');
+
+          logsArray.forEach((log) => {
+            if (log !== '') this.playerService.setLogs(log);
+          });
+
+          this.updateShotGrid();
+          this.updateGamePlayers();
+          this.checkAlivePlayers();
+          this.playerService.setPlayersData(this.playersData);
+        })
     }
   }
 
 
-  async getNextPlayer() {
+  public getNextPlayer() {
     let index: number = ++this.currentIndex;
     
     if (this.playersData.length === index) {
@@ -122,90 +132,64 @@ export class GameComponent implements OnInit {
     this.playerService.setCurrentPlayer(this.currentPlayer);
     this.shot.pop();
     this.showNextPlayer();
-    await this.updateUserGrid();
-    await this.updateShotGrid();
+    this.updateUserGrid();
+    this.updateShotGrid();
   }
 
 
-  public showNextPlayer(): void { 
+  private showNextPlayer() { 
     this.router.navigate(['/player']);
   }
 
 
-  public async updateUserGrid() {
-    await this.playerService
+  private updateUserGrid() {
+    this.playerService
       .getGridByPlayerId(this.currentPlayer.id, this.width, true)
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          this.playerService.setUserGrid(res);
-          this.userGrid = this.playerService.getUserGrid();
-        }
-      });
+      .subscribe((userGrid) => {
+        this.playerService.setUserGrid(userGrid);
+        this.userGrid = this.playerService.getUserGrid();
+      })
   }
 
 
-  public async updateShotGrid() {
-    await this.playerService
+  private updateShotGrid() {
+    this.playerService
       .getGridByPlayerId(this.currentPlayer.id, this.width, false)
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          this.playerService.setShotGrid(res);
-          this.shotGrid = this.playerService.getShotGrid();
-        }
-      });
+      .subscribe((shotGrid) => {
+        this.playerService.setShotGrid(shotGrid);
+        this.shotGrid = this.playerService.getShotGrid();
+      })
   }
 
 
-  public async updateGamePlayers() {
-    await this.playerService
+  private updateGamePlayers() {
+    this.playerService
       .getPlayers()
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          this.playerService.setGamePlayers(res);
-          this.players = this.playerService.getGamePlayers();
-        }
-      });
+      .subscribe((players) => {
+        this.playerService.setGamePlayers(players);
+        this.players = this.playerService.getGamePlayers();
+      })
   }
 
 
-  public async updateShot(playerShot: Shot) {
-    await this.playerService
-      .postShot(playerShot)
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          const logArray = res.log.split(';');
-          logArray.forEach((log) => {
-            if (log !== '') this.playerService.setLogs(log);
-          });
-        }
-      });
-  }
-
-
-  public async checkAlivePlayers() {
-    this.playersData.forEach(async (player, i) => {
+  private checkAlivePlayers() {
+    this.playersData.forEach((player, index) => {
       let shipsHP: number[] = [];
 
-      await this.playerService
+      this.playerService
         .getShipsByPlayerId(player.id)
-        .toPromise()
-        .then((res) => {
-          if (res) {
-            res.forEach((ship) => {
-              if (ship.hp !== 0) shipsHP.push(ship.hp);
-            });
-          }
+        .subscribe((ships) => {
+          ships.forEach((ship) => {
+            if (ship.hp !== 0) shipsHP.push(ship.hp);
+          });
+  
           if (shipsHP.length === 0) {
-            this.playersData.splice(i, 1);
+            this.playersData.splice(index, 1);
           }
           if (this.isGameOver() === true) {
-            this.router.navigate(['/leaderboard']);
+            this.router.navigate(['/leaderboard']);  
           }
-        });
+        })
     });
   }
 

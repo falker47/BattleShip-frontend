@@ -64,11 +64,15 @@ export class LandingPageComponent {
 
 
   public confirmPlayers() {
-    this.playerService.postCreateGame(this.players).subscribe(() => {
-      this.playerService.getPlayers().subscribe((players) => {
-        this.playerService.setGamePlayers(players);
-        this.router.navigate(['/board']);
+    this.playerService
+      .postCreateGame(this.players)
+      .subscribe(() => {
+        this.playerService
+          .getPlayers()
+          .subscribe((players) => {
+            this.playerService.setGamePlayers(players);
+            this.router.navigate(['/board']);
+          })
       })
-    })
   }
 }

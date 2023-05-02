@@ -113,16 +113,18 @@ export class BoardComponent implements OnInit {
   public confirmShips() {
     this.setPlayerFinalData();
 
-    this.playerService.postPlaceShips(this.playerFinalData).subscribe(() => {
-      this.playersData.map((player) => {
-        if (player.id === this.currentPlayer.id) {
-          player.confirmed = true;
-        }
+    this.playerService
+      .postPlaceShips(this.playerFinalData)
+      .subscribe(() => {
+        this.playersData.forEach((player) => {
+          if (player.id === this.currentPlayer.id) {
+            player.confirmed = true;
+          }
+        })
+        
+        this.goToStartGame();
+        this.getNextPlayer();
       })
-
-      this.goToStartGame();
-      this.getNextPlayer();
-    })
   }
 
 

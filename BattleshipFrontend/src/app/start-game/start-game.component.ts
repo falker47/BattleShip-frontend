@@ -20,13 +20,17 @@ export class StartGameComponent {
 
   
   public startGame() {
-    this.playerService.getGridByPlayerId(1, this.width, true).subscribe((res) => {
-      this.playerService.setUserGrid(res);
-    })
+    this.playerService
+      .getGridByPlayerId(1, this.width, true)
+      .subscribe((userGrid) => {
+        this.playerService.setUserGrid(userGrid);
+      })
 
-    this.playerService.getGridByPlayerId(1, this.width, false).subscribe((res) => {
-      this.playerService.setShotGrid(res);
-    })
+    this.playerService
+      .getGridByPlayerId(1, this.width, false)
+      .subscribe((shotGrid) => {
+        this.playerService.setShotGrid(shotGrid);
+      })
 
     this.router.navigate(['/player']);
   }
