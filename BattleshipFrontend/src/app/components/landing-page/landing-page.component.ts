@@ -15,6 +15,7 @@ window.addEventListener('beforeunload', (event) => {
 export class LandingPageComponent {
   public players: PlayerInitialData[] = [];
   public limitNumPlayers: number = 6;
+  public showLoader: boolean = false;
 
   
   constructor(private router: Router, private playerService: PlayerService) {}
@@ -65,6 +66,8 @@ export class LandingPageComponent {
 
 
   public confirmPlayers(): void {
+    this.showLoader = true;
+
     this.playerService
       .postCreateGame(this.players)
       .subscribe(() => {
@@ -72,7 +75,11 @@ export class LandingPageComponent {
           .getPlayers()
           .subscribe((players) => {
             this.playerService.setGamePlayers(players);
-            this.goToBoard();
+
+            if (this.playerService.getGamePlayers()[0] !== undefined) {
+              this.showLoader = false;
+              this.goToBoard();
+            }
           })
       })
   }

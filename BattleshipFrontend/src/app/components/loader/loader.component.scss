@@ -1,0 +1,19 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+
+  .loader-big {
+    width: 5em;
+    height: 5em;
+  }
+
+  .loader-small {
+    width: 3em;
+    height: 3em;
+    margin-top: 3em;
+    margin-left: -1em;
+  }
+}
+

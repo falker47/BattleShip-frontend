@@ -13,6 +13,7 @@ window.addEventListener('beforeunload', (event) => {
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
+  public showLoader: boolean = true;
   public width: number = 10;
   public playerBoard!: number[][];
   public userGrid!: GridApi;
@@ -40,6 +41,10 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.playerBoard = this.getEmptyBoard();
+
+    if (this.userGrid !== undefined && this.shotGrid !== undefined) {
+      this.showLoader = false;
+    }
   }
 
 

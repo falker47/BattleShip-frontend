@@ -18,6 +18,7 @@ import { PlayerReadyComponent } from './components/player-ready/player-ready.com
 import { GameComponent } from './components/game/game.component';
 import { GameInfoComponent } from './components/game-info/game-info.component';
 import { FinalLeaderboardComponent } from './components/final-leaderboard/final-leaderboard.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FinalLeaderboardComponent } from './components/final-leaderboard/final-
     GameComponent,
     GameInfoComponent,
     FinalLeaderboardComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
