@@ -88,114 +88,15 @@ export class BoardComponent implements OnInit {
 
   public createFleet(): Array<ShipComponent> {
     return [
-      {
-        name: 'ship_5_1_lightblue',
-        size: 5,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
-      {
-        name: 'ship_4_1_green',
-        size: 4,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
-      {
-        name: 'ship_3_1_blue',
-        size: 3,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
-      {
-        name: 'ship_3_2_pink',
-        size: 3,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
-      {
-        name: 'ship_2_1_orange',
-        size: 2,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
-      {
-        name: 'ship_2_2_yellow',
-        size: 2,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
-      {
-        name: 'ship_2_3_violet',
-        size: 2,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
-      {
-        name: 'ship_1_1_lightgreen',
-        size: 1,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
-      {
-        name: 'ship_1_2_grey',
-        size: 1,
-        isVertical: false,
-        top: 0,
-        left: 0,
-        col: 0,
-        row: 0,
-        occupiedCoords: [],
-        cellPixels: 30,
-        boardSize: 0,
-      },
+      { name: 'ship_5_1_lightblue', size: 5, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { name: 'ship_4_1_green', size: 4, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { name: 'ship_3_1_blue', size: 3, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { name: 'ship_3_2_pink', size: 3, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { name: 'ship_2_1_orange', size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { name: 'ship_2_2_yellow', size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { name: 'ship_2_3_violet', size: 2, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { name: 'ship_1_1_lightgreen', size: 1, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
+      { name: 'ship_1_2_grey', size: 1, isVertical: false, top: 0, left: 0, col: 0, row: 0, occupiedCoords: [], cellPixels: 30, boardSize: 0 },
     ];
   }
 
@@ -245,10 +146,10 @@ export class BoardComponent implements OnInit {
       this.router.navigate(['/start']);
     }
   }
-
   
 
   // ------------- SHIPS POSITIONING - DRAG & DROP ------------------ //
+
 
   public rotateAvailableShip(i: number): void {
     this.shipList1[i].isVertical = !this.shipList1[i].isVertical;
@@ -296,13 +197,13 @@ export class BoardComponent implements OnInit {
       if (currentShip !== undefined) {
         if (!currentShip.isVertical) {
           // *Current ship is HORIZONTAL
+          // Current ship size is <= than remaining space in a row
           if (currentShip.size <= this.width - col + 1) {
-            // Current ship size is <= than remaining space in a row
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
 
+              // Checking for HORIZONTAL ships when placing a HORIZONTAL ship
               this.shipList2.forEach((ship) => {
-                // Checking for HORIZONTAL ships when placing a HORIZONTAL ship
                 if (ship.name !== this.shipName) {
                   if (ship.col === col && ship.row === row) {
                     this.hoverPlace = this.dragStart;
@@ -321,8 +222,8 @@ export class BoardComponent implements OnInit {
                   ) {
                     this.hoverPlace = this.dragStart;
                   }
+                  // Checking for VERTICAL ships when placing a HORIZONTAL ship
                   if (ship.isVertical) {
-                    // Checking for VERTICAL ships when placing a HORIZONTAL ship
                     if (
                       ship.col > col &&
                       col + currentShip!.size - 1 >= ship.col &&
@@ -345,13 +246,13 @@ export class BoardComponent implements OnInit {
           }
         } else {
           // *Current ship is VERTICAL
+          // Current ship size is <= than remaining space in a col
           if (currentShip.size <= this.width - row + 1) {
-            // Current ship size is <= than remaining space in a col
             if (this.shipList2[0] !== undefined) {
               this.hoverPlace = dropPlace;
 
+              // Checking for VERTICAL ships when placing a VERTICAL ship
               this.shipList2.forEach((ship) => {
-                // Checking for VERTICAL ships when placing a VERTICAL ship
                 if (ship.name !== this.shipName) {
                   if (ship.col === col && ship.row === row) {
                     this.hoverPlace = this.dragStart;
@@ -370,8 +271,8 @@ export class BoardComponent implements OnInit {
                   ) {
                     this.hoverPlace = this.dragStart;
                   }
+                  // Checking for HORIZONTAL ships when placing a VERTICAL ship
                   if (!ship.isVertical) {
-                    // Checking for HORIZONTAL ships when placing a VERTICAL ship
                     if (
                       ship.row > row &&
                       row + currentShip!.size - 1 >= ship.row &&
@@ -402,8 +303,8 @@ export class BoardComponent implements OnInit {
     this.dragEnd = this.hoverPlace;
     this.increaseZIndex(event.source.element);
 
+    // Dropping ship inside the board
     if (this.dragEnd.type === 'cell' && this.dragStart.type !== 'cell') {
-      // Dropping ship inside the board
       this.moveFromshipList1To2(event.source.element.nativeElement.id);
       if (this.shipList1[0] !== undefined) {
         this.shipList1[0].isVertical = false;
@@ -411,8 +312,8 @@ export class BoardComponent implements OnInit {
       event.source._dragRef.reset();
     }
 
+    // Dropping ship outside DropLists
     if (this.dragEnd.type !== 'cell' && this.dragStart.type !== 'list') {
-      // Dropping ship outside DropLists
       this.moveFromshipList2To1(event.source.element.nativeElement.id);
       if (this.shipList1[0] !== undefined) {
         this.shipList1[0].isVertical = false;
@@ -420,13 +321,13 @@ export class BoardComponent implements OnInit {
       event.source._dragRef.reset();
     }
 
+    // Moving ship around available ships
     if (this.dragEnd.type === 'list' && this.dragStart.type === 'list') {
-      // Moving ship around available ships
       event.source._dragRef.reset();
     }
 
+    // Moving ship around the board
     if (this.dragEnd.type === 'cell' && this.dragStart.type === 'cell') {
-      // Moving ship around the board
       let index = Number(event.source.element.nativeElement.id);
       let item = this.shipList2[index];
       item = this.updateShip(item);
@@ -460,7 +361,7 @@ export class BoardComponent implements OnInit {
     ship.col = this.dragEnd.col;
     ship.row = this.dragEnd.row;
     ship.occupiedCoords =
-        ship.size === 5 && !ship.isVertical
+      ship.size === 5 && !ship.isVertical
         ? [
             { X: ship.col, Y: ship.row },
             { X: ship.col + 1, Y: ship.row },
