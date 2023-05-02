@@ -209,34 +209,29 @@ export class BoardComponent implements OnInit {
   }
 
 
-  public async confirmShips() {
+  public confirmShips() {
     this.setPlayerFinalData();
 
-    await this.playerService
-      .postPlaceShips(this.playerFinalData)
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          this.playersData.map((player) => {
-            if (player.id === this.currentPlayer.id) {
-              player.confirmed = true;
-            }
-          });
-
-          this.goToStartGame();
-          this.getNextPlayer();
+    this.playerService.postPlaceShips(this.playerFinalData).subscribe(() => {
+      this.playersData.map((player) => {
+        if (player.id === this.currentPlayer.id) {
+          player.confirmed = true;
         }
-      });
+      })
+
+      this.goToStartGame();
+      this.getNextPlayer();
+    })
   }
 
 
   public getNextPlayer(): void {
     let nextIndex = ++this.currentIndex;
-      if (this.playersData[nextIndex] !== undefined) {
-        this.currentPlayer = this.getCurrentPlayer(nextIndex);
-        this.shipList1 = this.createFleet();
-        this.shipList2 = [];
-      }
+    if (this.playersData[nextIndex] !== undefined) {
+      this.currentPlayer = this.getCurrentPlayer(nextIndex);
+      this.shipList1 = this.createFleet();
+      this.shipList2 = [];
+    }
   }
 
 
