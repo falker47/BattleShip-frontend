@@ -19,24 +19,14 @@ export class StartGameComponent {
   }
 
   
-  public async startGame() {
-    await this.playerService
-      .getGridByPlayerId(1, this.width, true)
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          this.playerService.setUserGrid(res);
-        }
-      });
+  public startGame() {
+    this.playerService.getGridByPlayerId(1, this.width, true).subscribe((res) => {
+      this.playerService.setUserGrid(res);
+    })
 
-    await this.playerService
-      .getGridByPlayerId(1, this.width, false)
-      .toPromise()
-      .then((res) => {
-        if (res) {
-          this.playerService.setShotGrid(res);
-        }
-      });
+    this.playerService.getGridByPlayerId(1, this.width, false).subscribe((res) => {
+      this.playerService.setShotGrid(res);
+    })
 
     this.router.navigate(['/player']);
   }

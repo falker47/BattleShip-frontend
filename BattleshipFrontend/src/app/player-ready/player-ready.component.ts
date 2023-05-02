@@ -25,7 +25,6 @@ export class PlayerReadyComponent {
 
 
   ngOnInit() {
-    console.log(this.players)
     if (this.playerService.getPlayersData()[0] === undefined) {
       this.preparePlayers();
       this.playerService.setPlayersData(this.playersData);

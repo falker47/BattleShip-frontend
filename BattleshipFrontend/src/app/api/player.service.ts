@@ -47,7 +47,7 @@ export class PlayerService {
   }
 
   postCreateGame(players: PlayerInitialData[]) {
-    return this.httpClient.post(this.URL + 'postCreateGame', players);
+    return this.httpClient.post<string>(this.URL + 'postCreateGame', players);
   }
 
   postPlaceShips(ships: PlayerShipsData) {
