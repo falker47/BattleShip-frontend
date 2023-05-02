@@ -1,28 +1,28 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 5em;
-    color: var(--white-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5em;
+  color: var(--white-color);
 
-    p {
-        font-size: 4em;
-        text-transform: uppercase;
-        margin-bottom: 1em;
-    }
+  p {
+    font-size: 4em;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+  }
 
-    a { 
-        font-size: 1.1em;
-        text-decoration: none;
-        color: var(--board-bg-color);
-        padding-bottom: .2em;
-        border-bottom: 1px solid var(--board-bg-color);
-    }
+  a {
+    font-size: 1.1em;
+    text-decoration: none;
+    color: var(--board-bg-color);
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid var(--board-bg-color);
+  }
 
-    a:hover {
-        cursor: pointer;
-        color: var(--board-line-color);
-        border-bottom: 1px solid var(--board-line-color);
-    }
+  a:hover {
+    cursor: pointer;
+    color: var(--board-line-color);
+    border-bottom: 1px solid var(--board-line-color);
+  }
 }
