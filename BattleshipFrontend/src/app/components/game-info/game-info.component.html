@@ -1,0 +1,19 @@
+<div class="game-info">
+  <div class="leaderboard">
+    <h4>Leaderboard</h4>
+    <p
+      class="leaderboard-content"
+      *ngFor="let player of sortLeaderboard(); let i = index"
+    >
+      <span class="position">{{ i + 1 }}</span>
+      <span class="name">{{ player.name }}</span>
+      <span class="points">{{ player.points }}</span>
+    </p>
+  </div>
+
+  <div class="logs-container" *ngIf="logs[0] !== undefined">
+    <div *ngFor="let log of logs; let i = index">
+      <p id="{{ i }}" class="new-log"><span>></span>{{ log }}</p>
+    </div>
+  </div>
+</div>

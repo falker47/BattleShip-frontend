@@ -1,0 +1,167 @@
+.config-page-container {
+  color: var(--white-color);
+  font-family: var(--font-paragraph);
+  padding-bottom: 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-family: var(--font-log);
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 2em;
+}
+
+.lists-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.container-1 {
+  margin-left: 2em;
+  display: inline;
+  justify-content: space-between;
+}
+
+.list-1,
+.list-2 {
+  position: relative;
+  height: 100%;
+}
+
+.ships {
+  h3 {
+    font-family: var(--font-log);
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--white-color);
+    margin-bottom: 1.5em;
+
+    span {
+      font-family: var(--font-log);
+    }
+  }
+}
+
+.ships-not-empty {
+  height: 150px;
+}
+
+.ships-empty {
+  height: 70px;
+}
+
+app-ship {
+  position: absolute;
+}
+
+.row {
+  display: inline-block;
+}
+
+.cell {
+  border: 1px solid var(--board-line-color);
+  background-color: rgba(0, 162, 255, 0.3);
+}
+
+.cell:hover {
+  background-color: rgb(7, 120, 186);
+}
+
+.cell-large {
+  width: 30px;
+  height: 30px;
+}
+
+.cell-medium {
+  width: 25px;
+  height: 25px;
+}
+
+.cell-small {
+  width: 20px;
+  height: 20px;
+}
+
+@media(min-width: 1605px) {
+  .info-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5em;
+
+    h2 {
+      margin: auto;
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .info {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 500px;
+    margin-right: 3em;
+
+    .info-instructions {
+      margin: 0;
+      width: 100%;
+      margin-bottom: 2em;
+    }
+
+    .info-player {
+      margin: 0;
+      width: 100%;
+      margin: 0 1em;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-content: center;
+
+      .confirm-btn {
+        margin: 0;
+        margin-right: 1.5em;
+      }
+    }
+  }
+}
+
+@media(max-width: 930px) {
+  .lists-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-1 {
+    margin: 0;
+  }
+
+  .ships-not-empty {
+    height: 230px;
+  }
+}

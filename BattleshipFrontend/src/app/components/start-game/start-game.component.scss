@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.title {
+  font-family: var(--font-log);
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--white-color);
+}
+
+.start-btn {
+  text-transform: uppercase;
+  font-size: 1.5em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--white-color);
+  border: none;
+  border-radius: 5px;
+  background-color: var(--btn-bg-color);
+  padding: 0.5em 1em;
+  margin: 2em 0.5em;
+  transition: 250ms ease-in-out;
+}
+
+.start-btn:hover,
+.start-btn:focus {
+  cursor: pointer;
+  background-color: var(--btn-hover-color);
+}
+
+.start-btn:hover,
+.start-btn:focus {
+  transform: scale(1.2);
+}

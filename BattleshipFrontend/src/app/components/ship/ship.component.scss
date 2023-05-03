@@ -1,0 +1,57 @@
+.ship-box {
+  position: relative;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+}
+
+.ship-box:hover {
+  cursor: grab;
+  cursor: -moz-grab;
+}
+
+.ship-box:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  box-shadow: 
+    0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.ship-draggable-wrapper {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.ship-box-cell {
+  border: 1px dotted;
+  display: inline-block;
+}
+
+.ship-box-cell-large {
+  width: 30px;
+  height: 30px;
+}
+
+.ship-box-cell-medium {
+  width: 25px;
+  height: 25px;
+}
+
+.ship-box-cell-small {
+  width: 20px;
+  height: 20px;
+}
+
+#ship_5_1_lightblue { background-color: #5dc1e2; }
+#ship_4_1_green { background-color: #008000; }
+#ship_3_1_blue { background-color: #0000ff; }
+#ship_3_2_pink { background-color: #fe95a7; }
+#ship_2_1_orange { background-color: #ff7f50; }
+#ship_2_2_yellow { background-color: #ffff00; }
+#ship_2_3_violet { background-color: #bc09bc; }
+#ship_1_1_lightgreen { background-color: #1cc11c; }
+#ship_1_2_grey { background-color: #989391;}

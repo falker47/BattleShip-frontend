@@ -1,0 +1,262 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-color);
+  padding-bottom: 4em;
+  min-height: 90vh;
+}
+
+app-loader {
+  margin: auto;
+}
+
+.general-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    font-family: var(--font-log);
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 2em 0 1em 0;
+  }
+
+  .player-info {
+    h4 {
+      font-size: 1.4em;
+      margin-bottom: 1.5em;
+    }
+
+    .player-name {
+      color: var(--btn-bg-color);
+      text-shadow: 1px 1px 5px black;
+      text-transform: capitalize;
+    }
+  }
+}
+
+#boards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-family: var(--font-paragraph);
+  }
+}
+
+.userBoard,
+.shotBoard {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgba(0, 162, 255, 0.3);
+  margin: 0 1.5em 1em 1.5em;
+}
+
+.userRow,
+.shotRow {
+  display: inline-block;
+}
+
+.userCell,
+.shotCell {
+  border: 1px var(--board-line-color) solid;
+}
+
+// ----- start CELLS CSS ----- //
+
+// LARGE CELLS
+
+.cell-large-water {
+  width: 30px;
+  height: 30px;
+}
+.cell-large-water-shooted {
+  width: 30px;
+  height: 30px;
+}
+.cell-large-water-shooted::before {
+  content: "X";
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-large-ship {
+  width: 30px;
+  height: 30px;
+  border: 1px dotted;
+  background-color: #5dc1e2;
+}
+.cell-large-ship-shooted {
+  width: 30px;
+  height: 30px;
+  border: 1px dotted;
+  background-color: #5dc1e2;
+}
+.cell-large-ship-shooted::before {
+  content: "X";
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-large-enemy-ship-shooted {
+  width: 30px;
+  height: 30px;
+}
+.cell-large-enemy-ship-shooted::before {
+  content: "X";
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// MEDIUM CELLS
+
+.cell-medium-water {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-water-shooted {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-water-shooted::before {
+  content: "X";
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-medium-ship {
+  width: 25px;
+  height: 25px;
+  border: 1px dotted;
+  background-color: #5dc1e2;
+}
+.cell-medium-ship-shooted {
+  width: 25px;
+  height: 25px;
+  border: 1px dotted;
+  background-color: #5dc1e2;
+}
+.cell-medium-ship-shooted::before {
+  content: "X";
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-medium-enemy-ship-shooted {
+  width: 25px;
+  height: 25px;
+}
+.cell-medium-enemy-ship-shooted::before {
+  content: "X";
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// SMALL CELLS
+
+.cell-small-water {
+  width: 20px;
+  height: 20px;
+}
+.cell-small-water-shooted {
+  width: 20px;
+  height: 20px;
+}
+.cell-small-water-shooted::before {
+  content: "X";
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-small-ship {
+  width: 20px;
+  height: 20px;
+  border: 1px dotted;
+  background-color: #5dc1e2;
+}
+.cell-small-ship-shooted {
+  width: 20px;
+  height: 20px;
+  border: 1px dotted;
+  background-color: #5dc1e2;
+}
+.cell-small-ship-shooted::before {
+  content: "X";
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell-small-enemy-ship-shooted {
+  width: 20px;
+  height: 20px;
+}
+.cell-small-enemy-ship-shooted::before {
+  content: "X";
+  color: red;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// ----- end CELLS CSS ----- //
+
+.next-player-container {
+  .next-player-btn {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--white-color);
+    border: none;
+    border-radius: 5px;
+    background-color: var(--btn-bg-color);
+    padding: 0.5em 1em;
+    margin-top: 1.5em;
+  }
+
+  .next-player-btn:disabled,
+  .next-player-btn:disabled:hover {
+    background-color: rgba(128, 128, 128, 0.8);
+    color: rgb(222, 222, 222);
+    cursor: default;
+  }
+
+  .next-player-btn:hover,
+  .next-player-btn:focus {
+    cursor: pointer;
+    background-color: var(--btn-hover-color);
+  }
+}

@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-family: var(--font-title);
+  font-size: 8em;
+  text-shadow: 1px 1px 5px black;
+  color: var(--white-color);
+  margin-top: 0.2em;
+}
+
+.add-player-container {
+  input {
+    padding: 0.7em 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--white-color);
+    width: 400px;
+  }
+
+  button {
+    font-size: 1.2em;
+    font-family: inherit;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 10em;
+    margin-left: 1em;
+    background-color: var(--btn-bg-color);
+    color: var(--white-color);
+  }
+
+  button:hover {
+    cursor: pointer;
+    background-color: var(--btn-hover-color);
+  }
+}
+
+.players-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+  .players-list {
+    margin: 0;
+    padding: 0;
+    margin-top: 2em;
+    color: var(--white-color);
+    width: 100%;
+    text-align: center;
+  
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+.limit-players-mesagge {
+  margin-top: 1em;
+  color: red;
+}
+
+.confirm-players-btn {
+  align-self: center;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--white-color);
+  border: none;
+  border-radius: 5px;
+  background-color: var(--btn-bg-color);
+  padding: 0.5em 1em;
+  margin-top: 1.5em;
+}
+
+.confirm-players-btn:hover {
+  cursor: pointer;
+  background-color: var(--btn-hover-color);
+}
+
+app-loader {
+  margin-top: 3em;
+}

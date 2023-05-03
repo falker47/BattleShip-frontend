@@ -1,0 +1,94 @@
+<div class="container">
+  <app-loader *ngIf="showLoader"></app-loader>
+
+  <div class="general-container" *ngIf="!showLoader">
+    <h2>Battleship Game</h2>
+  
+    <div class="player-info">
+      <h4>Player: <span class="player-name">{{ currentPlayer.name }}</span></h4>
+    </div>
+  
+    <div id="boards-container">
+      <div class="flex">
+        <p class="board-title">Your board:</p>
+        <div class="userBoard" #userBoard>
+          <div class="userRow" #userRows *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
+            <div class="userCol" #userCols *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
+              <div class="userCell" #userCell 
+                [ngStyle]="{
+                  'background-color': 
+                    getShipId(x+1, y+1) === 1 || getShipId(x+1, y+1) === 10 || getShipId(x+1, y+1) === 19 || getShipId(x+1, y+1) === 28 || getShipId(x+1, y+1) === 37 || getShipId(x+1, y+1) === 46 ? '#008000' : 
+                    getShipId(x+1, y+1) === 2 || getShipId(x+1, y+1) === 11 || getShipId(x+1, y+1) === 20 || getShipId(x+1, y+1) === 29 || getShipId(x+1, y+1) === 38 || getShipId(x+1, y+1) === 47 ? '#0000ff' :
+                    getShipId(x+1, y+1) === 3 || getShipId(x+1, y+1) === 12 || getShipId(x+1, y+1) === 21 || getShipId(x+1, y+1) === 30 || getShipId(x+1, y+1) === 39 || getShipId(x+1, y+1) === 48 ? '#fe95a7' :
+                    getShipId(x+1, y+1) === 4 || getShipId(x+1, y+1) === 13 || getShipId(x+1, y+1) === 22 || getShipId(x+1, y+1) === 31 || getShipId(x+1, y+1) === 40 || getShipId(x+1, y+1) === 49 ? '#ff7f50' :
+                    getShipId(x+1, y+1) === 5 || getShipId(x+1, y+1) === 14 || getShipId(x+1, y+1) === 23 || getShipId(x+1, y+1) === 32 || getShipId(x+1, y+1) === 41 || getShipId(x+1, y+1) === 50 ? '#ffff00' :
+                    getShipId(x+1, y+1) === 6 || getShipId(x+1, y+1) === 15 || getShipId(x+1, y+1) === 24 || getShipId(x+1, y+1) === 33 || getShipId(x+1, y+1) === 42 || getShipId(x+1, y+1) === 51 ? '#bc09bc' :
+                    getShipId(x+1, y+1) === 7 || getShipId(x+1, y+1) === 16 || getShipId(x+1, y+1) === 25 || getShipId(x+1, y+1) === 34 || getShipId(x+1, y+1) === 43 || getShipId(x+1, y+1) === 52 ? '#1cc11c' :
+                    getShipId(x+1, y+1) === 8 || getShipId(x+1, y+1) === 17 || getShipId(x+1, y+1) === 26 || getShipId(x+1, y+1) === 35 || getShipId(x+1, y+1) === 44 || getShipId(x+1, y+1) === 53 ? '#989391' :
+                    getShipId(x+1, y+1) === 9 || getShipId(x+1, y+1) === 18 || getShipId(x+1, y+1) === 27 || getShipId(x+1, y+1) === 36 || getShipId(x+1, y+1) === 45 || getShipId(x+1, y+1) === 54 ? '#5dc1e2' :
+                    ''
+                }"
+                [ngClass]="{  
+                  'cell-large-water': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'user') === 0, 
+                  'cell-medium-water': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'user') === 0,
+                  'cell-small-water': playerBoard.length === 30 && getCellState(x+1, y+1, 'user') === 0,
+                  
+                  'cell-large-ship': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'user') === 1, 
+                  'cell-medium-ship': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'user') === 1,
+                  'cell-small-ship': playerBoard.length === 30 && getCellState(x+1, y+1, 'user') === 1,
+  
+                  'cell-large-ship-shooted': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'user') === 2, 
+                  'cell-medium-ship-shooted': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'user') === 2,
+                  'cell-small-ship-shooted': playerBoard.length === 30 && getCellState(x+1, y+1, 'user') === 2,
+                }"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="flex">
+        <p class="board-title">Enemy's board:</p>
+        <div class="shotBoard" #shotBoard>
+          <div class="shotRow" #shotRow *ngFor="let row of playerBoard; let x = index" id="{{ x + 1 }}">
+            <div class="shotCol" #shotCol *ngFor="let box of row; let y = index" id="{{ y + 1 }}">
+              <div 
+                class="shotCell" 
+                #shotCell 
+                (click)="saveShot(x + 1, y + 1)"
+                [ngClass]="{  
+                  'cell-large-water': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'shot') === 0, 
+                  'cell-medium-water': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'shot') === 0,
+                  'cell-small-water': playerBoard.length === 30 && getCellState(x+1, y+1, 'shot') === 0,
+  
+                  'cell-large-enemy-ship-shooted': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'shot') === 2, 
+                  'cell-medium-enemy-ship-shooted': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'shot') === 2,
+                  'cell-small-enemy-ship-shooted': playerBoard.length === 30 && getCellState(x+1, y+1, 'shot') === 2,
+  
+                  'cell-large-water-shooted': (playerBoard.length === 10 || playerBoard.length === 15) && getCellState(x+1, y+1, 'shot') === 3, 
+                  'cell-medium-water-shooted': (playerBoard.length === 20 || playerBoard.length === 25) && getCellState(x+1, y+1, 'shot') === 3,
+                  'cell-small-water-shooted': playerBoard.length === 30 && getCellState(x+1, y+1, 'shot') === 3,
+                }"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div class="next-player-container">
+      <button 
+        [disabled]="shot.length === 0 ? 'disabled' : null" 
+        class="next-player-btn" 
+        (click)="getNextPlayer()"
+      >
+        Next player
+      </button>
+    </div>
+  
+  
+    <app-game-info [players]="players" [logs]="logs"></app-game-info>
+  </div>
+
+</div>
